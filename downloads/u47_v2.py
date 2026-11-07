@@ -25,10 +25,10 @@ PLA = 1.24                    # g/cm3 (PETG 1,27: o ~3 g těžší, doladí se �
 TARGET_NET_G = -1.5           # hmotnost minus vztlak bez šroubků a prášku (záporné = plave)
 SPLIT_X = 215.0               # dělicí rovina trupu (záďová část 215 mm, příďová 117,5 mm)
 
-CUP_W, CUP_L, CUP_TOP = 12.0, 60.0, 10.0    # komora na prášek
+CUP_W, CUP_L, CUP_TOP = 12.0, 60.0, 12.0    # komora na prášek
 PLUG_T = 2.4                                # zátka s mřížkou
-SIPHON_D = 3.2
-BEND_Z = 4.2                                # spodek ohybu sifonu (> PLUG_T)
+SIPHON_D = 6.0                              # Ø kanálku: Eötvös > 3,4, bubliny stoupají samy, kapilární tlak ~1,7 mm H2O
+BEND_Z = 5.5                                # spodek ohybu sifonu (> PLUG_T + kapilární rezerva)
 WALL_SIDE, WALL_DECK = 2.2, 2.0             # stěny dutiny plováku
 PIN_D, PIN_L = 4.0, 24.0                    # spojovací kolíky
 
@@ -114,18 +114,18 @@ solid = U([hull] + rud)
 # -------- otevřené dutiny
 cup = B(CUP_L, CUP_W, CUP_TOP + 1, cup_cx, 0, (CUP_TOP + 1) / 2 - 1)
 notch = B(4.0, CUP_W + 4.0, 2.4, cup_cx + CUP_L / 2 + 1.5, 0, 0.0)                   # zářez pro nehet (přední konec)
-xa = cup_cx - CUP_L / 2 + 3.0; xb = xa - 7.0; xc = xb - 7.0
-z_top = CUP_TOP + 3.2; z_exit = 12.5; r = SIPHON_D / 2
+xa = cup_cx - CUP_L / 2 + 4.0; xb = xa - 9.5; xc = xb - 9.5
+z_top = CUP_TOP + 6.0; z_exit = 15.0; r = SIPHON_D / 2   # horní větev 3 mm nad stropem komory; r = SIPHON_D / 2
 siphon = U([
     Cz(SIPHON_D, z_top - CUP_TOP + 1 + r, xa, 0, (CUP_TOP - 1 + z_top + r) / 2),
     Cx(SIPHON_D, xa - xb + SIPHON_D, (xa + xb) / 2, 0, z_top),
     Cz(SIPHON_D, z_top - BEND_Z + SIPHON_D, xb, 0, (z_top + BEND_Z) / 2),
     Cx(SIPHON_D, xb - xc + SIPHON_D, (xb + xc) / 2, 0, BEND_Z),
     Cz(SIPHON_D, z_exit - BEND_Z + SIPHON_D, xc, 0, (z_exit + BEND_Z) / 2),
-    Cy(SIPHON_D, 24.0, xc, 12.0, z_exit),
+    Cy(SIPHON_D, 28.0, xc, 14.0, z_exit),
 ])
 # šroubky M4 (doladění zátěže a trimu): Ø3,3 × 12 mm, dva vzadu, dva vpředu
-screw_x = [xc - 12.0, xc - 40.0, cup_cx + CUP_L / 2 + 14.0, SPLIT_X + 30.0]
+screw_x = [xc - 14.0, xc - 42.0, cup_cx + CUP_L / 2 + 14.0, SPLIT_X + 30.0]
 screws = [Cz(3.3, 13.0, x, 0, 5.5) for x in screw_x]
 deck_z = ZD * SCALE
 tower_recess = extrude_polygon(stadium(6.4 * SCALE + 0.4, 1.9 * SCALE + 0.4), 0.8); tower_recess.apply_translation((tower_cx, 0, deck_z - 0.4))
@@ -158,7 +158,7 @@ def make_void(z_lo):
         boxes.append(B(x1 - x0 + 0.01, 2 * w, zt - z_lo, (x0 + x1) / 2, 0, (zt + z_lo) / 2))
     v = U(boxes)
     keep = U([
-        B(xa - xc + 2 * SIPHON_D + 6.0, 60, 20.0, (xa + xc) / 2, 0, 10.0),   # sifon
+        B(xa - xc + 2 * SIPHON_D + 6.0, 60, 24.0, (xa + xc) / 2, 0, 12.0),   # sifon
         B(6.0, 60, 60, SPLIT_X, 0, 20),                                     # stěny u dělicí roviny (3 mm na každé straně)
         Cz(8.0, 40, gun_x, 0, 20), Cz(7.0, 40, flak_x, 0, 20),              # pod dělem a flakem
     ])
@@ -218,6 +218,13 @@ for name, wfit in (("lid_tight", CUP_W + 0.1), ("lid_normal", CUP_W - 0.05), ("l
     lid = D(U([lid] + ribs), U(holes)); lid.export(os.path.join(OUT, name + ".stl")); lids[name] = lid
 bow_plane = B(7.0, 30.0, 1.6, 0, 0, 0.8); stern_plane = B(8.0, 28.0, 1.6, 12, 0, 0.8)
 U([bow_plane, stern_plane]).export(os.path.join(OUT, "planes.stl"))
+
+# -------- zkušební kostka komory se sifonem (tisk ~30 min): stejná komora, stejný sifon, stejná zátka
+tb_x0 = xc - 7.0; tb_x1 = cup_cx + CUP_L / 2 + 6.0
+test_block = B(tb_x1 - tb_x0, CUP_W + 8.0, CUP_TOP + 12.0, (tb_x0 + tb_x1) / 2, 0, (CUP_TOP + 12.0) / 2)
+test_block = D(test_block, U([cup, notch, siphon]))
+tb = test_block.copy(); tb.apply_transform(trimesh.transformations.rotation_matrix(np.pi, (1, 0, 0))); tb.apply_translation(-tb.bounds[0]); tb.export(os.path.join(OUT, "test_block_print.stl"))
+print("zkušební kostka:", [round(v, 1) for v in test_block.extents], "mm, PLA", round(test_block.volume / 1000 * PLA, 1), "g")
 
 # -------- modely pro web (v poloze sestavení, souřadnice modelu)
 for mesh, name in ((stern, "hull_stern"), (bow, "hull_bow"), (void, "void"), (cup, "cup"), (siphon, "siphon")):

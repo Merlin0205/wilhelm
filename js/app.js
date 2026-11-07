@@ -145,7 +145,7 @@ class Dive {
     tower: ['věž (Turm 0)', ST.tower_cx, 0, DECK + 16], gun: ['dělo 8,8 cm SK C/35', ST.gun_x, 0, DECK + 7], flak: ['flak 2 cm', ST.flak_x, 0, DECK + 5],
     bow: ['příďový díl 118 mm', ST.split_x + 60, 0, DECK + 3], stern: ['záďový díl 215 mm', 90, 0, DECK + 3], split: ['spoj: 2 kolíky Ø4', ST.split_x, -16, 14],
     lid: ['zátka s mřížkou', ST.cup.cx, 0, -4], planes: ['hloubková kormidla', 60.5 * 5, 20, 16], rud: ['dvě kormidla', 13, 0, 8],
-    cup: ['komora na prášek 12 × 60 mm', ST.cup.cx, 0, 5], siphon: ['plynový sifon Ø3,2', ST.siphon.xb, 0, -7], voidl: ['uzavřená dutina plováku 32 cm³', ST.cup.cx + 50, 0, 26], slots: ['zaplavovací otvory nástavby', 260, 9, DECK - 2.6],
+    cup: ['komora na prášek 12 × 60 mm', ST.cup.cx, 0, 5], siphon: ['plynový sifon Ø6', ST.siphon.xb, 0, -7], voidl: ['uzavřená dutina plováku 32 cm³', ST.cup.cx + 50, 0, 26], slots: ['zaplavovací otvory nástavby', 260, 9, DECK - 2.6],
     screws: ['otvory M4 pro dolaďovací šroubky', ST.screw_x[1], 0, 3], exit: ['výstup plynu, pravobok', ST.siphon.xc - 14, 14, ST.siphon.exit_z + 12],
   };
   const labelEls = {}; for (const k of Object.keys(LABELS)) { const d = document.createElement('div'); d.className = 'lbl'; d.textContent = LABELS[k][0]; labelsEl.appendChild(d); labelEls[k] = d; }
