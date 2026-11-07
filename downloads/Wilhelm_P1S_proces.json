@@ -1,0 +1,21 @@
+{
+  "type": "process",
+  "name": "Wilhelm plný trup 0.20mm @BBL P1P",
+  "inherits": "0.20mm Standard @BBL P1P",
+  "from": "User",
+  "is_custom_defined": "0",
+  "version": "01.10.00.00",
+  "description": "Wilhelm (U-47 1:200): 4 stěny, 100 % výplň, límec 5 mm, bez podpěr. Hmotnost dílů je spočítaná pro plný materiál.",
+  "wall_loops": "4",
+  "sparse_infill_density": "100%",
+  "sparse_infill_pattern": "rectilinear",
+  "top_shell_layers": "5",
+  "bottom_shell_layers": "5",
+  "brim_type": "outer_only",
+  "brim_width": "5",
+  "brim_object_gap": "0.1",
+  "seam_position": "rear",
+  "enable_support": "0",
+  "only_one_wall_top": "0",
+  "infill_wall_overlap": "25%"
+}

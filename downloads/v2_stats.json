@@ -1,0 +1,67 @@
+{
+ "scale": 200,
+ "length_mm": 332.5,
+ "beam_mm": 31.0,
+ "height_mm": 47.5,
+ "deck_mm": 32.5,
+ "waterline_mm": 23.5,
+ "displaced_cm3": 151.1,
+ "void_cm3": 32.0,
+ "void_z_lo_mm": 19.2,
+ "mass_g": {
+  "hull_stern": 104.8,
+  "hull_bow": 42.8,
+  "tower": 4.7,
+  "gun": 0.1,
+  "flak": 0.0,
+  "lid": 1.8,
+  "planes": 0.9,
+  "pins": 0.7,
+  "total": 155.8
+ },
+ "net_g": -1.47,
+ "gas_capacity_cm3": 4.2,
+ "cg_z_mm": 15.8,
+ "cb_z_mm": 17.7,
+ "cup": {
+  "w": 12.0,
+  "l": 60.0,
+  "top": 10.0,
+  "cx": 167.3
+ },
+ "siphon": {
+  "d": 3.2,
+  "bend_z": 4.2,
+  "exit_z": 12.5,
+  "xa": 140.3,
+  "xb": 133.3,
+  "xc": 126.3
+ },
+ "split_x": 215.0,
+ "tower_cx": 163.5,
+ "gun_x": 202.5,
+ "flak_x": 132.5,
+ "screw_x": [
+  114.3,
+  86.3,
+  211.3,
+  245.0
+ ],
+ "parts_extents_mm": {
+  "hull_stern": [
+   215.0,
+   31.0,
+   32.5
+  ],
+  "hull_bow": [
+   117.5,
+   29.4,
+   32.5
+  ],
+  "tower": [
+   32.0,
+   9.5,
+   21.0
+  ]
+ }
+}

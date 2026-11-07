@@ -1,0 +1,25 @@
+WILHELM – ponorka U-47 (typ VIIB) 1:200, která se sama potápí
+================================================================
+Kompletní návod s obrázky: index.html ve složce web (nebo adresa, kterou jste dostali).
+
+TISK (Bambu Lab P1S, tryska 0,4 mm, PLA)
+1. Otevřete Wilhelm_podlozka_P1S.3mf v Bambu Studiu (načíst jako více objektů).
+   Nebo přidejte STL soubory – jsou v tiskové poloze, trup palubou dolů.
+2. File -> Import -> Import Configs -> Wilhelm_P1S_proces.json
+   nebo ručně z profilu 0.20mm Standard: 4 stěny, výplň 100 % rectilinear,
+   5 horních/5 spodních vrstev, límec 5 mm, bez podpěr, šev vzadu.
+3. Tisk asi 8 h, 156 g PLA. Po tisku: projet sifon jehlou (kanálek u komory zespodu
+   a otvor na pravém boku), vyzkoušet zátku a kolíky na sucho.
+
+SESTAVENÍ (vteřinové lepidlo)
+1. Kolíky do otvorů v dělicí rovině zádě.  2. Nasadit příď.
+3. Věž do obrysu v palubě (kulatý konec dopředu), dělo před věž, flak za věž.
+4. Pásky hloubkových kormidel do drážek (30 mm příď, 28 mm záď).
+
+PRVNÍ PLAVBA
+1. Kýlem nahoru, do komory prášek do pečiva do 2/3 (lžička), zátku zatlačit.
+2. Do vody (15 cm, vlažná): má pomalu klesat. Plave -> šroubek M4 do kýlu. Padá -> kratší.
+3. Zatřepat pod vodou, položit na dno. Do minuty stoupá, na hladině vybublá a klesne.
+
+POZOR: vlažná voda (PLA měkne od 55 °C), prášek do pečiva (ne soda), zátěž jen do kýlu.
+Soubory: hull_stern_print, hull_bow_print, tower, lid_normal (+tight/loose), planes, gun_88, flak_20, pins.
