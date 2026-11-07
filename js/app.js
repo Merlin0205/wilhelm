@@ -16,7 +16,7 @@ function fixGeom(g) { g.rotateX(-Math.PI / 2); g.translate(-CENTER.x, -CENTER.z,
 
 // ---------- načtení geometrií (sdílené mezi scénami)
 const loader = new STLLoader();
-const FILES = ['hull_stern', 'hull_bow', 'tower', 'gun', 'flak', 'lid', 'planes', 'cup', 'siphon', 'void'];
+const FILES = ['hull_stern', 'hull_bow', 'tower', 'gun', 'flak', 'lid', 'planes', 'rudders', 'cup', 'siphon', 'void'];
 const geoms = {};
 await Promise.all(FILES.map(n => new Promise((res, rej) => loader.load(`models/${n}.stl`, g => { geoms[n] = fixGeom(g); res(); }, undefined, rej))))
   .catch(e => { document.querySelectorAll('.overlay').forEach(o => o.textContent = 'Model se nepodařilo načíst. Stránku je nutné otevřít přes http server, ne jako soubor.'); throw e; });
@@ -30,7 +30,8 @@ const PART_INFO = {
   gun:        { name: 'Dělo 8,8 cm', color: COLORS.brass, explode: [0, 0, 28], file: 'gun_88.stl' },
   flak:       { name: 'Flak 2 cm', color: COLORS.brass, explode: [0, 0, 22], file: 'flak_20.stl' },
   lid:        { name: 'Zátka s mřížkou', color: COLORS.lid, explode: [0, 0, -30], file: 'lid_normal.stl' },
-  planes:     { name: 'Hloubková kormidla', color: COLORS.brass, explode: [0, 0, -24], file: 'planes.stl' },
+  planes:     { name: 'Hloubková kormidla (otočná)', color: COLORS.brass, explode: [0, 0, -24], file: 'plane_bow.stl, plane_stern.stl' },
+  rudders:    { name: 'Kormidla (otočná)', color: COLORS.brass, explode: [0, 0, -30], file: 'rudder.stl ×2' },
 };
 const INNER = { cup: COLORS.cup, siphon: COLORS.siphon, void: COLORS.void };
 
@@ -144,8 +145,8 @@ class Dive {
   const LABELS = {
     tower: ['věž (Turm 0)', ST.tower_cx, 0, DECK + 16], gun: ['dělo 8,8 cm SK C/35', ST.gun_x, 0, DECK + 7], flak: ['flak 2 cm', ST.flak_x, 0, DECK + 5],
     bow: ['příďový díl 118 mm', ST.split_x + 60, 0, DECK + 3], stern: ['záďový díl 215 mm', 90, 0, DECK + 3], split: ['spoj: 2 kolíky Ø4', ST.split_x, -16, 14],
-    lid: ['zátka s mřížkou', ST.cup.cx, 0, -4], planes: ['hloubková kormidla', 60.5 * 5, 20, 16], rud: ['dvě kormidla', 13, 0, 8],
-    cup: ['komora na prášek 12 × 60 mm', ST.cup.cx, 0, 5], siphon: ['plynový sifon Ø6', ST.siphon.xb, 0, -7], voidl: ['uzavřená dutina plováku 32 cm³', ST.cup.cx + 50, 0, 26], slots: ['zaplavovací otvory nástavby', 260, 9, DECK - 2.6],
+    lid: ['zátka s mřížkou', ST.cup.cx, 0, -4], planes: ['otočná hloubková kormidla, západky 0 / ±10 / ±20°', 60.5 * 5, 20, 16], rud: ['dvě kormidla', 13, 0, 8],
+    cup: ['komora na prášek 12 × 60 mm, 25 mm před těžištěm', ST.cup.cx, 0, 5], siphon: ['plynový sifon Ø 9 mm', ST.siphon.xb, 0, -7], voidl: ['uzavřená dutina plováku ' + ST.void_cm3 + ' cm³', ST.cup.cx - 60, 0, 26], slots: ['zaplavovací otvory nástavby', 260, 9, DECK - 2.6], rudders: ['kormidla na čepech, stabilizátor', 10, 0, 6], name: ['reliéf WILHELM', 77, -9, 20],
     screws: ['otvory M4 pro dolaďovací šroubky', ST.screw_x[1], 0, 3], exit: ['výstup plynu, pravobok', ST.siphon.xc - 14, 14, ST.siphon.exit_z + 12],
   };
   const labelEls = {}; for (const k of Object.keys(LABELS)) { const d = document.createElement('div'); d.className = 'lbl'; d.textContent = LABELS[k][0]; labelsEl.appendChild(d); labelEls[k] = d; }
@@ -154,8 +155,8 @@ class Dive {
   const camState = { px: 300, py: 150, pz: 360, tx: 0, ty: 0, tz: 0 };
   const SCENES = {
     hero:    { cam: [380, 190, 470, -50, 0, 0], explode: 0, inner: 0, clipOn: 0, water: 0, dive: 0, auto: 1, labels: [] },
-    side:    { cam: [10, 40, 470, 0, 0, 0], explode: 0, inner: 0, clipOn: 0, water: 0, dive: 0, auto: 0, labels: ['tower', 'gun', 'flak', 'planes', 'rud', 'slots'] },
-    explode: { cam: [330, 190, 330, 10, 0, 0], explode: 1, inner: 0, clipOn: 0, water: 0, dive: 0, auto: 0, labels: ['bow', 'stern', 'split', 'tower', 'gun', 'flak', 'lid', 'planes'] },
+    side:    { cam: [10, 40, 470, 0, 0, 0], explode: 0, inner: 0, clipOn: 0, water: 0, dive: 0, auto: 0, labels: ['tower', 'gun', 'flak', 'planes', 'rudders', 'slots', 'name'] },
+    explode: { cam: [330, 190, 330, 10, 0, 0], explode: 1, inner: 0, clipOn: 0, water: 0, dive: 0, auto: 0, labels: ['bow', 'stern', 'split', 'tower', 'gun', 'flak', 'lid', 'planes', 'rudders'] },
     inside:  { cam: [80, 120, 330, 0, -6, 0], explode: 0, inner: 1, clipOn: 1, water: 0, dive: 0, auto: 0, labels: ['cup', 'siphon', 'voidl', 'exit', 'screws', 'lid'] },
     dive:    { cam: [220, 60, 420, 0, -60, 0], explode: 0, inner: 0.6, clipOn: 1, water: 1, dive: 1, auto: 0, labels: [] },
   };
@@ -198,6 +199,7 @@ class Dive {
     water.position.y = THREE.MathUtils.lerp(300, WL - CENTER.z, state.dive);
     tank.position.y = -CENTER.z - DEPTH - 2;
     sub.root.position.y = subY * state.dive;
+    sub.root.rotation.z = state.dive > 0.02 ? THREE.MathUtils.degToRad(-14 + 32 * dive.gas) * state.dive : 0;   // kluzák: příď nahoru s plynem
     gas.visible = state.dive > 0.02;
     const gh = Math.max(0.01, cupH * dive.gas); gas.scale.y = gh; gas.position.set(ST.cup.cx - CENTER.x, (ST.cup.top - gh / 2) - CENTER.z, 0);
     siphonMat.emissiveIntensity = dive.phase === 'dump' ? 1.4 : 0.25; sub.inner.siphon.material.opacity = state.dive > 0.02 ? 0.85 : state.inner * 0.55;
@@ -210,7 +212,7 @@ class Dive {
     if (current === 'dive') capEl.textContent = `${dive.status} · plyn ${(dive.gas * ST.gas_capacity_cm3).toFixed(1).replace('.', ',')} cm³`;
     // popisky
     const w = stage.clientWidth, h = stage.clientHeight;
-    const LABEL_PART = { tower: 'tower', gun: 'gun', flak: 'flak', lid: 'lid', planes: 'planes', bow: 'hull_bow' };
+    const LABEL_PART = { tower: 'tower', gun: 'gun', flak: 'flak', lid: 'lid', planes: 'planes', rudders: 'rudders', bow: 'hull_bow' };
     for (const k of Object.keys(labelEls)) { if (!labelEls[k].classList.contains('on')) continue; const L3 = LABELS[k];
       const base = toThree(L3[1], L3[2], L3[3]); const part = sub.parts[LABEL_PART[k]]; if (part) base.add(part.position); base.add(sub.root.position); base.project(camera);
       labelEls[k].style.left = `${(base.x * 0.5 + 0.5) * w}px`; labelEls[k].style.top = `${(-base.y * 0.5 + 0.5) * h - 22}px`; }

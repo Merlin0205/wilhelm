@@ -1,28 +1,27 @@
-WILHELM – ponorka U-47 (typ VIIB) 1:200, která se sama potápí
-================================================================
-Kompletní návod s obrázky: index.html ve složce web (nebo adresa, kterou jste dostali).
+WILHELM v3 – ponorka U-47 (typ VIIB) 1:200, která se sama potápí a klouže vpřed
+=================================================================================
+Návod s obrázky, 3D a simulacemi: index.html ve složce web (nebo adresa, kterou jste dostali).
 
-NEJDŘÍV ZKOUŠKA: test_block_print.stl + lid_normal.stl (1 h, 40 g). Otvorem dolů, lžička prášku, zátka,
-do sklenice vody. Má opakovaně vybublat dávka plynu z boku. Teprve pak tisknout ponorku.
+NEJDŘÍV ZKOUŠKA: test_block_print.stl + lid_normal.stl (1 h, 49 g). Otvorem dolů, lžička prášku do pečiva,
+zátka, do sklenice vody. Z bočního otvoru má opakovaně vybublat celá dávka plynu najednou. Teprve pak ponorka.
 
 TISK (Bambu Lab P1S, tryska 0,4 mm, PLA)
 1. Otevřete Wilhelm_podlozka_P1S.3mf v Bambu Studiu (načíst jako více objektů).
-   Nebo přidejte STL soubory – jsou v tiskové poloze, trup palubou dolů.
 2. File -> Import -> Import Configs -> Wilhelm_P1S_proces.json
-   nebo ručně z profilu 0.20mm Standard: 4 stěny, výplň 100 % rectilinear,
-   5 horních/5 spodních vrstev, límec 5 mm, bez podpěr, šev vzadu.
-3. Tisk asi 8 h, 156 g PLA. Po tisku: projet sifon jehlou (kanálek u komory zespodu
-   a otvor na pravém boku), vyzkoušet zátku a kolíky na sucho.
+   nebo ručně z 0.20mm Standard: 4 stěny, výplň 100 % rectilinear, 5/5 vrstev, límec 5 mm, bez podpěr, šev vzadu.
+3. Tisk asi 8 h, 149 g PLA. Po tisku projet sifon drátkem (otvor na pravoboku + komora).
 
-SESTAVENÍ (vteřinové lepidlo)
-1. Kolíky do otvorů v dělicí rovině zádě.  2. Nasadit příď.
-3. Věž do obrysu v palubě (kulatý konec dopředu), dělo před věž, flak za věž.
-4. Pásky hloubkových kormidel do drážek (30 mm příď, 28 mm záď).
+SESTAVENÍ (vteřinové lepidlo jen na věž, dělo a flak)
+1. Kolíky do dělicí roviny zádě.  2. Nasadit příď.  3. Věž (býk dopředu, U 47 dozadu), dělo před věž, flak za věž.
+4. Hloubková kormidla: hřídel prostrčit otvorem na přídi (plane_bow) a zádi (plane_stern), ukazatel nahoru = 0°,
+   otočením cvakne na +-10 / +-20°.  5. Dvě kormidla (rudder) čepy zespodu do pouzder pod deskou na zádi.
 
 PRVNÍ PLAVBA
-1. Kýlem nahoru, do komory prášek do pečiva do 2/3 (lžička), zátku zatlačit.
-2. Do vody (15 cm, vlažná): má pomalu klesat. Plave -> šroubek M4 do kýlu. Padá -> kratší.
-3. Zatřepat pod vodou, položit na dno. Do minuty stoupá, na hladině vybublá a klesne.
+1. Kýlem nahoru, do komory prášek do pečiva do 2/3 (nebo čtvrt šumivé tablety), zátku zatlačit.
+2. Do vody (15 cm+, vlažná): má pomalu klesat přídí mírně dolů. Plave -> šroubek M4 do předního otvoru.
+3. Kormidla 0°: stoupá a klesá na místě. Hloubková kormidla 10–20° + natočená kormidla: klouže vpřed a krouží.
 
-POZOR: vlažná voda (PLA měkne od 55 °C), prášek do pečiva (ne soda), zátěž jen do kýlu.
-Soubory: test_block_print, hull_stern_print, hull_bow_print, tower, lid_normal (+tight/loose), planes, gun_88, flak_20, pins.
+ŘÍZENÍ: šroubky = rychlost klesání; hloubková kormidla = kluz vpřed; kormidla = kruh; palivo = délka a tempo cyklů.
+POZOR: vlažná voda (PLA měkne od 55 °C), prášek do pečiva nebo tableta (ne samotná soda), zátěž jen do kýlu.
+Soubory: test_block_print, hull_stern_print, hull_bow_print, tower, lid_normal (+tight/loose), plane_bow, plane_stern,
+rudder (2x), gun_88, flak_20, pins. Generátor u47_v3.py, simulátor wilhelm_sim.py, čísla v3_stats.json.

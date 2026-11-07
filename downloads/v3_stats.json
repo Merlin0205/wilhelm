@@ -1,0 +1,111 @@
+{
+ "version": 3,
+ "scale": 200,
+ "length_mm": 332.5,
+ "beam_mm": 31.0,
+ "height_mm": 47.5,
+ "deck_mm": 32.5,
+ "waterline_mm": 23.5,
+ "displaced_cm3": 143.8,
+ "void_cm3": 31.3,
+ "void_z_lo_mm": 17.0,
+ "mass_g": {
+  "hull_stern": 114.49,
+  "hull_bow": 25.11,
+  "tower": 4.74,
+  "gun": 0.15,
+  "flak": 0.03,
+  "lid": 1.82,
+  "plane_bow": 0.8,
+  "plane_stern": 0.78,
+  "rudders": 0.62,
+  "pins": 0.71,
+  "test_block": 48.65,
+  "total": 149.3
+ },
+ "net_g": -1.49,
+ "gas_capacity_cm3": 5.0,
+ "cg_z_mm": 16.2,
+ "cb_z_mm": 17.9,
+ "cg_x_mm": 165.0,
+ "cb_x_mm": 165.2,
+ "cup": {
+  "w": 12.0,
+  "l": 60.0,
+  "top": 14.0,
+  "cx": 192.3,
+  "offset_mm": 25.0
+ },
+ "siphon": {
+  "d": 9.0,
+  "bend_z": 7.0,
+  "exit_z": 19.5,
+  "top_z": 21.5,
+  "xa": 170.8,
+  "xb": 158.8,
+  "xc": 146.8
+ },
+ "split_x": 240.0,
+ "tower_cx": 163.5,
+ "gun_x": 202.5,
+ "flak_x": 132.5,
+ "screw_x": [
+  60.0,
+  90.0,
+  254.0,
+  280.0
+ ],
+ "planes": {
+  "bow_x": 302.5,
+  "bow_z": 16.5,
+  "stern_x": 20.0,
+  "stern_z": 17.0,
+  "span": 34.0,
+  "chord": 9.0,
+  "detents_deg": [
+   -20,
+   -10,
+   0,
+   10,
+   20
+  ]
+ },
+ "rudders": {
+  "x": 10.5,
+  "y": 5.5,
+  "z": 14.5,
+  "pin_d": 3.0
+ },
+ "parts_extents_mm": {
+  "hull_stern": [
+   240.0,
+   31.0,
+   32.5
+  ],
+  "hull_bow": [
+   92.5,
+   24.4,
+   32.5
+  ],
+  "tower": [
+   32.0,
+   10.3,
+   21.0
+  ],
+  "test_block": [
+   90.0,
+   20.0,
+   30.0
+  ],
+  "plane_bow": [
+   9.0,
+   40.8,
+   9.2
+  ],
+  "rudder": [
+   10.0,
+   3.0,
+   19.0
+  ]
+ }
+}

@@ -216,3 +216,9 @@ footer .wrap{display:grid;gap:10px}
 .morebody{padding:4px 22px 24px;display:grid;gap:16px}
 .more h4{font-size:1.05rem;font-weight:600;margin:0 0 8px}
 .fig{margin:0;display:grid;gap:8px} .fig img{width:100%;height:auto;border-radius:12px;background:#0a1a28} .fig figcaption{color:var(--muted);font-size:.9rem}
+
+/* ===== v3 ===== */
+.vid{width:100%;height:auto;display:block;border-radius:12px;background:#07131d}
+.ar{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px;display:grid;gap:8px;position:relative}
+model-viewer{--poster-color:transparent;border-radius:12px}
+.fig figcaption{margin-top:6px}
