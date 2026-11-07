@@ -16,7 +16,7 @@ function fixGeom(g) { g.rotateX(-Math.PI / 2); g.translate(-CENTER.x, -CENTER.z,
 
 // ---------- načtení geometrií (sdílené mezi scénami)
 const loader = new STLLoader();
-const FILES = ['hull_stern', 'hull_bow', 'tower', 'gun', 'flak', 'lid', 'planes', 'rudders', 'cup', 'siphon', 'void'];
+const FILES = ['hull_stern', 'hull_bow', 'tower', 'gun', 'flak', 'lid', 'planes', 'rudders', 'cup', 'siphon', 'void', 'test_block'];
 const geoms = {};
 await Promise.all(FILES.map(n => new Promise((res, rej) => loader.load(`models/${n}.stl`, g => { geoms[n] = fixGeom(g); res(); }, undefined, rej))))
   .catch(e => { document.querySelectorAll('.overlay').forEach(o => o.textContent = 'Model se nepodařilo načíst. Stránku je nutné otevřít přes http server, ne jako soubor.'); throw e; });
@@ -254,6 +254,14 @@ class Dive {
   tog('vCut', on => { cutRange.disabled = !on; clip.constant = on ? parseFloat(cutRange.value) : 1e6; });
   cutRange?.addEventListener('input', () => { clip.constant = parseFloat(cutRange.value); });
   tog('vAuto', on => { controls.autoRotate = on; });
+  // zkušební kostka: samostatné těleso, zobrazí se místo ponorky
+  const blockMat = new THREE.MeshStandardMaterial({ color: COLORS.hull, metalness: 0.3, roughness: 0.5, side: THREE.DoubleSide, clippingPlanes: [clip] });
+  const block = new THREE.Mesh(geoms.test_block, blockMat); block.visible = false; block.castShadow = block.receiveShadow = true;
+  // kostka leží v modelových souřadnicích u komory; posunout ke středu scény
+  const bb = new THREE.Box3().setFromObject(block); const bc = bb.getCenter(new THREE.Vector3()); block.position.set(-bc.x, -bc.y + 8, -bc.z); scene.add(block);
+  const blockInner = ['cup', 'siphon'].map(k => { const m = new THREE.Mesh(geoms[k], new THREE.MeshStandardMaterial({ color: INNER[k], emissive: INNER[k], emissiveIntensity: 0.3, transparent: true, opacity: 0.5, depthWrite: false, side: THREE.DoubleSide, clippingPlanes: [clip] })); m.position.copy(block.position); m.visible = false; scene.add(m); return m; });
+  tog('vBlock', on => { block.visible = on; sub.root.visible = !on; blockInner.forEach(m => m.visible = on && vs.inner > 0.01); if (on) { gsap.to(camera.position, { x: 90, y: 60, z: 130, duration: 0.8 }); controls.target.set(0, 0, 0); } else { gsap.to(camera.position, { x: 260, y: 150, z: 330, duration: 0.8 }); } });
+  const _setInnerOrig = setInner;
   // seznam dílů: zobrazit/skrýt
   const list = document.getElementById('partList');
   if (list) for (const [k, info] of Object.entries(PART_INFO)) {
@@ -263,7 +271,7 @@ class Dive {
     list.appendChild(b);
   }
   let last = performance.now();
-  function frame(now) { requestAnimationFrame(frame); const dt = Math.min(0.05, (now - last) / 1000); last = now; setExplode(sub, vs.explode); setInner(sub, vs.inner > 0.01, vs.inner * 0.55); controls.update(); renderer.render(scene, camera); }
+  function frame(now) { requestAnimationFrame(frame); const dt = Math.min(0.05, (now - last) / 1000); last = now; setExplode(sub, vs.explode); setInner(sub, vs.inner > 0.01, vs.inner * 0.55); if (block.visible) blockInner.forEach(m => { m.visible = vs.inner > 0.01; m.material.opacity = vs.inner * 0.55; }); controls.update(); renderer.render(scene, camera); }
   requestAnimationFrame(frame);
 })();
 

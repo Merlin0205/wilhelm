@@ -322,6 +322,7 @@ for name, wfit in (("lid_tight", CUP_W + 0.1), ("lid_normal", CUP_W - 0.05), ("l
 tb_x0 = xc - r - 4.0; tb_x1 = cup_cx + CUP_L / 2 + 6.0
 test_block = D(B(tb_x1 - tb_x0, CUP_W + 8.0, z_top + r + 4.0, (tb_x0 + tb_x1) / 2, 0, (z_top + r + 4.0) / 2), U([cup, notch, siphon]))
 export(test_block, "test_block_print", flip=True)
+test_block.export(os.path.join(WEB, "test_block.stl"))
 print("zkušební kostka", [round(v, 1) for v in test_block.extents], "mm,", round(test_block.volume / 1000 * PLA, 1), "g, vodotěsná", test_block.is_watertight)
 
 # ---------------- modely pro web (sestava)
