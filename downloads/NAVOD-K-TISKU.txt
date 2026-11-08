@@ -2,7 +2,7 @@ WILHELM v3 – ponorka U-47 (typ VIIB) 1:200, která se sama potápí a klouže 
 =================================================================================
 Návod s obrázky, 3D a simulacemi: index.html ve složce web (nebo adresa, kterou jste dostali).
 
-NEJDŘÍV ZKOUŠKA: test_block_print.stl + lid_normal.stl (1 h, 49 g). Otvorem dolů, lžička prášku do pečiva,
+NEPOVINNÁ ZKOUŠKA (kostka není součást ponorky): test_block_print.stl + lid_normal.stl (1 h, 49 g). Otvorem dolů, lžička prášku do pečiva,
 zátka, do sklenice vody. Z bočního otvoru má opakovaně vybublat celá dávka plynu najednou. Teprve pak ponorka.
 
 TISK (Bambu Lab P1S, tryska 0,4 mm, PLA)
@@ -25,3 +25,6 @@ PRVNÍ PLAVBA
 POZOR: vlažná voda (PLA měkne od 55 °C), prášek do pečiva nebo tableta (ne samotná soda), zátěž jen do kýlu.
 Soubory: test_block_print, hull_stern_print, hull_bow_print, tower, lid_normal (+tight/loose), plane_bow, plane_stern,
 rudder (2x), gun_88, flak_20, pins. Generátor u47_v3.py, simulátor wilhelm_sim.py, čísla v3_stats.json.
+
+VÝSTAVNÍ VERZE (na poličku): vytiskněte stand.stl a display_plug.stl. Vložku zasuňte do komory místo prášku a víčka,
+ponorku položte na stojánek. Na plavání vložku vytáhněte.

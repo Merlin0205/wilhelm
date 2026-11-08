@@ -318,6 +318,24 @@ for name, wfit in (("lid_tight", CUP_W + 0.1), ("lid_normal", CUP_W - 0.05), ("l
     holes = [Cz(2.0, PLUG_T + 2, x, y, PLUG_T / 2) for x in np.linspace(-CUP_L / 2 + 5, CUP_L / 2 - 5, 10) for y in (-3.0, 3.0)]
     ribs = [B(8, 0.6, PLUG_T - 0.8, x, s * (wfit / 2), PLUG_T / 2) for x in (-20, 0, 20) for s in (-1, 1)]
     lid = D(U([lid] + ribs), U(holes)); lid.export(os.path.join(OUT, name + ".stl")); lids[name] = lid
+# ---------------- výstavní verze: vložka zaplní komoru, stojánek s nápisem
+plug_body = B(CUP_L - 0.3, CUP_W - 0.15, CUP_TOP - 0.3, 0, 0, (CUP_TOP - 0.3) / 2)
+plug_ribs = [B(8, 0.6, CUP_TOP - 2.0, x, s * ((CUP_W - 0.15) / 2), (CUP_TOP - 0.3) / 2) for x in (-20, 0, 20) for s in (-1, 1)]
+display_plug = U([plug_body] + plug_ribs)
+export(display_plug, "display_plug")
+st_x0, st_x1 = 70.0, 270.0
+base = B(st_x1 - st_x0, 44.0, 4.0, (st_x0 + st_x1) / 2, 0, -8.0)
+cradles = [B(10.0, 30.0, 16.0, x, 0, -2.0) for x in (100.0, 240.0)]
+stand = D(U([base] + cradles), hull)
+lab = text_polys("U-47  WILHELM", 7.0); lb = lab.bounds
+lab_geoms = list(lab.geoms) if hasattr(lab, "geoms") else [lab]
+lab_m = U([extrude_polygon(g, 0.8) for g in lab_geoms if g.area > 0.05])
+lab_m.apply_translation(((st_x0 + st_x1) / 2 - (lb[0] + lb[2]) / 2, -18.0 - lb[1], -6.0))
+stand = U([stand, lab_m])
+stand.export(os.path.join(WEB, "stand.stl"))
+export(stand, "stand")
+print("výstavní vložka", [round(v, 1) for v in display_plug.extents], "stojánek", [round(v, 1) for v in stand.extents], "vodotěsné", display_plug.is_watertight, stand.is_watertight)
+
 # zkušební kostka: stejná komora, sifon a zátka
 tb_x0 = xc - r - 4.0; tb_x1 = cup_cx + CUP_L / 2 + 6.0
 test_block = D(B(tb_x1 - tb_x0, CUP_W + 8.0, z_top + r + 4.0, (tb_x0 + tb_x1) / 2, 0, (z_top + r + 4.0) / 2), U([cup, notch, siphon]))
