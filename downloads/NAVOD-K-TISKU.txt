@@ -3,17 +3,17 @@ WILHELM – ponorka U-47 (typ VIIB) 1:200, která se sama potápí, vynořuje a 
 Návod s obrázky a 3D: https://merlin0205.github.io/wilhelm/
 
 1) TISK (Bambu Lab P1S, tryska 0,4 mm, PLA)
-   - Otevřete Wilhelm_podlozka_P1S.3mf v Bambu Studiu (načíst jako více objektů).
-     Zadní díl trupu leží na podložce úhlopříčně (je delší než 256 mm), nic neotáčejte.
-   - File -> Import -> Import Configs -> Wilhelm_P1S_proces.json
-     (nebo ručně: 4 stěny, výplň 100 %, límec 5 mm, bez podpěr).
+   - Otevřete Wilhelm_podlozka_P1S.3mf v Bambu Studiu. Nastavení každého dílu je uložené
+     v souboru (4 stěny, výplň 100 %, límec 5 mm, bez podpěr). Zvolte jen tiskárnu P1S a PLA.
+     Zadní díl trupu leží úhlopříčně (je delší než 256 mm), nic neotáčejte.
+   - Kdyby nastavení po otevření chybělo: File -> Import -> Import Configs -> Wilhelm_P1S_proces.json.
    - Asi 8 hodin, 150 g PLA. Po tisku projeďte drátkem kanálek: z komory pod kýlem
      ke kulatému otvoru na pravém boku.
 
 2) SLOŽENÍ (vteřinové lepidlo)
    - Kolíky do zadního dílu, nasadit přední díl.
-   - Palivovou kazetu (zlatý díl s košíčkem) přilepte zespodu k věži, výřez do výřezu.
-     Věž se do paluby NElepí, jen zasouvá.
+   - Palivovou kazetu (díl s košíčkem) přilepte zespodu k věži, výřez do výřezu.
+     Věž se do paluby NElepí: zasune se, dvě pružné západky cvaknou; vytáhne se tahem nahoru.
    - Dělo před věž, kulomet za ni. Malá kormidla prostrčit otvory na přídi a zádi,
      svislá kormidla zespodu do zádě. Víčko s dírkami zatlačit zespodu do komory (zůstává tam).
 
@@ -22,13 +22,17 @@ Návod s obrázky a 3D: https://merlin0205.github.io/wilhelm/
      věž zasuňte zpátky, cvakne.
      Na delší hraní: lžička prášku do pečiva zespodu do komory pod víčko.
    - Ponořit, zatřepat (vybublá vzduch), položit na dno. Do minuty vyplave.
-   - Klesá moc pomalu / plave: šroubek M4 do spodku. Padá moc rychle: šroubek ubrat.
+   - Zátěž: dvě schránky ve spodku, víčko mincí o čtvrt otáčky. Dovnitř matky M4 nebo kuličky 6 mm.
+     Plave: přidat matku. Padá moc rychle: ubrat. Vpředu víc = příď dolů.
    - Malá kormidla natočit = pluje dopředu. Svislá kormidla natočit = krouží.
 
 4) NA POLIČKU / JEN NA HLADINU
+   - Výstavní díly jsou v Wilhelm_vystavni_P1S.3mf (také s nastavením).
    - display_plug.stl (dutá vložka) místo víčka: ponorka pluje jen na hladině a spodek je hladký.
-   - exit_cap.stl zakryje boční otvor kanálku (jen na poličku).
+   - exit_cap.stl zakryje boční otvor kanálku (jen na poličku); vyndává se nehtem v drážce.
    - stand.stl: stojánek s nápisem U-47 WILHELM.
 
 NEPOVINNÉ: test_block_print.stl je jen zkušební kostka komory s kanálkem, do ponorky se nedává.
 POZOR: vlažná voda (PLA měkne od 55 °C), zátěž jen do spodku, po hraní vypláchnout a usušit.
+
+PO HRANÍ: vytáhnout věž s kazetou a víčko komory, vypláchnout, nechat den vyschnout.

@@ -14,7 +14,7 @@
   "brim_type": "outer_only",
   "brim_width": "5",
   "brim_object_gap": "0.1",
-  "seam_position": "rear",
+  "seam_position": "back",
   "enable_support": "0",
   "only_one_wall_top": "0",
   "infill_wall_overlap": "25%"
