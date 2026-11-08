@@ -1,30 +1,34 @@
-WILHELM v3 – ponorka U-47 (typ VIIB) 1:200, která se sama potápí a klouže vpřed
-=================================================================================
-Návod s obrázky, 3D a simulacemi: index.html ve složce web (nebo adresa, kterou jste dostali).
+WILHELM – ponorka U-47 (typ VIIB) 1:200, která se sama potápí, vynořuje a pluje dopředu
+=========================================================================================
+Návod s obrázky a 3D: https://merlin0205.github.io/wilhelm/
 
-NEPOVINNÁ ZKOUŠKA (kostka není součást ponorky): test_block_print.stl + lid_normal.stl (1 h, 49 g). Otvorem dolů, lžička prášku do pečiva,
-zátka, do sklenice vody. Z bočního otvoru má opakovaně vybublat celá dávka plynu najednou. Teprve pak ponorka.
+1) TISK (Bambu Lab P1S, tryska 0,4 mm, PLA)
+   - Otevřete Wilhelm_podlozka_P1S.3mf v Bambu Studiu (načíst jako více objektů).
+     Zadní díl trupu leží na podložce úhlopříčně (je delší než 256 mm), nic neotáčejte.
+   - File -> Import -> Import Configs -> Wilhelm_P1S_proces.json
+     (nebo ručně: 4 stěny, výplň 100 %, límec 5 mm, bez podpěr).
+   - Asi 8 hodin, 150 g PLA. Po tisku projeďte drátkem kanálek: z komory pod kýlem
+     ke kulatému otvoru na pravém boku.
 
-TISK (Bambu Lab P1S, tryska 0,4 mm, PLA)
-1. Otevřete Wilhelm_podlozka_P1S.3mf v Bambu Studiu (načíst jako více objektů).
-2. File -> Import -> Import Configs -> Wilhelm_P1S_proces.json
-   nebo ručně z 0.20mm Standard: 4 stěny, výplň 100 % rectilinear, 5/5 vrstev, límec 5 mm, bez podpěr, šev vzadu.
-3. Tisk asi 8 h, 149 g PLA. Po tisku projet sifon drátkem (otvor na pravoboku + komora).
+2) SLOŽENÍ (vteřinové lepidlo)
+   - Kolíky do zadního dílu, nasadit přední díl.
+   - Palivovou kazetu (zlatý díl s košíčkem) přilepte zespodu k věži, výřez do výřezu.
+     Věž se do paluby NElepí, jen zasouvá.
+   - Dělo před věž, kulomet za ni. Malá kormidla prostrčit otvory na přídi a zádi,
+     svislá kormidla zespodu do zádě. Víčko s dírkami zatlačit zespodu do komory (zůstává tam).
 
-SESTAVENÍ (vteřinové lepidlo jen na věž, dělo a flak)
-1. Kolíky do dělicí roviny zádě.  2. Nasadit příď.  3. Věž (býk dopředu, U 47 dozadu), dělo před věž, flak za věž.
-4. Hloubková kormidla: hřídel prostrčit otvorem na přídi (plane_bow) a zádi (plane_stern), ukazatel nahoru = 0°,
-   otočením cvakne na +-10 / +-20°.  5. Dvě kormidla (rudder) čepy zespodu do pouzder pod deskou na zádi.
+3) PLAVBA
+   - Vytáhněte věž, do košíčku vložte kousek šumivé tablety (asi půl gramu = asi 10 ponorů),
+     věž zasuňte zpátky, cvakne.
+     Na delší hraní: lžička prášku do pečiva zespodu do komory pod víčko.
+   - Ponořit, zatřepat (vybublá vzduch), položit na dno. Do minuty vyplave.
+   - Klesá moc pomalu / plave: šroubek M4 do spodku. Padá moc rychle: šroubek ubrat.
+   - Malá kormidla natočit = pluje dopředu. Svislá kormidla natočit = krouží.
 
-PRVNÍ PLAVBA
-1. Kýlem nahoru, do komory prášek do pečiva do 2/3 (nebo čtvrt šumivé tablety), zátku zatlačit.
-2. Do vody (15 cm+, vlažná): má pomalu klesat přídí mírně dolů. Plave -> šroubek M4 do předního otvoru.
-3. Kormidla 0°: stoupá a klesá na místě. Hloubková kormidla 10–20° + natočená kormidla: klouže vpřed a krouží.
+4) NA POLIČKU / JEN NA HLADINU
+   - display_plug.stl (dutá vložka) místo víčka: ponorka pluje jen na hladině a spodek je hladký.
+   - exit_cap.stl zakryje boční otvor kanálku (jen na poličku).
+   - stand.stl: stojánek s nápisem U-47 WILHELM.
 
-ŘÍZENÍ: šroubky = rychlost klesání; hloubková kormidla = kluz vpřed; kormidla = kruh; palivo = délka a tempo cyklů.
-POZOR: vlažná voda (PLA měkne od 55 °C), prášek do pečiva nebo tableta (ne samotná soda), zátěž jen do kýlu.
-Soubory: test_block_print, hull_stern_print, hull_bow_print, tower, lid_normal (+tight/loose), plane_bow, plane_stern,
-rudder (2x), gun_88, flak_20, pins. Generátor u47_v3.py, simulátor wilhelm_sim.py, čísla v3_stats.json.
-
-VÝSTAVNÍ VERZE (na poličku): vytiskněte stand.stl a display_plug.stl. Vložku zasuňte do komory místo prášku a víčka,
-ponorku položte na stojánek. Na plavání vložku vytáhněte.
+NEPOVINNÉ: test_block_print.stl je jen zkušební kostka komory s kanálkem, do ponorky se nedává.
+POZOR: vlažná voda (PLA měkne od 55 °C), zátěž jen do spodku, po hraní vypláchnout a usušit.

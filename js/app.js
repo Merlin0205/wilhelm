@@ -16,7 +16,7 @@ function fixGeom(g) { g.rotateX(-Math.PI / 2); g.translate(-CENTER.x, -CENTER.z,
 
 // ---------- načtení geometrií (sdílené mezi scénami)
 const loader = new STLLoader();
-const FILES = ['hull_stern', 'hull_bow', 'tower', 'gun', 'flak', 'lid', 'planes', 'rudders', 'cup', 'siphon', 'void', 'test_block'];
+const FILES = ['hull_stern', 'hull_bow', 'tower', 'gun', 'flak', 'lid', 'planes', 'rudders', 'cartridge', 'cup', 'siphon', 'void', 'test_block'];
 const geoms = {};
 await Promise.all(FILES.map(n => new Promise((res, rej) => loader.load(`models/${n}.stl`, g => { geoms[n] = fixGeom(g); res(); }, undefined, rej))))
   .catch(e => { document.querySelectorAll('.overlay').forEach(o => o.textContent = 'Model se nepodařilo načíst. Stránku je nutné otevřít přes http server, ne jako soubor.'); throw e; });
@@ -27,6 +27,7 @@ const PART_INFO = {
   hull_stern: { name: 'Trup, záďový díl', color: COLORS.hull, explode: [0, 0, 0], file: 'hull_stern_print.stl' },
   hull_bow:   { name: 'Trup, příďový díl', color: COLORS.hull, explode: [46, 0, 0], file: 'hull_bow_print.stl' },
   tower:      { name: 'Věž', color: COLORS.tower, explode: [0, 0, 38], file: 'tower.stl' },
+  cartridge:  { name: 'Palivová kazeta', color: COLORS.brass, explode: [0, 0, 38], file: 'fuel_cartridge.stl' },
   gun:        { name: 'Dělo 8,8 cm', color: COLORS.brass, explode: [0, 0, 28], file: 'gun_88.stl' },
   flak:       { name: 'Flak 2 cm', color: COLORS.brass, explode: [0, 0, 22], file: 'flak_20.stl' },
   lid:        { name: 'Zátka s mřížkou', color: COLORS.lid, explode: [0, 0, -30], file: 'lid_normal.stl' },

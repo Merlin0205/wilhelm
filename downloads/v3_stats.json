@@ -6,13 +6,13 @@
  "height_mm": 47.5,
  "deck_mm": 32.5,
  "waterline_mm": 23.5,
- "displaced_cm3": 143.8,
+ "displaced_cm3": 142.1,
  "void_cm3": 31.3,
- "void_z_lo_mm": 17.0,
+ "void_z_lo_mm": 15.2,
  "mass_g": {
-  "hull_stern": 114.49,
-  "hull_bow": 25.11,
-  "tower": 4.74,
+  "hull_stern": 123.93,
+  "hull_bow": 13.57,
+  "tower": 4.69,
   "gun": 0.15,
   "flak": 0.03,
   "lid": 1.82,
@@ -20,15 +20,15 @@
   "plane_stern": 0.78,
   "rudders": 0.62,
   "pins": 0.71,
-  "test_block": 48.65,
-  "total": 149.3
+  "test_block": 50.88,
+  "total": 147.1
  },
  "net_g": -1.49,
  "gas_capacity_cm3": 5.0,
- "cg_z_mm": 16.2,
- "cb_z_mm": 17.9,
- "cg_x_mm": 165.0,
- "cb_x_mm": 165.2,
+ "cg_z_mm": 16.3,
+ "cb_z_mm": 17.8,
+ "cg_x_mm": 166.8,
+ "cb_x_mm": 162.5,
  "cup": {
   "w": 12.0,
   "l": 60.0,
@@ -41,19 +41,26 @@
   "bend_z": 7.0,
   "exit_z": 19.5,
   "top_z": 21.5,
-  "xa": 170.8,
-  "xb": 158.8,
-  "xc": 146.8
+  "xa": 213.8,
+  "xb": 229.3,
+  "xc": 241.3
  },
- "split_x": 240.0,
+ "split_x": 262.0,
+ "fuel": {
+  "x": 171.3,
+  "l": 14.0,
+  "w": 6.5,
+  "basket_cm3": 0.5
+ },
+ "float_air_cm3": 4.4,
  "tower_cx": 163.5,
  "gun_x": 202.5,
  "flak_x": 132.5,
  "screw_x": [
   60.0,
   90.0,
-  254.0,
-  280.0
+  280.0,
+  295.0
  ],
  "planes": {
   "bow_x": 302.5,
@@ -78,14 +85,14 @@
  },
  "parts_extents_mm": {
   "hull_stern": [
-   240.0,
+   262.0,
    31.0,
    32.5
   ],
   "hull_bow": [
-   92.5,
-   24.4,
-   32.5
+   70.5,
+   19.0,
+   31.9
   ],
   "tower": [
    32.0,
@@ -93,7 +100,7 @@
    21.0
   ],
   "test_block": [
-   90.0,
+   93.5,
    20.0,
    30.0
   ],

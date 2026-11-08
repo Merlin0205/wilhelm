@@ -23,7 +23,7 @@ from matplotlib.font_manager import FontProperties
 
 SCALE = 1000.0 / 200.0; L_REAL = 66.5; L = L_REAL * SCALE
 PLA = 1.24; TARGET_NET_G = -1.5
-SPLIT_X = 240.0
+SPLIT_X = 262.0
 CUP_W, CUP_L, CUP_TOP = 12.0, 60.0, 14.0
 CUP_OFFSET = 25.0                 # mm před objemovým těžištěm (moment plynu -> příď nahoru při stoupání)
 PLUG_T = 2.4
@@ -145,21 +145,25 @@ solid = U([hull, stab_plate] + stab_boss)
 
 # ---------------- otevřené dutiny
 cup = B(CUP_L, CUP_W, CUP_TOP + 1, cup_cx, 0, (CUP_TOP + 1) / 2 - 1)
-notch = B(4.0, CUP_W + 4.0, 2.4, cup_cx + CUP_L / 2 + 1.5, 0, 0.0)
+notch = B(4.0, CUP_W + 4.0, 2.4, cup_cx - CUP_L / 2 - 1.5, 0, 0.0)
 r = SIPHON_D / 2
-xa = cup_cx - CUP_L / 2 + 4.0 + r; xb = xa - (SIPHON_D + 3.0); xc = xb - (SIPHON_D + 3.0)
+xa = cup_cx + CUP_L / 2 - 4.0 - r; xb = cup_cx + CUP_L / 2 + 2.5 + r; xc = xb + SIPHON_D + 3.0   # sifon před komorou (za ní je šachta paliva)
 z_top = CUP_TOP + 3.0 + r; z_exit = CUP_TOP + 1.0 + r
 siphon = U([
     Cz(SIPHON_D, z_top - CUP_TOP + 1, xa, 0, (CUP_TOP - 1 + z_top) / 2),
-    Cx(SIPHON_D, xa - xb + SIPHON_D, (xa + xb) / 2, 0, z_top),
+    Cx(SIPHON_D, abs(xb - xa) + SIPHON_D, (xa + xb) / 2, 0, z_top),
     Cz(SIPHON_D, z_top - BEND_Z + SIPHON_D, xb, 0, (z_top + BEND_Z) / 2),
-    Cx(SIPHON_D, xb - xc + SIPHON_D, (xb + xc) / 2, 0, BEND_Z),
+    Cx(SIPHON_D, abs(xc - xb) + SIPHON_D, (xb + xc) / 2, 0, BEND_Z),
     Cz(SIPHON_D, z_exit - BEND_Z + SIPHON_D, xc, 0, (z_exit + BEND_Z) / 2),
     Cy(SIPHON_D, 30.0, xc, 15.0, z_exit),
 ])
-screw_x = [60.0, 90.0, SPLIT_X + 14.0, SPLIT_X + 40.0]          # dva vzadu, dva vpředu (trim: příď dolů)
+screw_x = [60.0, 90.0, 280.0, 295.0]          # dva vzadu, dva vpředu (trim: příď dolů)
 screws = [Cz(3.3, 13.0, x, 0, 5.5) for x in screw_x]
 deck_z = ZD * SCALE
+FUEL_X = cup_cx - CUP_L / 2 + 9.0          # šachta u zadního konce komory, celá pod věží
+FUEL_L, FUEL_W = 14.0, 6.5                  # průřez kazety (pod věží 32 × 9,5 mm není vidět)
+shaft = extrude_polygon(stadium(FUEL_L + 0.4, FUEL_W + 0.4), deck_z + 2 - (CUP_TOP - 1)); shaft.apply_translation((FUEL_X, 0, CUP_TOP - 1))
+snap_dimples = [Sph(1.4, FUEL_X + dx, s * (FUEL_W / 2 + 0.2), deck_z - 3.0) for dx in (-3.5, 3.5) for s in (-1, 1)]
 tower_recess = extrude_polygon(stadium(6.4 * SCALE + 0.4, 1.9 * SCALE + 0.4), 0.8); tower_recess.apply_translation((tower_cx, 0, deck_z - 0.4))
 gun_x = (L_REAL - 26.0) * SCALE; flak_x = (L_REAL - 40.0) * SCALE
 gun_hole = Cz(2.3, 5.0, gun_x, 0, deck_z - 2.0); flak_hole = Cz(1.8, 4.0, flak_x, 0, deck_z - 1.5)
@@ -191,7 +195,7 @@ for px, pz in ((plane_bow_x, plane_bow_z), (plane_stern_x, plane_stern_z)):
         for s in (-1, 1):
             yw = half_width(px / SCALE, pz + rr * math.cos(a)) * s
             tk = B(0.5, 3.0, 1.4 if ang == 0 else 0.9, px + rr * math.sin(a), yw, pz + rr * math.cos(a)); ticks.append(tk)   # 3 mm na tloušťku: vždy otevřené ven
-open_cav = U([cup, notch, siphon, tower_recess, gun_hole, flak_hole] + screws + plane_holes + dimples + rudder_holes + pin_holes + hatches + slots + ticks)
+open_cav = U([cup, notch, siphon, shaft] + snap_dimples + [tower_recess, gun_hole, flak_hole] + screws + plane_holes + dimples + rudder_holes + pin_holes + hatches + slots + ticks)
 
 # ---------------- reliéf: WILHELM na bocích (sedlové nádrže), zrcadlově na levoboku
 name_h = 5.0; name_z = 18.0; name_x0 = 46.0
@@ -223,7 +227,8 @@ def make_void(z_lo):
         boxes.append(B(x1 - x0 + 0.01, 2 * w, zt - z_lo, (x0 + x1) / 2, 0, (zt + z_lo) / 2))
     v = U(boxes)
     keep = U([
-        B(xa - xc + 2 * SIPHON_D + 6.0, 60, 2 * (z_top + r + 2.5), (xa + xc) / 2, 0, 0),   # sifon + 2,5 mm stěna nad ním
+        B(abs(xc - xa) + 2 * SIPHON_D + 6.0, 60, 2 * (z_top + r + 2.5), (xa + xc) / 2, 0, 0),   # sifon + 2,5 mm stěna nad ním
+        B(FUEL_L + 6.0, 60, 80, FUEL_X, 0, 0),                                           # šachta paliva
         B(6.0, 60, 60, SPLIT_X, 0, 20),
         Cz(8.0, 40, gun_x, 0, 20), Cz(7.0, 40, flak_x, 0, 20),
         B(12.0, 60, 2 * (plane_bow_z + PLANE_SHAFT_D / 2 + 2.5), plane_bow_x, 0, 0),      # hřídele kormidel
@@ -252,6 +257,20 @@ for s in (1, -1):
         tw_emb.append(emboss_y(num_poly, -(yw + 0.4), -(yw - 0.6), -9.0 - nbb[0], 4.0))
         tw_emb.append(emboss_y(bull, -(yw + 0.4), -(yw - 0.6), 1.5, 3.5))
 tower = U([tower] + scopes + tw_emb)
+blade_h = deck_z - CUP_TOP                                   # z = CUP_TOP .. deck_z
+blade = extrude_polygon(stadium(FUEL_L, FUEL_W), blade_h); blade.apply_translation((0, 0, CUP_TOP))
+bumps = [Sph(1.2, dx, s * (FUEL_W / 2), deck_z - 3.0) for dx in (-3.5, 3.5) for s in (-1, 1)]
+BASKET_Z0 = 2.9
+basket = extrude_polygon(stadium(FUEL_L, FUEL_W), CUP_TOP - BASKET_Z0); basket.apply_translation((0, 0, BASKET_Z0))
+cavity = extrude_polygon(stadium(FUEL_L - 2.0, FUEL_W - 2.0), CUP_TOP - BASKET_Z0 - 0.8); cavity.apply_translation((0, 0, BASKET_Z0 + 0.8))
+slots_b = [B(1.4, FUEL_W + 2, CUP_TOP - BASKET_Z0 - 2.0, dx, 0, (BASKET_Z0 + 1.0 + CUP_TOP) / 2 - 0.2) for dx in (-4.5, -1.5, 1.5, 4.5)]
+holes_b = [Cz(1.2, 3, dx, 0, BASKET_Z0 + 0.4) for dx in (-3, 0, 3)]
+grip = B(4.0, FUEL_W + 2, 1.5, 0, 0, deck_z - 0.75)            # drážka pro nalepení věže
+cartridge = D(U([blade, basket] + bumps), U([cavity, grip] + slots_b + holes_b))
+cartridge.apply_translation((0, 0, 0))
+# věž: dole zahloubení pro horní konec kazety (lepí se k sobě)
+tw_socket = B(4.0, FUEL_W - 0.4, 1.5, FUEL_X - tower_cx, 0, 0.75)
+tower = D(tower, tw_socket)
 gun = U([Cz(4.0, 2.5, 0, 0, 1.25), Cz(2.0, 3.0, 0, 0, -1.5 + 0.01), B(5.0, 3.0, 3.0, 0, 0, 4.0), Cx(1.6, 16.0, 9.0, 0, 4.6), B(2.6, 2.0, 1.6, -3.0, 0, 4.6)])
 flak = U([Cz(3.0, 1.5, 0, 0, 0.75), Cz(1.5, 2.5, 0, 0, -1.25 + 0.01), Cz(1.4, 4.0, 0, 0, 3.5), Cx(1.0, 7.0, 3.0, 0, 5.4)])
 pins = U([Cx(PIN_D - 0.1, PIN_L, 0, s * 6, PIN_D / 2) for s in (-1, 1)])
@@ -278,7 +297,7 @@ def rudder_part():
     return U([blade, pin])
 rudder = rudder_part()
 
-tower_net = tower.volume / 1000 * (PLA - 1.0); gun_net = (gun.volume + flak.volume) / 1000 * (PLA - 1.0)
+tower_net = tower.volume / 1000 * (PLA - 1.0) + cartridge.volume / 1000 * (PLA - 1.0); gun_net = (gun.volume + flak.volume) / 1000 * (PLA - 1.0)
 plug_net = CUP_L * CUP_W * PLUG_T / 1000 * (PLA - 1.0) * 0.85
 pins_net = pins.volume / 1000 * PLA
 planes_net = (plane_bow.volume + plane_stern.volume) / 1000 * (PLA - 1.0) + 0.3   # hřídel v otvoru: otvor je dutina
@@ -309,7 +328,7 @@ def export(mesh, name, flip=False, rot=None):
     if rot is not None: m.apply_transform(rot)
     m.apply_translation(-m.bounds[0]); m.export(os.path.join(OUT, name + ".stl")); return m
 export(stern, "hull_stern_print", flip=True); export(bow, "hull_bow_print", flip=True)
-export(tower, "tower"); export(gun, "gun_88"); export(flak, "flak_20"); export(pins, "pins")
+export(tower, "tower"); export(cartridge, "fuel_cartridge", rot=trimesh.transformations.rotation_matrix(np.pi / 2, (1, 0, 0))); export(gun, "gun_88"); export(flak, "flak_20"); export(pins, "pins")
 export(plane_bow, "plane_bow"); export(plane_stern, "plane_stern")
 export(rudder, "rudder", rot=trimesh.transformations.rotation_matrix(np.pi / 2, (1, 0, 0)))   # naležato
 lids = {}
@@ -320,8 +339,17 @@ for name, wfit in (("lid_tight", CUP_W + 0.1), ("lid_normal", CUP_W - 0.05), ("l
     lid = D(U([lid] + ribs), U(holes)); lid.export(os.path.join(OUT, name + ".stl")); lids[name] = lid
 # ---------------- výstavní verze: vložka zaplní komoru, stojánek s nápisem
 plug_body = B(CUP_L - 0.3, CUP_W - 0.15, CUP_TOP - 0.3, 0, 0, (CUP_TOP - 0.3) / 2)
-plug_ribs = [B(8, 0.6, CUP_TOP - 2.0, x, s * ((CUP_W - 0.15) / 2), (CUP_TOP - 0.3) / 2) for x in (-20, 0, 20) for s in (-1, 1)]
-display_plug = U([plug_body] + plug_ribs)
+pocket_c = (FUEL_X - cup_cx)
+pocket = B(FUEL_L + 1.2, CUP_W + 2, CUP_TOP - BASKET_Z0 + 1.0, pocket_c, 0, (BASKET_Z0 - 0.6 + CUP_TOP + 1) / 2)
+plug_ribs = [B(8, 0.6, CUP_TOP - 2.0, x, s * ((CUP_W - 0.15) / 2), (CUP_TOP - 0.3) / 2) for x in (-12, 4, 20) for s in (-1, 1)]
+outer = D(U([plug_body] + plug_ribs), pocket)
+inner = D(B(CUP_L - 0.3 - 2.4, CUP_W - 0.15 - 2.4, CUP_TOP - 0.3 - 2.4, 0, 0, (CUP_TOP - 0.3) / 2),
+          B(FUEL_L + 1.2 + 2.4, CUP_W + 2, CUP_TOP - BASKET_Z0 + 1.0 + 2.4, pocket_c, 0, (BASKET_Z0 - 0.6 + CUP_TOP + 1) / 2 - 1.2))
+display_plug = D(outer, inner)                                   # dutá, uzavřená: plovák i výstavní zátka
+float_air = inner.volume / 1000; float_gain = float_air + (CUP_L * CUP_W * CUP_TOP / 1000 - display_plug.volume / 1000 - float_air) * 0 - display_plug.volume / 1000 * (PLA - 1.0)
+exit_cap = U([Cy(SIPHON_D - 0.15, 5.0, 0, 0, 0), B(0.8, 5.0, SIPHON_D - 3, 0, -2.4, 0)])
+export(exit_cap, "exit_cap", rot=trimesh.transformations.rotation_matrix(np.pi / 2, (1, 0, 0)))
+print(f"plovací vložka: vzduch {float_air:.1f} cm3, vztlak navíc ~{float_air - display_plug.volume/1000*(PLA-1):.1f} g")
 export(display_plug, "display_plug")
 st_x0, st_x1 = 70.0, 270.0
 base = B(st_x1 - st_x0, 44.0, 4.0, (st_x0 + st_x1) / 2, 0, -8.0)
@@ -337,7 +365,7 @@ export(stand, "stand")
 print("výstavní vložka", [round(v, 1) for v in display_plug.extents], "stojánek", [round(v, 1) for v in stand.extents], "vodotěsné", display_plug.is_watertight, stand.is_watertight)
 
 # zkušební kostka: stejná komora, sifon a zátka
-tb_x0 = xc - r - 4.0; tb_x1 = cup_cx + CUP_L / 2 + 6.0
+tb_x0 = cup_cx - CUP_L / 2 - 6.0; tb_x1 = xc + r + 4.0
 test_block = D(B(tb_x1 - tb_x0, CUP_W + 8.0, z_top + r + 4.0, (tb_x0 + tb_x1) / 2, 0, (z_top + r + 4.0) / 2), U([cup, notch, siphon]))
 export(test_block, "test_block_print", flip=True)
 test_block.export(os.path.join(WEB, "test_block.stl"))
@@ -346,6 +374,8 @@ print("zkušební kostka", [round(v, 1) for v in test_block.extents], "mm,", rou
 # ---------------- modely pro web (sestava)
 for mesh, name in ((stern, "hull_stern"), (bow, "hull_bow"), (void, "void"), (cup, "cup"), (siphon, "siphon")): mesh.export(os.path.join(WEB, name + ".stl"))
 tower.copy().apply_translation((tower_cx, 0, deck_z)).export(os.path.join(WEB, "tower.stl"))
+cartridge.copy().apply_translation((FUEL_X, 0, 0)).export(os.path.join(WEB, "cartridge.stl"))
+ec = exit_cap.copy(); ec.apply_translation((xc, half_width(xc / SCALE, z_exit) - 2.5, z_exit)); ec.export(os.path.join(WEB, "exit_cap.stl"))
 gun.copy().apply_translation((gun_x, 0, deck_z)).export(os.path.join(WEB, "gun.stl"))
 flak.copy().apply_translation((flak_x, 0, deck_z)).export(os.path.join(WEB, "flak.stl"))
 lids["lid_normal"].copy().apply_translation((cup_cx, 0, 0)).export(os.path.join(WEB, "lid.stl"))
@@ -368,7 +398,7 @@ stats = {"version": 3, "scale": 200, "length_mm": round(L, 1), "beam_mm": round(
          "mass_g": {"hull_stern": g(stern), "hull_bow": g(bow), "tower": g(tower), "gun": g(gun), "flak": g(flak), "lid": round(CUP_L * CUP_W * PLUG_T / 1000 * PLA * 0.85, 2), "plane_bow": g(plane_bow), "plane_stern": g(plane_stern), "rudders": round(2 * rudder.volume / 1000 * PLA, 2), "pins": g(pins), "test_block": g(test_block)},
          "net_g": round(net_total, 2), "gas_capacity_cm3": round(cup_cap, 1), "cg_z_mm": round(cm[2], 1), "cb_z_mm": round(cb[2], 1), "cg_x_mm": round(cm[0], 1), "cb_x_mm": round(cb[0], 1),
          "cup": {"w": CUP_W, "l": CUP_L, "top": CUP_TOP, "cx": round(cup_cx, 1), "offset_mm": CUP_OFFSET}, "siphon": {"d": SIPHON_D, "bend_z": BEND_Z, "exit_z": round(z_exit, 1), "top_z": round(z_top, 1), "xa": round(xa, 1), "xb": round(xb, 1), "xc": round(xc, 1)},
-         "split_x": SPLIT_X, "tower_cx": round(tower_cx, 1), "gun_x": round(gun_x, 1), "flak_x": round(flak_x, 1), "screw_x": screw_x,
+         "split_x": SPLIT_X, "fuel": {"x": round(FUEL_X, 1), "l": FUEL_L, "w": FUEL_W, "basket_cm3": round((FUEL_L - 2) * (FUEL_W - 2) * (CUP_TOP - BASKET_Z0 - 0.8) / 1000 * 0.9, 2)}, "float_air_cm3": round(float_air, 1), "tower_cx": round(tower_cx, 1), "gun_x": round(gun_x, 1), "flak_x": round(flak_x, 1), "screw_x": screw_x,
          "planes": {"bow_x": plane_bow_x, "bow_z": plane_bow_z, "stern_x": plane_stern_x, "stern_z": plane_stern_z, "span": PLANE_SPAN, "chord": PLANE_CHORD, "detents_deg": [-20, -10, 0, 10, 20]},
          "rudders": {"x": rud_x, "y": rud_y, "z": round(rud_zk, 1), "pin_d": RUDDER_PIN_D},
          "parts_extents_mm": {k: [round(v, 1) for v in m.extents] for k, m in (("hull_stern", stern), ("hull_bow", bow), ("tower", tower), ("test_block", test_block), ("plane_bow", plane_bow), ("rudder", rudder))}}
