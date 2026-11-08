@@ -6,8 +6,12 @@ Návod s obrázky a 3D: https://merlin0205.github.io/wilhelm/
    - Otevřete Wilhelm_podlozka_P1S.3mf v Bambu Studiu. Nastavení každého dílu je uložené
      v souboru (4 stěny, výplň 100 %, límec 5 mm, bez podpěr). Zvolte jen tiskárnu P1S a PLA.
      Zadní díl trupu leží úhlopříčně (je delší než 256 mm), nic neotáčejte.
-   - Kdyby nastavení po otevření chybělo: File -> Import -> Import Configs -> Wilhelm_P1S_proces.json.
-   - Asi 8 hodin, 150 g PLA. Po tisku projeďte drátkem kanálek: z komory pod kýlem
+     Ověřeno v Bambu Studiu 2.9.1: projekt se naslicuje bez chyb a bez varování.
+   - Kdyby nastavení po otevření chybělo: File -> Import -> Import Configs -> Wilhelm_P1S_proces.json
+     (vychází z profilu 0.20mm Standard @BBL X1C, který Bambu používá i pro P1S).
+   - Asi 4 a půl hodiny, 150 g PLA.
+   - Pod plochou deskou na konci zádě jsou dvě tenká žebra. Jsou jen pro tisk:
+     po tisku je ulomte kleštěmi a hranu přejeďte smirkem. Po tisku projeďte drátkem kanálek: z komory pod kýlem
      ke kulatému otvoru na pravém boku.
 
 2) SLOŽENÍ (vteřinové lepidlo)
@@ -27,7 +31,7 @@ Návod s obrázky a 3D: https://merlin0205.github.io/wilhelm/
    - Malá kormidla natočit = pluje dopředu. Svislá kormidla natočit = krouží.
 
 4) NA POLIČKU / JEN NA HLADINU
-   - Výstavní díly jsou v Wilhelm_vystavni_P1S.3mf (také s nastavením).
+   - Výstavní díly jsou v Wilhelm_vystavni_P1S.3mf (také s nastavením, asi hodina tisku, 56 g).
    - display_plug.stl (dutá vložka) místo víčka: ponorka pluje jen na hladině a spodek je hladký.
    - exit_cap.stl zakryje boční otvor kanálku (jen na poličku); vyndává se nehtem v drážce.
    - stand.stl: stojánek s nápisem U-47 WILHELM.

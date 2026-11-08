@@ -172,22 +172,26 @@ FUEL_X = cup_cx - CUP_L / 2 + 8.0          # šachta u zadního konce komory, ce
 FUEL_L, FUEL_W = 13.0, 6.5                  # průřez kazety (pod věží 32 × 9,5 mm není vidět)
 shaft = B(FUEL_L + 0.4, FUEL_W + 0.4, deck_z + 2 - (CUP_TOP - 1), FUEL_X, 0, (deck_z + 2 + CUP_TOP - 1) / 2)
 SNAP_Z = deck_z - 12.0                                   # výška zobáčku západky
-snap_dimples = [B(1.6, 4.8, 3.6, FUEL_X + s * (FUEL_L / 2 + 0.2 + 0.6), 0, SNAP_Z) for s in (-1, 1)]
+snap_dimples = [B(1.6, FUEL_W + 1.0, 2.6, FUEL_X + s * (FUEL_L / 2 + 0.2 + 0.6), 0, SNAP_Z) for s in (-1, 1)]   # z: zobáček ± 0,2 mm
 tower_recess = extrude_polygon(stadium(6.4 * SCALE + 0.4, 1.9 * SCALE + 0.4), 0.8); tower_recess.apply_translation((tower_cx, 0, deck_z - 0.4))
 gun_x = (L_REAL - 26.0) * SCALE; flak_x = (L_REAL - 40.0) * SCALE
-gun_hole = Cz(2.3, 5.0, gun_x, 0, deck_z - 2.0); flak_hole = Cz(1.8, 4.0, flak_x, 0, deck_z - 1.5)
+gun_hole = Cz(4.3, 0.8, gun_x, 0, deck_z - 0.2); flak_hole = Cz(3.3, 0.8, flak_x, 0, deck_z - 0.2)   # mělké lůžko pro přilepení
 # otočná hloubková kormidla: průchozí otvor pro hřídel
 plane_bow_x, plane_bow_z = 60.5 * SCALE, 3.3 * SCALE
 plane_stern_x, plane_stern_z = 4.0 * SCALE, 3.4 * SCALE
 plane_holes = [Cy(PLANE_SHAFT_D + 0.3, 60, plane_bow_x, 0, plane_bow_z), Cy(PLANE_SHAFT_D + 0.3, 60, plane_stern_x, 0, plane_stern_z)]
 # západkové důlky okolo otvoru na boku trupu: 0, ±10, ±20° (důlky v trupu, výstupek na náboji)
-dimples = []
+dimples = []; spot_faces = []
 for px, pz in ((plane_bow_x, plane_bow_z), (plane_stern_x, plane_stern_z)):
+    hw0 = half_width(px / SCALE, pz)                          # rovina náboje = půlšířka trupu v ose hřídele
+    for s in (-1, 1):
+        spot_faces.append(Cy(12.8, 20.0, px, s * (hw0 + 10.0), pz))   # rovná dosedací plocha Ø12,8 (náboj + ukazatel s výstupkem)
     for ang in (-20, -10, 0, 10, 20):
         a = math.radians(ang); rr = 4.6
+        mat = half_width((px + rr * math.sin(a)) / SCALE, pz + rr * math.cos(a)) - hw0
+        assert mat > 0.1, f"důlek {ang}° u x={px:.0f}: trup nesahá k dosedací ploše ({mat:.2f} mm)"
         for s in (-1, 1):
-            yw = half_width(px / SCALE, pz + rr * math.cos(a)) * s      # povrch ve výšce důlku
-            dimples.append(Sph(1.3, px + rr * math.sin(a), yw, pz + rr * math.cos(a)))
+            dimples.append(Sph(1.3, px + rr * math.sin(a), s * hw0, pz + rr * math.cos(a)))
 # kormidla otočná: čepy Ø3 zespodu do zádě
 rudder_holes = [Cz(RUDDER_PIN_D + 0.15, 7.0, rud_x, s * rud_y, rud_zk + 3.0) for s in (-1, 1)]   # z 14 až 21
 pin_holes = [Cx(PIN_D + 0.15, PIN_L + 2.0, SPLIT_X, s * 4.5, 12.0) for s in (-1, 1)]
@@ -204,7 +208,7 @@ for px, pz in ((plane_bow_x, plane_bow_z), (plane_stern_x, plane_stern_z)):
         for s in (-1, 1):
             yw = half_width(px / SCALE, pz + rr * math.cos(a)) * s
             tk = B(0.5, 3.0, 1.4 if ang == 0 else 0.9, px + rr * math.sin(a), yw, pz + rr * math.cos(a)); ticks.append(tk)   # 3 mm na tloušťku: vždy otevřené ven
-open_cav = U([cup, notch, siphon, shaft] + snap_dimples + [tower_recess, gun_hole, flak_hole] + screws + plane_holes + dimples + rudder_holes + pin_holes + hatches + slots + ticks)
+open_cav = U([cup, notch, siphon, shaft] + snap_dimples + [gun_hole, flak_hole] + screws + plane_holes + spot_faces + dimples + rudder_holes + pin_holes + hatches + slots + ticks)
 
 # ---------------- reliéf: WILHELM na bocích (sedlové nádrže), zrcadlově na levoboku
 name_h = 5.0; name_z = 18.0; name_x0 = 46.0
@@ -269,35 +273,43 @@ for s in (1, -1):
 tower = U([tower] + scopes + tw_emb)
 blade_h = deck_z - CUP_TOP                                   # z = CUP_TOP .. deck_z
 blade = B(FUEL_L, FUEL_W, blade_h, 0, 0, CUP_TOP + blade_h / 2)
-ARM_L, ARM_T, ARM_W, HOOK = 10.0, 1.2, 4.0, 0.6            # PLA: ε = 1,5·t·y/L² = 1,08 % (< 1,5 % pro opakované použití)
-arm_top = SNAP_Z + 10.0 - 0.5; arm_bot = arm_top - ARM_L
+ARM_L, ARM_T, ARM_W, HOOK = 12.0, 1.2, FUEL_W, 0.8          # jazýček přes celou tloušťku čepele: při tisku naplocho stojí na podložce
+HOOK_Z0 = SNAP_Z - 1.3                                       # spodek zobáčku; zobáček celý nad volným koncem jazýčku
+arm_bot = HOOK_Z0 - 0.2; arm_top = arm_bot + ARM_L          # kořen nahoře (u paluby), volný konec dole
 bumps = []; arm_cuts = []
-for s_ in (-1, 1):                                          # jazýčky na čelech kazety (±x): při tisku naplocho se ohýbají v rovině vrstev
+for s_ in (-1, 1):                                          # jazýčky na čelech kazety (±x): ohýbají se v rovině vrstev (nejpevnější směr)
     xo = s_ * (FUEL_L / 2)
-    arm_cuts.append(B(0.8, ARM_W + 1.2, ARM_L, xo - s_ * (ARM_T + 0.4), 0, arm_bot + ARM_L / 2))          # mezera za jazýčkem
-    for dy in (-(ARM_W / 2 + 0.3), ARM_W / 2 + 0.3):
-        arm_cuts.append(B(ARM_T + 0.9, 0.6, ARM_L, xo - s_ * (ARM_T / 2 + 0.2), dy, arm_bot + ARM_L / 2))  # boční řezy
-    arm_cuts.append(B(ARM_T + 1.2, ARM_W + 1.2, 0.6, xo - s_ * (ARM_T / 2 + 0.2), 0, arm_bot - 0.3))       # volný konec
-    zc = SNAP_Z + 0.4; pts = []
-    for yy in (-ARM_W / 2, ARM_W / 2):                      # zobáček: náběh 30° zespodu, 45° shora
-        pts += [(xo, yy, zc - 1.0 - HOOK / math.tan(math.radians(30))), (xo + s_ * HOOK, yy, zc - 1.0), (xo + s_ * HOOK, yy, zc + 0.2), (xo, yy, zc + 0.2 + HOOK), (xo - s_ * 0.3, yy, zc - 2.2), (xo - s_ * 0.3, yy, zc + 0.9)]
+    arm_cuts.append(B(0.8, FUEL_W + 2, ARM_L + 0.8, xo - s_ * (ARM_T + 0.4), 0, arm_bot - 0.8 + (ARM_L + 0.8) / 2))   # mezera za jazýčkem
+    arm_cuts.append(B(ARM_T + 2.0, FUEL_W + 2, 0.8, xo - s_ * (ARM_T + 0.8) / 2 + s_ * 0.6, 0, arm_bot - 0.4))       # volný konec (mezera 0,8 mm)
+    z0 = HOOK_Z0; zr = z0 + HOOK / math.tan(math.radians(30)); zf = zr + 0.4; zt = zf + HOOK   # náběh 30°, rovinka 0,4, výběh 45°
+    pts = []
+    for yy in (-ARM_W / 2, ARM_W / 2):
+        pts += [(xo - s_ * 0.4, yy, z0), (xo, yy, z0), (xo + s_ * HOOK, yy, zr), (xo + s_ * HOOK, yy, zf), (xo, yy, zt), (xo - s_ * 0.4, yy, zt)]
     bumps.append(trimesh.convex.convex_hull(np.array(pts)))
 BASKET_Z0 = 2.9
 basket = B(FUEL_L, FUEL_W, CUP_TOP - BASKET_Z0, 0, 0, (CUP_TOP + BASKET_Z0) / 2)
 cavity = B(FUEL_L - 2.0, FUEL_W - 2.0, CUP_TOP - BASKET_Z0 - 0.8, 0, 0, (CUP_TOP + BASKET_Z0 + 0.8) / 2)
 slots_b = [B(1.4, FUEL_W + 2, CUP_TOP - BASKET_Z0 - 2.0, dx, 0, (BASKET_Z0 + 1.0 + CUP_TOP) / 2 - 0.2) for dx in (-4.2, -1.4, 1.4, 4.2)]
 holes_b = [Cz(1.2, 3, dx, 0, BASKET_Z0 + 0.4) for dx in (-3, 0, 3)]
-grip = B(4.0, FUEL_W + 2, 1.5, 0, 0, deck_z - 0.75)            # drážka pro nalepení věže
-cartridge = D(U([D(blade, U(arm_cuts)), basket] + bumps), U([cavity, grip] + slots_b + holes_b))
+grip = B(0.01, 0.01, 0.01, 0, 0, CUP_TOP + 3)                  # (bez drážky)
+tongue = B(3.8, FUEL_W, 1.4, 0, 0, deck_z + 0.7)                # výstupek do drážky věže (lepí se CA)            # drážka pro nalepení věže
+cartridge = D(U([D(blade, U(arm_cuts)), basket, tongue] + bumps), U([cavity] + slots_b + holes_b))
 _F = lambda w, t, L, eps, E=3500: w * t * t * E * eps / (6 * L)
-_f = _F(ARM_W, ARM_T, ARM_L, 1.5 * ARM_T * HOOK / ARM_L ** 2); mu = 0.3
-print(f"západka: ohyb {1.5*ARM_T*HOOK/ARM_L**2*100:.2f} %, zasunutí {2*_f*(mu+math.tan(math.radians(30)))/(1-mu*math.tan(math.radians(30))):.1f} N, vytažení {2*_f*(mu+1)/(1-mu):.1f} N")
-cartridge.apply_translation((0, 0, 0))
+mu = 0.3
+_y = HOOK - 0.2                                              # skutečný průhyb: vůle šachty 0,2 mm
+_f = _F(ARM_W, ARM_T, ARM_L, 1.5 * ARM_T * _y / ARM_L ** 2)
+print(f"západka: záběr {_y:.1f} mm, ohyb {1.5*ARM_T*_y/ARM_L**2*100:.2f} %, zasunutí {2*_f*(mu+math.tan(math.radians(30)))/(1-mu*math.tan(math.radians(30))):.1f} N, vytažení {2*_f*(mu+1)/(1-mu):.1f} N")
+_root_cut = U([B(ARM_T + 0.2, FUEL_W + 2, 0.6, s_ * (FUEL_L / 2 - ARM_T / 2), 0, arm_top - 0.2) for s_ in (-1, 1)])
+_parts = D(cartridge, _root_cut).split(only_watertight=False)
+assert len(_parts) == 3, f"jazýček kazety není volný (těles po odříznutí kořene: {len(_parts)})"
+print("kazeta: oba jazýčky volné, vetknuté jen u kořene")
 # věž: dole zahloubení pro horní konec kazety (lepí se k sobě)
-tw_socket = B(4.0, FUEL_W - 0.4, 1.5, FUEL_X - tower_cx, 0, 0.75)
+tw_socket = B(4.2, FUEL_W + 0.4, 1.6, FUEL_X - tower_cx, 0, 0.8 - 0.01)       # drážka ve spodku věže pro výstupek kazety (vůle 0,2)
 tower = D(tower, tw_socket)
-gun = U([Cz(4.0, 2.5, 0, 0, 1.25), Cz(2.0, 3.0, 0, 0, -1.5 + 0.01), B(5.0, 3.0, 3.0, 0, 0, 4.0), Cx(1.6, 16.0, 9.0, 0, 4.6), B(2.6, 2.0, 1.6, -3.0, 0, 4.6)])
-flak = U([Cz(3.0, 1.5, 0, 0, 0.75), Cz(1.5, 2.5, 0, 0, -1.25 + 0.01), Cz(1.4, 4.0, 0, 0, 3.5), Cx(1.0, 7.0, 3.0, 0, 5.4)])
+gun = U([Cz(4.0, 2.5, 0, 0, 1.25), B(5.0, 3.0, 3.0, 0, 0, 4.0), Cx(1.6, 16.0, 9.0, 0, 4.6), B(2.6, 2.0, 1.6, -3.0, 0, 4.6)])   # plochá pata, lepí se
+gun = trimesh.boolean.intersection([gun, B(60, 60, 5.3, 0, 0, 5.3 / 2)])   # vršek srovnaný o 0,1–0,2 mm: tiskne se vzhůru nohama, hlaveň leží na podložce
+flak = U([Cz(3.0, 1.5, 0, 0, 0.75), Cz(1.4, 4.4, 0, 0, 3.7), Cx(1.0, 7.0, 3.0, 0, 5.4)])   # plochá pata, lepí se
+flak = trimesh.boolean.intersection([flak, B(60, 60, 5.75, 0, 0, 5.75 / 2)])   # vršek srovnaný: tisk vzhůru nohama
 pins = U([Cx(PIN_D - 0.1, PIN_L, 0, s * 6, PIN_D / 2) for s in (-1, 1)])
 
 # ---------------- otočná hloubková kormidla (hřídel + 2 listy + náboje s výstupkem), stejný díl pro příď i záď
@@ -357,8 +369,14 @@ def export(mesh, name, flip=False, rot=None):
     m.apply_translation(-m.bounds[0])
     m.vertices = np.round(m.vertices, 4); m.merge_vertices(); m.update_faces(m.nondegenerate_faces()); m.update_faces(m.unique_faces()); m.remove_unreferenced_vertices()
     m.export(os.path.join(OUT, name + ".stl")); return m
-export(stern, "hull_stern_print", flip=True); export(bow, "hull_bow_print", flip=True)
-export(tower, "tower"); export(cartridge, "fuel_cartridge", rot=trimesh.transformations.rotation_matrix(np.pi / 2, (1, 0, 0))); export(gun, "gun_88"); export(flak, "flak_20"); export(pins, "pins")
+# odlamovací žebra pod okraji stabilizační desky (jen pro tisk): stojí na podložce, k desce je drží břit 0,5 × 0,4 mm (ulomit kleštěmi)
+_zt = stern.bounds[1][2]; _zp = 20.3 + 0.8; _ry = 17.0 / 2 - 0.6
+ribs = U([B(12.0, 1.2, _zt - (_zp + 0.4), 10.0, s_ * _ry, (_zt + _zp + 0.4) / 2) for s_ in (-1, 1)] +
+         [B(12.0, 0.5, 0.42, 10.0, s_ * _ry, _zp + 0.2) for s_ in (-1, 1)])
+assert trimesh.boolean.intersection([ribs, hull_final.copy()]).volume < 0.12, "žebro koliduje s trupem"   # dovolen jen dotek břitu
+stern_print = U([stern, ribs])
+export(stern_print, "hull_stern_print", flip=True); export(bow, "hull_bow_print", flip=True)
+export(tower, "tower"); export(cartridge, "fuel_cartridge", rot=trimesh.transformations.rotation_matrix(np.pi / 2, (1, 0, 0))); export(gun, "gun_88", rot=trimesh.transformations.rotation_matrix(np.pi, (1, 0, 0))); export(flak, "flak_20", rot=trimesh.transformations.rotation_matrix(np.pi, (1, 0, 0))); export(pins, "pins")
 export(plane_bow, "plane_bow"); export(plane_stern, "plane_stern")
 export(rudder, "rudder", rot=trimesh.transformations.rotation_matrix(np.pi / 2, (1, 0, 0)))   # naležato
 lids = {}
@@ -386,6 +404,7 @@ exit_cap = D(U([cap_body] + cap_ribs), nail_slot)
 # víčko schránky zátěže: bajonet na čtvrt otáčky, čelo zarovnané s kýlem, drážka pro minci
 bc = Cz(9.6, 2.4, 0, 0, 1.2)
 lugs = [B(2.4, 1.6, 1.1, 0, s_ * 5.25, 1.15 + 0.55) for s_ in (-1, 1)]
+lugs += [trimesh.convex.convex_hull(np.array([(-1.2, s_ * 4.6, 2.25), (1.2, s_ * 4.6, 2.25), (-1.2, s_ * 5.9, 2.25), (1.2, s_ * 5.9, 2.25), (0, s_ * 4.6, 2.55), (0, s_ * 5.9, 2.55)])) for s_ in (-1, 1)]   # 0,3 mm jistič: přeskočí při otočení, drží proti samovolnému povolení
 bc_slot = B(7.0, 1.2, 0.9, 0, 0, 0.45)
 grip_post = Cz(3.0, 2.0, 0, 0, 2.4 + 1.0)                          # krátký čep dovnitř, aby se zátěž necpala k ústí
 ballast_cap = D(U([bc] + lugs + [grip_post]), bc_slot)
