@@ -4,7 +4,7 @@
   --ink:#eaf1f7; --muted:#9bafc0; --dim:#6f8396;
   --brass:#e3b94e; --brass2:#b8862b; --steel:#7fb3e0; --sea:#1f6fb5; --gas:#9fd3ff; --ok:#5fd09b; --warn:#f0b840; --bad:#ff7a6b;
   --fd:"Saira Condensed","Arial Narrow",system-ui,sans-serif; --fb:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif; --fm:"IBM Plex Mono",ui-monospace,Menlo,monospace;
-  --maxw:1120px; --gutter:clamp(16px,4vw,48px); --r:16px;
+  --maxw:1360px; --gutter:clamp(16px,4vw,48px); --r:16px;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -25,7 +25,7 @@ b{font-weight:600;color:var(--ink)}
 .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 /* sekce */
-.sec{padding-block:clamp(64px,9vw,120px);display:grid;gap:34px}
+.sec{padding-block:clamp(48px,6vw,88px);display:grid;gap:30px}
 .alt{background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 50%,var(--bg) 100%)}
 .badge{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;border:1px solid rgba(95,208,155,.4);background:rgba(95,208,155,.08);color:var(--ok);font-size:.95rem}
 .tag{display:inline-block;font-family:var(--fm);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:6px;background:rgba(227,185,78,.14);color:var(--brass);margin-bottom:4px}
@@ -97,7 +97,7 @@ input[type=range]{accent-color:var(--brass)}
 .story-canvas{position:sticky;top:0;height:100vh;height:100svh;width:100%;overflow:hidden;background:radial-gradient(120% 80% at 50% 10%,var(--bg2) 0%,var(--bg) 70%)}
 .story-canvas canvas{display:block;width:100%;height:100%;touch-action:pan-y}
 .story-steps{position:relative;margin-top:-100vh;margin-top:-100svh;pointer-events:none;z-index:2}
-.step{min-height:100vh;min-height:100svh;display:flex;align-items:center;padding:0 var(--gutter)}
+.step{min-height:100vh;min-height:100svh;display:flex;align-items:center;padding:0 max(var(--gutter),calc((100vw - var(--maxw))/2 + var(--gutter)))}
 .step .panel{pointer-events:auto;max-width:470px;background:rgba(8,20,32,.78);border:1px solid var(--line);border-radius:18px;padding:26px 28px;display:grid;gap:12px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 20px 60px rgba(0,0,0,.35)}
 .step .panel h2{font-size:clamp(1.9rem,3vw,2.5rem)}
 .step .panel p{color:var(--muted)}
@@ -189,3 +189,5 @@ footer{border-top:1px solid var(--line);padding:40px var(--gutter) 70px;color:va
 footer .wrap{display:grid;gap:14px}
 .endcta{display:grid;gap:16px;justify-items:start;padding:40px 0 10px}
 .endcta h2{font-size:clamp(2rem,4vw,3rem)}
+
+.arhidden{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden}

@@ -7,7 +7,7 @@
 <meta name="description" content="Wilhelm: tištěný model ponorky U‑47 (typ VIIB) 1:200. Sám se potápí, vynořuje a pluje dopředu, nebo stojí na poličce. Pohon: lžička prášku do pečiva.">
 <link rel="icon" href="img/brand/helma.svg" type="image/svg+xml">
 <link rel="stylesheet" href="fonts/fonts.css">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css?v=1794135899">
 <script type="importmap">{"imports":{"three":"./lib/three.module.js","three/addons/":"./lib/addons/"}}</script>
 <script>window.WILHELM_STATS = {"version": 3, "scale": 200, "length_mm": 332.5, "beam_mm": 31.0, "height_mm": 47.5, "deck_mm": 32.5, "waterline_mm": 23.5, "displaced_cm3": 143.8, "void_cm3": 31.3, "void_z_lo_mm": 17.0, "mass_g": {"hull_stern": 114.49, "hull_bow": 25.11, "tower": 4.74, "gun": 0.15, "flak": 0.03, "lid": 1.82, "plane_bow": 0.8, "plane_stern": 0.78, "rudders": 0.62, "pins": 0.71, "test_block": 48.65, "total": 149.3}, "net_g": -1.49, "gas_capacity_cm3": 5.0, "cg_z_mm": 16.2, "cb_z_mm": 17.9, "cg_x_mm": 165.0, "cb_x_mm": 165.2, "cup": {"w": 12.0, "l": 60.0, "top": 14.0, "cx": 192.3, "offset_mm": 25.0}, "siphon": {"d": 9.0, "bend_z": 7.0, "exit_z": 19.5, "top_z": 21.5, "xa": 170.8, "xb": 158.8, "xc": 146.8}, "split_x": 240.0, "tower_cx": 163.5, "gun_x": 202.5, "flak_x": 132.5, "screw_x": [60.0, 90.0, 254.0, 280.0], "planes": {"bow_x": 302.5, "bow_z": 16.5, "stern_x": 20.0, "stern_z": 17.0, "span": 34.0, "chord": 9.0, "detents_deg": [-20, -10, 0, 10, 20]}, "rudders": {"x": 10.5, "y": 5.5, "z": 14.5, "pin_d": 3.0}, "parts_extents_mm": {"hull_stern": [240.0, 31.0, 32.5], "hull_bow": [92.5, 24.4, 32.5], "tower": [32.0, 10.3, 21.0], "test_block": [90.0, 20.0, 30.0], "plane_bow": [9.0, 40.8, 9.2], "rudder": [10.0, 3.0, 19.0]}};</script>
 </head>
@@ -162,7 +162,7 @@
   <div class="sec-head">
     <div class="n">3D</div>
     <h2>Prohlédněte si ji ze všech stran</h2>
-    <p class="lede">Táhnutím otáčíte, kolečkem nebo dvěma prsty přibližujete. Na telefonu si ji můžete postavit na stůl.</p>
+    <p class="lede">Táhnutím otáčíte, kolečkem nebo dvěma prsty přibližujete. Na telefonu tlačítkem AR postavíte ponorku ve skutečné velikosti na stůl.</p>
   </div>
   <div class="viewer" id="viewer">
     <div class="stage">
@@ -174,17 +174,13 @@
         <button class="btn" data-view="iso" aria-pressed="true" type="button">Volně</button><button class="btn" data-view="side" aria-pressed="false" type="button">Bok</button><button class="btn" data-view="top" aria-pressed="false" type="button">Shora</button><button class="btn" data-view="bottom" aria-pressed="false" type="button">Zespodu</button>
       </div>
       <div class="grp"><span class="t">Zobrazit</span>
-        <button class="btn" id="vAuto" aria-pressed="true" type="button">Otáčet</button><button class="btn" id="vExplode" aria-pressed="false" type="button">Rozložit</button><button class="btn" id="vInner" aria-pressed="false" type="button">Vnitřek</button><button class="btn" id="vCut" aria-pressed="false" type="button">Řez</button><button class="btn" id="vBlock" aria-pressed="false" type="button">Zkušební kostka</button>
+        <button class="btn" id="vAuto" aria-pressed="true" type="button">Otáčet</button><button class="btn" id="vExplode" aria-pressed="false" type="button">Rozložit</button><button class="btn" id="vInner" aria-pressed="false" type="button">Vnitřek</button><button class="btn" id="vCut" aria-pressed="false" type="button">Řez</button><button class="btn" id="vBlock" aria-pressed="false" type="button">Zkušební kostka</button><button class="btn primary" id="vAR" type="button">Postavit na stůl (AR)</button>
         <button class="btn" id="vWater" aria-pressed="false" type="button" hidden>Vodoryska</button>
         <label for="vCutPos" hidden><input type="range" id="vCutPos" min="-16" max="16" step="0.5" value="0" disabled></label>
       </div>
     </div>
   </div>
-  <div class="ar">
-    <model-viewer src="models/wilhelm.glb" ios-src="models/wilhelm.usdz" alt="Wilhelm, 3D model" ar ar-modes="webxr scene-viewer quick-look" ar-scale="fixed" camera-controls auto-rotate shadow-intensity="1" exposure="1.1">
-      <button slot="ar-button" class="btn primary" style="position:absolute;bottom:16px;left:16px">Postavit na stůl (AR)</button>
-    </model-viewer>
-  </div>
+  <model-viewer class="arhidden" id="arView" src="models/wilhelm.glb" ios-src="models/wilhelm.usdz" alt="" ar ar-modes="webxr scene-viewer quick-look" ar-scale="fixed"></model-viewer>
 </section>
 
 <!-- ===== PŘEDLOHA ===== -->
@@ -241,6 +237,6 @@
 <script src="lib/gsap.min.js"></script>
 <script src="lib/ScrollTrigger.min.js"></script>
 <script type="module" src="lib/model-viewer.min.js"></script>
-<script type="module" src="js/app.js"></script>
+<script type="module" src="js/app.js?v=1794135899"></script>
 </body>
 </html>

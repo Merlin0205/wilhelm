@@ -123,7 +123,7 @@ class Dive {
   const stage = canvas.parentElement;
   const renderer = makeRenderer(canvas);
   const scene = new THREE.Scene(); scene.environment = makeEnv(renderer); scene.environmentIntensity = 0.9;
-  const camera = new THREE.PerspectiveCamera(30, 16 / 9, 1, 4000);
+  const camera = new THREE.PerspectiveCamera(30, 16 / 9, 1, 4000); camera.position.set(330, 150, 520);
   const clip = new THREE.Plane(new THREE.Vector3(0, 0, -1), 1e6);
   const sub = buildSub(clip); scene.add(sub.root);
   addLights(scene);
@@ -152,15 +152,15 @@ class Dive {
   const labelEls = {}; for (const k of Object.keys(LABELS)) { const d = document.createElement('div'); d.className = 'lbl'; d.textContent = LABELS[k][0]; labelsEl.appendChild(d); labelEls[k] = d; }
 
   const state = { explode: 0, inner: 0, clip: 0, clipOn: 0, water: 0, dive: 0, auto: 1 };
-  const camState = { px: 300, py: 150, pz: 360, tx: 0, ty: 0, tz: 0 };
+  const camState = { px: 330, py: 150, pz: 520, tx: 0, ty: 0, tz: 0 };
   const SCENES = {
-    hero:    { cam: [380, 190, 470, -50, 0, 0], explode: 0, inner: 0, clipOn: 0, water: 0, dive: 0, auto: 1, labels: [] },
+    hero:    { cam: [330, 150, 520, 0, 0, 0], explode: 0, inner: 0, clipOn: 0, water: 0, dive: 0, auto: 0, labels: [] },
     side:    { cam: [10, 40, 470, 0, 0, 0], explode: 0, inner: 0, clipOn: 0, water: 0, dive: 0, auto: 0, labels: ['tower', 'gun', 'flak', 'planes', 'rudders', 'slots', 'name'] },
     explode: { cam: [330, 190, 330, 10, 0, 0], explode: 1, inner: 0, clipOn: 0, water: 0, dive: 0, auto: 0, labels: ['bow', 'stern', 'split', 'tower', 'gun', 'flak', 'lid', 'planes', 'rudders'] },
-    inside:  { cam: [80, 120, 330, 0, -6, 0], explode: 0, inner: 1, clipOn: 1, water: 0, dive: 0, auto: 0, labels: ['cup', 'siphon', 'voidl', 'exit', 'screws', 'lid'] },
+    inside:  { cam: [60, 90, 420, 30, -4, 0], explode: 0, inner: 1, clipOn: 1, water: 0, dive: 0, auto: 0, labels: ['cup', 'siphon', 'voidl', 'exit', 'screws', 'lid'] },
     dive:    { cam: [220, 60, 420, 0, -60, 0], explode: 0, inner: 0.6, clipOn: 1, water: 1, dive: 1, auto: 0, labels: [] },
   };
-  let current = 'hero';
+  let current = null;
   function setScene(name) {
     if (!SCENES[name] || current === name) return; current = name; const s = SCENES[name];
     const d = reduced ? 0 : 1.4;
@@ -172,10 +172,13 @@ class Dive {
     if (name === 'dive') dive.reset();
   }
   const dive = new Dive();
+  setScene('hero');
   document.getElementById('divePlay')?.addEventListener('click', e => { dive.playing = !dive.playing; e.currentTarget.textContent = dive.playing ? 'Pauza' : 'Přehrát'; });
   document.getElementById('diveSpeed')?.addEventListener('input', e => { dive.speed = parseFloat(e.target.value); });
 
-  function resize() { const w = stage.clientWidth, h = stage.clientHeight; if (!w || !h) return; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); }
+  function resize() { const w = stage.clientWidth, h = stage.clientHeight; if (!w || !h) return; renderer.setSize(w, h, false); camera.aspect = w / h;
+    if (w / h > 1.25) camera.setViewOffset(w, h, -w * 0.2, 0, w, h); else camera.clearViewOffset();   // model vpravo od textových panelů
+    camera.updateProjectionMatrix(); }
   new ResizeObserver(resize).observe(stage); resize();
 
   const tmp = new THREE.Vector3(); let last = performance.now(); let userRotating = false;
@@ -236,7 +239,6 @@ class Dive {
   const clip = new THREE.Plane(new THREE.Vector3(0, 0, -1), 1e6); const sub = buildSub(clip); scene.add(sub.root); addLights(scene);
   const floor = new THREE.Mesh(new THREE.PlaneGeometry(1400, 900), new THREE.ShadowMaterial({ opacity: 0.3 })); floor.rotation.x = -Math.PI / 2; floor.position.y = -CENTER.z - 2; floor.receiveShadow = true; scene.add(floor);
   const water = new THREE.Mesh(new THREE.PlaneGeometry(600, 160), new THREE.MeshBasicMaterial({ color: 0x3b8bd1, transparent: true, opacity: 0.28, side: THREE.DoubleSide, depthWrite: false })); water.rotation.x = -Math.PI / 2; water.position.y = WL - CENTER.z; water.visible = false; scene.add(water);
-  const grid = new THREE.GridHelper(600, 60, 0x24405a, 0x16293a); grid.position.y = -CENTER.z - 1.9; scene.add(grid);
   const controls = new OrbitControls(camera, canvas); controls.enableDamping = true; controls.minDistance = 40; controls.maxDistance = 1200; controls.autoRotate = !reduced; controls.autoRotateSpeed = 0.8;
   controls.addEventListener('start', () => { controls.autoRotate = false; pressView(null); });
   function resize() { const w = stage.clientWidth, h = stage.clientHeight; if (!w || !h) return; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); }
@@ -254,6 +256,7 @@ class Dive {
   tog('vCut', on => { cutRange.disabled = !on; clip.constant = on ? parseFloat(cutRange.value) : 1e6; });
   cutRange?.addEventListener('input', () => { clip.constant = parseFloat(cutRange.value); });
   tog('vAuto', on => { controls.autoRotate = on; });
+  document.getElementById('vAR')?.addEventListener('click', async () => { const mv = document.getElementById('arView'); try { if (mv && mv.canActivateAR) mv.activateAR(); else alert; } catch (e) {} if (!(mv && mv.canActivateAR)) { const b = document.getElementById('vAR'); b.textContent = 'AR jen na telefonu'; setTimeout(() => b.textContent = 'Postavit na stůl (AR)', 2500); } });
   // zkušební kostka: samostatné těleso, zobrazí se místo ponorky
   const blockMat = new THREE.MeshStandardMaterial({ color: COLORS.hull, metalness: 0.3, roughness: 0.5, side: THREE.DoubleSide, clippingPlanes: [clip] });
   const block = new THREE.Mesh(geoms.test_block, blockMat); block.visible = false; block.castShadow = block.receiveShadow = true;
