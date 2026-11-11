@@ -193,7 +193,8 @@ footer .wrap{display:grid;gap:14px}
 .arhidden{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden}
 
 /* přepínač malá / velká ponorka */
-.tabs{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:60;display:flex;gap:4px;padding:4px;border-radius:999px;background:rgba(12,27,42,.92);border:1px solid var(--line2)}
+.tabs{position:fixed;top:56px;left:50%;transform:translateX(-50%);z-index:60;display:flex;gap:4px;padding:4px;border-radius:999px;background:rgba(12,27,42,.92);border:1px solid var(--line2)}
 .tabs a{font-family:var(--fm);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:7px 14px;border-radius:999px;white-space:nowrap}
 .tabs a.on{background:var(--brass);color:#14100a;font-weight:600}
+@media (min-width:1500px){.tabs{top:10px}}
 @media (max-width:860px){.tabs{top:auto;bottom:12px}}

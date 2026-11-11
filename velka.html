@@ -20,7 +20,33 @@
 .tbl th{font-family:var(--fm);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500}
 .tbl td.num{white-space:nowrap;font-family:var(--fm)}
 .tblwrap{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:6px 10px}
-.mv{width:100%;height:min(70vh,640px);background:radial-gradient(90% 90% at 50% 40%,#13293c 0%,#0a1a28 75%);border-radius:var(--r)}
+.v3d{display:grid;grid-template-columns:1fr 330px;gap:14px}
+@media (max-width:960px){.v3d{grid-template-columns:1fr}}
+.v3d-stage{position:relative;border-radius:var(--r);overflow:hidden;background:#0a1a28;border:1px solid var(--line)}
+.v3d-stage canvas{display:block;width:100%;height:min(72vh,660px);touch-action:none;cursor:grab}
+@media (max-width:700px){.v3d-stage canvas{height:58vh}}
+.v3d-status{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-family:var(--fm);font-size:.8rem}
+.v3d-tools{position:absolute;top:10px;left:10px;display:flex;gap:6px}
+.v3d button{font-family:var(--fm);font-size:.72rem;letter-spacing:.04em;color:var(--ink);background:rgba(19,38,55,.92);border:1px solid var(--line2);border-radius:8px;padding:7px 10px;cursor:pointer}
+.v3d button:hover{border-color:var(--brass)} .v3d button.on{background:var(--brass);color:#14100a;border-color:var(--brass)}
+.v3d button.main{background:rgba(227,185,78,.14);border-color:var(--brass);color:var(--brass);font-size:.8rem;padding:9px 12px}
+.v3d button.link{background:none;border:0;color:var(--steel);padding:0 4px;text-decoration:underline}
+.v3d-info{position:absolute;right:10px;bottom:10px;max-width:min(360px,calc(100% - 20px));background:rgba(12,27,42,.95);border:1px solid var(--brass);border-radius:12px;padding:12px 14px;display:grid;gap:6px}
+.v3d-info h3{font-size:1.2rem} .v3d-info p{color:var(--muted);font-size:.9rem} .v3d-info div{display:flex;gap:6px}
+.v3d-info .grp{font-family:var(--fm);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.v3d-info .st{justify-self:start;font-family:var(--fm);font-size:.68rem;padding:2px 8px;border-radius:6px;background:rgba(155,175,192,.12);color:var(--muted)}
+.v3d-info .st[data-s="hýbe se"]{background:rgba(95,208,155,.14);color:var(--ok)} .v3d-info .st[data-s="snímá se"]{background:rgba(127,179,224,.14);color:var(--steel)}
+.v3d-panel{display:grid;gap:12px;align-content:start}
+.v3d [hidden]{display:none!important}
+.v3d-blk{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:grid;gap:8px}
+.v3d-blk>b{font-family:var(--fd);font-size:1.1rem;letter-spacing:.03em}
+.v3d .seg{display:flex;flex-wrap:wrap;gap:5px}
+.v3d input[type=range]{width:100%;accent-color:var(--brass)}
+.v3d-list{max-height:330px;overflow:auto;display:grid;gap:4px;font-size:.9rem}
+.v3d-list summary{cursor:pointer;color:var(--ink);padding:4px 0} .v3d-list .cnt{color:var(--dim);font-family:var(--fm);font-size:.75rem}
+.v3d-list .row{display:flex;align-items:center;gap:6px;padding:2px 0 2px 18px;color:var(--muted)}
+.v3d-list .row .only{margin-left:auto;padding:2px 6px;font-size:.62rem}
+
 .dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
 .dl a{display:grid;gap:4px;padding:18px 20px;border-radius:var(--r);border:1px solid var(--line2);background:var(--panel);text-decoration:none;color:var(--ink)}
 .dl a b{font-family:var(--fd);font-size:1.3rem}
@@ -70,8 +96,32 @@ footer{border-top:1px solid var(--line);padding:30px var(--gutter);color:var(--d
 <!-- ===== 3D ===== -->
 <section class="sec alt" id="3d"><div class="wrap row">
   <div class="sec-head"><div class="n">01 · 3D</div><h2>Prohlédněte si ji ze všech stran</h2>
-    <p class="lede">Táhnutím otáčíte, kolečkem nebo dvěma prsty přibližujete. Na telefonu ji tlačítkem v rohu postavíte do pokoje ve skutečné velikosti.</p></div>
-  <model-viewer class="mv" src="velka/models/u47_50.glb" alt="3D model U‑47 1:50" camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second="12deg" shadow-intensity="0.8" exposure="1.1" ar ar-modes="webxr scene-viewer quick-look" ar-scale="fixed" camera-orbit="35deg 72deg 140%"></model-viewer>
+    <p class="lede">Rozložte ponorku na díly, rozřízněte ji, schovejte, co nepotřebujete, a prohlédněte si každý díl zvlášť.</p></div>
+  <div class="v3d" id="v3d">
+    <div class="v3d-stage">
+      <canvas aria-label="3D model U‑47 1:50"></canvas>
+      <div class="v3d-status">Načítám 3D model…</div>
+      <div class="v3d-tools">
+        <button type="button" id="v3dRot" class="on">Otáčení: zap</button>
+        <button type="button" id="v3dZoomIn" aria-label="Přiblížit">＋</button><button type="button" id="v3dZoomOut" aria-label="Oddálit">－</button>
+      </div>
+      <div class="v3d-info" id="v3dInfo" hidden><span class="grp"></span><h3></h3><span class="st"></span><p></p>
+        <div><button type="button" id="v3dOnly">Jen tento díl</button><button type="button" id="v3dHide">Skrýt</button></div></div>
+    </div>
+    <div class="v3d-panel">
+      <div class="v3d-blk"><b>Rozložení</b>
+        <button type="button" id="v3dExplode" class="main">Rozložit na díly</button>
+        <input type="range" id="v3dExSlider" min="0" max="100" value="0" aria-label="Míra rozložení"></div>
+      <div class="v3d-blk"><b>Řez</b>
+        <div class="seg"><button type="button" data-cut="zadny">bez řezu</button><button type="button" data-cut="podelny">podélný</button><button type="button" data-cut="pricny">příčný</button><button type="button" data-cut="vodorovny">vodorovný</button></div>
+        <input type="range" id="v3dCutSlider" aria-label="Poloha řezu"></div>
+      <div class="v3d-blk"><b>Pohled</b>
+        <div class="seg"><button type="button" data-view="celek">celek</button><button type="button" data-view="bok">bok</button><button type="button" data-view="shora">shora</button><button type="button" data-view="zad">záď</button><button type="button" data-view="vez">věž</button><button type="button" data-view="vnitrek">vnitřek</button></div></div>
+      <div class="v3d-blk"><b>Díly</b> <button type="button" id="v3dAll" class="link">ukázat vše</button>
+        <div id="v3dList" class="v3d-list"></div></div>
+    </div>
+  </div>
+  <p class="small muted">Tip: klikněte na díl a uvidíte, co to je a jestli se hýbe. Tažením otáčíte, kolečkem nebo dvěma prsty přibližujete, pravým tlačítkem nebo dvěma prsty posouváte.</p>
   <div class="cards">
     <div class="card scard"><div class="frame"><img src="velka/img/vez.jpg" alt="Věž" loading="lazy"></div><div class="body"><h3>Věž jako v říjnu 1939</h3><p>Vysoká přední část, zadní otevřený můstek se zábradlím a větracími mřížkami, malá lišta proti stříkání, periskopy, UZO, kompas, rámová anténa a funící býk na obou bocích. Čísla „47“ byla tehdy přetřená.</p></div></div>
     <div class="card scard"><div class="frame"><img src="velka/img/prid.jpg" alt="Příď" loading="lazy"></div><div class="body"><h3>Příď</h3><p>Řezač sítí s lanem přes věž až na záď, kotevní kapsa, dvířka torpédometů, řady zatopovacích a odvodňovacích otvorů, naviják, úvazníky a dřevěná paluba s prkny.</p></div></div>
@@ -210,7 +260,7 @@ footer{border-top:1px solid var(--line);padding:30px var(--gutter);color:var(--d
   <div class="dl">
     <a class="main" href="velka/downloads/U47_1-50_P1S.3mf" download><b>Projekt pro Bambu Studio</b><span>U47_1-50_P1S.3mf · P1S, 6 podložek, nastavení dílů · 5 MB</span></a>
     <a href="velka/downloads/U47_1-50_STL.zip" download><b>Všechny díly jako STL</b><span>53 dílů v tiskové poloze, pro jiné slicery</span></a>
-    <a href="velka/models/u47_50.glb" download><b>3D model sestavy</b><span>GLB, pro prohlížení</span></a>
+    <a href="velka/models/u47_50.glb" download><b>3D model sestavy</b><span>GLB se všemi díly i modulem, rozměry v mm</span></a>
   </div>
 </section>
 
@@ -226,6 +276,7 @@ footer{border-top:1px solid var(--line);padding:30px var(--gutter);color:var(--d
 </div></section>
 
 <footer>Wilhelm · U‑47 1:50 · <a href="index.html">zpět na malou ponorku 1:200</a></footer>
-<script type="module" src="lib/model-viewer.min.js"></script>
+<script type="importmap">{"imports":{"three":"./lib/three.module.js","three/addons/":"./lib/addons/"}}</script>
+<script type="module" src="js/velka3d.js?v=20261111c"></script>
 </body>
 </html>
