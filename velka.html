@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>U‑47 1:50 · velká RC ponorka s modulem Holland</title>
+<meta name="description" content="Velká RC ponorka U‑47 (typ VIIB, říjen 1939) v měřítku 1:50, 1330 mm, kolem řídicího modulu Holland SUB 90. Projekt pro Bambu Lab P1S, nákupní seznam, návod ke stavbě.">
+<link rel="icon" href="img/brand/helma.svg" type="image/svg+xml">
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="css/style.css?v=20261111a">
+<style>
+.hero2{padding-top:96px}
+.hero2 h1{font-size:clamp(2.6rem,6vw,4.6rem);font-weight:800}
+.specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.specs div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.specs b{display:block;font-family:var(--fd);font-size:1.9rem;color:var(--brass);line-height:1}
+.specs span{font-family:var(--fm);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.tbl{width:100%;border-collapse:collapse;font-size:.95rem}
+.tbl th,.tbl td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl th{font-family:var(--fm);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.tbl td.num{white-space:nowrap;font-family:var(--fm)}
+.tblwrap{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:6px 10px}
+.mv{width:100%;height:min(70vh,640px);background:radial-gradient(90% 90% at 50% 40%,#13293c 0%,#0a1a28 75%);border-radius:var(--r)}
+.dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.dl a{display:grid;gap:4px;padding:18px 20px;border-radius:var(--r);border:1px solid var(--line2);background:var(--panel);text-decoration:none;color:var(--ink)}
+.dl a b{font-family:var(--fd);font-size:1.3rem}
+.dl a span{color:var(--muted);font-size:.9rem}
+.dl a.main{border-color:var(--brass);background:rgba(227,185,78,.08)}
+.move{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.chip{display:inline-block;font-family:var(--fm);font-size:.7rem;padding:2px 8px;border-radius:6px;margin-right:6px}
+.chip.m{background:rgba(95,208,155,.14);color:var(--ok)} .chip.f{background:rgba(155,175,192,.12);color:var(--muted)} .chip.r{background:rgba(127,179,224,.14);color:var(--steel)}
+.warnbox{border-left:4px solid var(--bad)} .okbox{border-left:4px solid var(--ok)}
+.plates{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.plates .card img{width:100%;border-radius:10px;background:#0a1a28}
+footer{border-top:1px solid var(--line);padding:30px var(--gutter);color:var(--dim);font-size:.85rem;text-align:center}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Navigace">
+  <a class="brand" href="index.html"><img src="img/brand/logo-svetle.svg" alt="Wilhelm" class="brandimg"></a>
+  <ul>
+    <li><a class="l" href="#3d">3D</a></li>
+    <li><a class="l" href="#koupit">Co koupit</a></li>
+    <li><a class="l" href="#tisk">Tisk</a></li>
+    <li><a class="l" href="#stavba">Stavba</a></li>
+    <li><a class="l" href="#pohyb">Co se hýbe</a></li>
+    <li><a class="l" href="#soubory">Soubory</a></li>
+  </ul>
+</nav>
+<div class="tabs" role="tablist" aria-label="Verze ponorky"><a href="index.html" role="tab">Malá · 1:200</a><a class="on" href="velka.html" role="tab" aria-selected="true">Velká · 1:50</a></div>
+
+<!-- ===== ÚVOD ===== -->
+<section class="wrap sec hero2" id="top">
+  <div class="sec-head">
+    <div class="eyebrow">U‑47 · typ VIIB · stav ze 17. října 1939</div>
+    <h1>Velká RC ponorka 1:50</h1>
+    <p class="lede">Model dlouhý 1,33 m, který postavíte kolem řídicího modulu <b>Holland SUB 90</b>. Modul s čerpadlem a servy se zasune do trupu pod poklop s věží. Ponorka se potápí a vynořuje čerpadlem, pluje na dva šrouby a řídí se dvojitými kormidly.</p>
+  </div>
+  <div class="frame wide"><img src="velka/img/hero.jpg" alt="U‑47 1:50, celkový pohled"></div>
+  <div class="specs">
+    <div><b>1330 mm</b><span>délka, šířka 124 mm</span></div>
+    <div><b>53</b><span>tištěných dílů</span></div>
+    <div><b>58 h</b><span>tisk na P1S, 6 podložek</span></div>
+    <div><b>1,8 kg</b><span>PLA</span></div>
+    <div><b>Ø 90</b><span>modul Holland SUB 90</span></div>
+  </div>
+</section>
+
+<!-- ===== 3D ===== -->
+<section class="sec alt" id="3d"><div class="wrap row">
+  <div class="sec-head"><div class="n">01 · 3D</div><h2>Prohlédněte si ji ze všech stran</h2>
+    <p class="lede">Táhnutím otáčíte, kolečkem nebo dvěma prsty přibližujete. Na telefonu ji tlačítkem v rohu postavíte do pokoje ve skutečné velikosti.</p></div>
+  <model-viewer class="mv" src="velka/models/u47_50.glb" alt="3D model U‑47 1:50" camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second="12deg" shadow-intensity="0.8" exposure="1.1" ar ar-modes="webxr scene-viewer quick-look" ar-scale="fixed" camera-orbit="35deg 72deg 140%"></model-viewer>
+  <div class="cards">
+    <div class="card scard"><div class="frame"><img src="velka/img/vez.jpg" alt="Věž" loading="lazy"></div><div class="body"><h3>Věž jako v říjnu 1939</h3><p>Vysoká přední část, zadní otevřený můstek se zábradlím a větracími mřížkami, malá lišta proti stříkání, periskopy, UZO, kompas, rámová anténa a funící býk na obou bocích. Čísla „47“ byla tehdy přetřená.</p></div></div>
+    <div class="card scard"><div class="frame"><img src="velka/img/prid.jpg" alt="Příď" loading="lazy"></div><div class="body"><h3>Příď</h3><p>Řezač sítí s lanem přes věž až na záď, kotevní kapsa, dvířka torpédometů, řady zatopovacích a odvodňovacích otvorů, naviják, úvazníky a dřevěná paluba s prkny.</p></div></div>
+    <div class="card scard"><div class="frame"><img src="velka/img/zad.jpg" alt="Záď" loading="lazy"></div><div class="body"><h3>Záď</h3><p>Dva šrouby na konzolách, za nimi dvojitá kormidla na stabilizátoru a hloubková kormidla. Na zadní palubě lafeta kulometu 2 cm.</p></div></div>
+  </div>
+  <div class="frame wide"><img src="velka/img/bok.jpg" alt="Bokorys" loading="lazy"><span class="cap">bokorys podle výkresu D. Martindale (Accurate Model Parts)</span></div>
+</div></section>
+
+<!-- ===== JAK FUNGUJE ===== -->
+<section class="wrap sec" id="jak">
+  <div class="sec-head"><div class="n">02 · Jak funguje</div><h2>Modul uvnitř, trup kolem</h2>
+    <p class="lede">Trup je zaplavovaný, voda volně proudí dovnitř i ven. Suchá je jen plexi trubka modulu. V ní je přijímač, regulátor, akumulátor, dvě serva a čerpadlo, které plní a vyprazdňuje vak.</p></div>
+  <div class="frame wide"><img src="velka/img/otevreno.jpg" alt="Zvednutý poklop, modul v sedlech" loading="lazy"><span class="cap">poklop s věží zvednutý, modul v sedlech, za ním motory a hřídele</span></div>
+  <div class="cards">
+    <div class="card"><h3>Potápění</h3><p>Čerpadlo napustí vak, ponorka se ztěžkne a klesá. Vyprázdněním vaku vyplave. Ponorka stojí na místě a nemusí se pohybovat.</p></div>
+    <div class="card"><h3>Jízda</h3><p>Dva motory LICHIFIT pohánějí přes hřídele Ø4 dva třílisté šrouby. Kabel motorů vede ze zadního víka modulu.</p></div>
+    <div class="card"><h3>Řízení</h3><p>Dvě serva v modulu táhnou přes měchy dvě táhla. Spodní táhlo ovládá obě svislá kormidla, horní táhlo hloubková kormidla na zádi.</p></div>
+  </div>
+</section>
+
+<!-- ===== CO SE HÝBE ===== -->
+<section class="sec alt" id="pohyb"><div class="wrap row">
+  <div class="sec-head"><div class="n">03 · Co se hýbe a co ne</div><h2>Co lepit a co nechat volné</h2></div>
+  <div class="move">
+    <div class="card"><h3>Pohyblivé</h3><ul>
+      <li><span class="chip m">pohyb</span><b>Svislá kormidla:</b> dva listy na mosazném čepu Ø3, páky spojené drátem 1,5. Do čepu nelepit, listy se lepí jen na čep.</li>
+      <li><span class="chip m">pohyb</span><b>Hloubková kormidla:</b> listy nalepené na hřídeli Ø4, hřídel se otáčí v trupu. Páka uvnitř je na šroubku M2.</li>
+      <li><span class="chip m">pohyb</span><b>Hřídele a šrouby:</b> hřídel v ložiscích 624ZZ, šroub na stavěcím šroubku M3.</li>
+      <li><span class="chip m">pohyb</span><b>Táhla:</b> drát 1,5 v mosazných trubičkách, spojené koncovkami s táhly z modulu.</li>
+    </ul></div>
+    <div class="card"><h3>Snímatelné</h3><ul>
+      <li><span class="chip r">snímá se</span><b>Poklop s věží a dělem:</b> drží na 4 magnetech, vede ho lem po stranách. Zvedá se kolmo nahoru.</li>
+      <li><span class="chip r">snímá se</span><b>Modul:</b> leží ve dvou sedlech, přes trubku se natáhnou O‑kroužky 78 × 3,5 za kolíky.</li>
+      <li><span class="chip r">snímá se</span><b>Motory:</b> drží v otvorech dvou přepážek a vysunou se dopředu pod poklop.</li>
+      <li><span class="chip r">snímá se</span><b>Olovo:</b> v sáčcích pod modulem, kvůli vyvážení.</li>
+    </ul></div>
+    <div class="card"><h3>Lepí se napevno</h3><ul>
+      <li><span class="chip f">lepit</span>6 dílů spodku trupu, horní záď a příď (epoxid).</li>
+      <li><span class="chip f">lepit</span>přepážky a sedla do drážek, trubičky táhel, ložiska.</li>
+      <li><span class="chip f">lepit</span>stabilizátor, konzoly hřídelí, sání čerpadla, příďová kormidla.</li>
+      <li><span class="chip f">lepit</span>věž, podlahy můstku, dělo, lafeta, výstroj paluby, řezač sítí.</li>
+    </ul></div>
+  </div>
+</div></section>
+
+<!-- ===== CO KOUPIT ===== -->
+<section class="wrap sec" id="koupit">
+  <div class="sec-head"><div class="n">04 · Co koupit</div><h2>Nákupní seznam</h2>
+    <p class="lede">Modul Holland SUB 90 už máte, včetně přijímače, čerpadla, serv a O‑kroužků. Ceny jsou ověřené na stránkách obchodů 11. 11. 2026, kde ověřit nešly, je to napsané.</p></div>
+  <div class="tblwrap"><table class="tbl">
+    <tr><th>Díl</th><th>Kolik</th><th>Kde</th><th>Cena</th><th>Na co</th></tr>
+    <tr><td>Podvodní motor LICHIFIT 7,4 V, pár CW + CCW</td><td>1 pár</td><td><a href="https://www.amazon.de/-/en/LICHIFIT-Underwater-Propeller-Submarine-Accessories/dp/B07WY4MDYZ">Amazon.de</a></td><td class="num">neověřeno</td><td>Holland má jeden motor, U‑47 dva šrouby. Průměr hřídele motoru změřte.</td></tr>
+    <tr><td>Kuličkové ložisko 624ZZ (4 × 13 × 5)</td><td>2 (2 máte)</td><td><a href="https://www.hadex.cz/l760d-kulickove-lozisko-624zz13x5mm-na-hridel-4mm/">Hadex</a></td><td class="num">8 Kč/ks</td><td>hřídele šroubů</td></tr>
+    <tr><td>Mosazná tyčka Ø4 mm, 1 m</td><td>1</td><td><a href="https://www.astramodel.cz/cz/katalog/krick-modelltechnik/krick-drat-mosaz-4mm-1m-p53775.html">Astramodel</a></td><td class="num">229 Kč</td><td>2 hřídele 250 mm, hřídel hloubkových kormidel 65 mm</td></tr>
+    <tr><td>Mosazná tyčka Ø3 mm, 1 m</td><td>1</td><td><a href="https://www.astramodel.cz/cz/katalog/krick-modelltechnik/krick-drat-mosaz-3mm-1m-p54099.html">Astramodel</a></td><td class="num">169 Kč</td><td>2 čepy svislých kormidel 45 mm</td></tr>
+    <tr><td>Mosazná trubka 4 × 3,1 mm, 1 m</td><td>1</td><td><a href="https://www.astramodel.cz/cz/katalog/krick-modelltechnik/krick-trubka-mosaz-4x3-1mm-1m-p54110.html">Astramodel</a></td><td class="num">119 Kč</td><td>vedení táhel (2 × 360 mm), periskopy</td></tr>
+    <tr><td>Drát pružinová ocel 1,5 mm, 1 m</td><td>1</td><td><a href="https://www.astramodel.cz/cz/katalog/krick-modelltechnik/krick-drat-pruzinova-ocel-1-5x1000mm-p54119.html">Astramodel</a></td><td class="num">29 Kč</td><td>táhla, spojovací tyčka kormidel</td></tr>
+    <tr><td>Pájecí koncovka M2 pro drát 1,6 (5 ks)</td><td>1 balení</td><td><a href="https://www.astramodel.cz/cz/katalog/revtec/zavitova-koncovka-pajeci-m2-drat-1-6-5-p22341.html">Astramodel</a></td><td class="num">79 Kč</td><td>spojení táhel s táhly modulu</td></tr>
+    <tr><td>Neodymový magnet 10 × 3 mm N52 (10 ks)</td><td>1 balení</td><td><a href="https://www.supermagnete.cz/eng/disc-magnets-neodymium/disc-magnet-10mm-3mm_S-10-03-N52N">supermagnete.cz</a></td><td class="num">6,20 €</td><td>poklop (8 ks)</td></tr>
+    <tr><td>PLA šedé 1 kg (Prusament Gravity Grey)</td><td>2</td><td><a href="https://www.prusa3d.com/cs/produkt/prusament-pla-gravity-grey-1kg-nfc/">Prusa</a></td><td class="num">599 Kč/ks</td><td>všechny díly, 1,76 kg</td></tr>
+    <tr><td>Olovo, broky nebo plech</td><td>asi 1 kg</td><td>rybářské potřeby, sběrna</td><td class="num">neověřeno</td><td>zátěž pod modulem</td></tr>
+    <tr><td>Dvousložkový epoxid (UHU Plus Endfest)</td><td>1</td><td>Kaufland, papírnictví</td><td class="num">neověřeno</td><td>spoje trupu pod vodou</td></tr>
+    <tr><td>Spojka motor–hřídel: silikonová hadička nebo pružná spojka</td><td>2</td><td>podle průměru hřídele motoru</td><td class="num">neověřeno</td><td>spojení motoru s hřídelí Ø4</td></tr>
+    <tr><td>Stavěcí šroubek M3 × 4 a M2 × 3</td><td>2 + 1</td><td>železářství</td><td class="num">neověřeno</td><td>šrouby lodi, páka hloubkových kormidel</td></tr>
+    <tr><td>Rybářská šňůra 0,5 mm</td><td>1,5 m</td><td>rybářské potřeby</td><td class="num">neověřeno</td><td>lano proti sítím</td></tr>
+    <tr><td><i>Volitelně:</i> lodní šroub Raboesch Ø35 M4, levý / pravý</td><td>1 + 1</td><td><a href="https://www.astramodel.cz/en/catalog/raboesch/raboesch-boat-propeller-class-160-35mm-m4-3-blade-left-p89143.html">Astramodel</a></td><td class="num">659 Kč/ks</td><td>místo tištěných šroubů, na hřídel je potřeba závit M4</td></tr>
+  </table></div>
+  <div class="card warnbox"><h3>Rádio: 2,4 GHz pod vodou nefunguje</h3><p>Vysílačky na 2,4 GHz (např. TX16S s ELRS) ztratí spojení hned pod hladinou. Použijte přijímač 40/41 MHz z modulu Holland a anténu vyveďte trubičkou do věže.</p></div>
+</section>
+
+<!-- ===== TISK ===== -->
+<section class="sec alt" id="tisk"><div class="wrap row">
+  <div class="sec-head"><div class="n">05 · Tisk</div><h2>Jeden soubor pro Bambu Studio, šest podložek</h2>
+    <p class="lede">Otevřete <span class="mono">U47_1-50_P1S.3mf</span>. Tiskárna Bambu Lab P1S s tryskou 0,4 je nastavená, díly leží na šesti podložkách a každý díl má nastavení v souboru. Stačí zvolit filament PLA, zmáčknout <b>Slice all</b> a postupně posílat podložky na tiskárnu.</p></div>
+  <div class="card okbox"><h3>Ověřeno v Bambu Studiu 2.9</h3><p>Všech 6 podložek se naslicuje bez chyby a bez jediného varování. Podpěry nejsou potřeba, kromě dvou vrtulí, kde jsou zapnuté stromové podpěry.</p></div>
+  <div class="tblwrap"><table class="tbl">
+    <tr><th>Díly</th><th>Vrstva</th><th>Stěny / výplň</th><th>Poznámka</th></tr>
+    <tr><td>Trup (13 dílů)</td><td class="num">0,20 mm</td><td>6 stěn, 100 %</td><td>nastojato, záďovou stranou dolů, vnější stěna 150 mm/s, šev na kýlu, límec 5 mm</td></tr>
+    <tr><td>Věž, dělo, výstroj, kormidla, páky, konzoly, podlahy můstku</td><td class="num">0,12 mm</td><td>6 stěn, 100 %</td><td>vnější stěna 60 mm/s kvůli detailům, límec 3 mm</td></tr>
+    <tr><td>Vrtule</td><td class="num">0,12 mm</td><td>100 %</td><td>stromové podpěry, nebo koupit mosazné</td></tr>
+    <tr><td>Přepážky, sedla, stabilizátor</td><td class="num">0,20 mm</td><td>6 stěn, 100 %</td><td>naplocho</td></tr>
+    <tr><td>Stojan</td><td class="num">0,20 mm</td><td>3 stěny, 20 %</td><td>bez límce</td></tr>
+  </table></div>
+  <div class="plates">
+    <div class="card"><img src="velka/img/plate_1.png" alt="Podložka 1" loading="lazy"><h3>Podložka 1 · 4,5 h · 182 g</h3><p class="small">stojan, přepážky, konzoly, dělo, lafeta, výstroj paluby, páky, sání</p></div>
+    <div class="card"><img src="velka/img/plate_2.png" alt="Podložka 2" loading="lazy"><h3>Podložka 2 · 6,7 h · 181 g</h3><p class="small">věž, sedla, přepážky, podlahy můstku, vrtule, všechna kormidla</p></div>
+    <div class="card"><img src="velka/img/plate_3.png" alt="Podložka 3" loading="lazy"><h3>Podložka 3 · 21,7 h · 604 g</h3><p class="small">poklop 1–3, spodek 2 a 5</p></div>
+    <div class="card"><img src="velka/img/plate_4.png" alt="Podložka 4" loading="lazy"><h3>Podložka 4 · 19,7 h · 616 g</h3><p class="small">spodek 1, 3, 4, vrch záď 2, vrch příď 1 a 2</p></div>
+    <div class="card"><img src="velka/img/plate_5.png" alt="Podložka 5" loading="lazy"><h3>Podložka 5 · 4,3 h · 145 g</h3><p class="small">vrch záď 1, spodek 6 (příď)</p></div>
+    <div class="card"><img src="velka/img/plate_6.png" alt="Podložka 6" loading="lazy"><h3>Podložka 6 · 0,7 h · 36 g</h3><p class="small">přepážka záď, stabilizátor</p></div>
+  </div>
+  <div class="card"><h3>Rady k tisku</h3><ul>
+    <li>Celkem asi 58 hodin a 1,76 kg PLA. Nejdelší podložky běží přes noc.</li>
+    <li>Vysoké díly trupu stojí na límci 5 mm. Podložku před tiskem odmastěte, ať se díl neutrhne.</li>
+    <li>Límec po tisku odlomte a hranu přejeďte smirkem. Spoje dílů nebruste, límce do sebe musí zapadnout.</li>
+    <li>Rytiny na trupu (prkna paluby, švy nádrží) jsou hluboké 0,6 mm, při broušení je nezahlaďte.</li>
+  </ul></div>
+</div></section>
+
+<!-- ===== STAVBA ===== -->
+<section class="wrap sec" id="stavba">
+  <div class="sec-head"><div class="n">06 · Stavba</div><h2>Šest kroků od dílů k ponorce</h2>
+    <p class="lede">Trup lepte epoxidem, protože bude pod vodou. Drobnosti můžete vteřinovým lepidlem. Každý díl má v souboru jméno, podle kterého ho najdete.</p></div>
+  <div class="cards two">
+    <div class="card scard"><div class="frame"><img src="velka/img/krok1_spodek.jpg" alt="Krok 1" loading="lazy"></div><div class="body"><div class="num">1</div><h3>Spodek trupu</h3><p>Slepte <b>spodek 1 až 6</b> v pořadí od zádi. Každý díl má na přední straně vnitřní límec, na který se nasune další díl. Dvě hodiny nechte vytvrdnout na rovné podložce.</p></div></div>
+    <div class="card scard"><div class="frame"><img src="velka/img/krok2_prepazky.jpg" alt="Krok 2" loading="lazy"></div><div class="body"><div class="num">2</div><h3>Přepážky a sedla</h3><p>Každá přepážka má svou drážku mezi dvěma žebírky, zepředu dozadu: <b>záď, hřídel, motor 1, motor 2, doraz, sedlo 1, sedlo 2, přední</b>. Do přepážek vlepte mosazné trubičky táhel (360 mm) a do přepážky hřídele ložiska. Na dno vlepte zevnitř <b>sání čerpadla</b>.</p></div></div>
+    <div class="card scard"><div class="frame"><img src="velka/img/krok3_zad.jpg" alt="Krok 3" loading="lazy"></div><div class="body"><div class="num">3</div><h3>Záď: hřídele, motory, kormidla</h3><p><b>Stabilizátor</b> vlepte žebrem do drážky ve dně. <b>Konzoly hřídelí</b> zasuňte kolíky do otvorů v boku, vlepte do nich ložiska a protáhněte hřídele. Na hřídele nasaďte spojky a motory do přepážek motor 1 a 2. Svislá kormidla jsou dva listy na čepu Ø3 nad a pod stabilizátorem, páky spojte drátem skrz štěrbinu v zádi. Páku hloubkových kormidel nasaďte dovnitř a protáhněte hřídel Ø4. <b>Páku vložte dřív, než nalepíte horní záď.</b></p></div></div>
+    <div class="card scard"><div class="frame"><img src="velka/img/krok4_vrch.jpg" alt="Krok 4" loading="lazy"></div><div class="body"><div class="num">4</div><h3>Horní záď a příď</h3><p>Nalepte <b>vrch záď 1 a 2</b> a <b>vrch příď 1 a 2</b> na spodek. Jejich lem zapadne dovnitř spodku. Do příďových štěrbin vlepte <b>příďová kormidla</b>. Do čtyř ok na hraně otvoru vlepte magnety a do ok na poklopu protikusy opačnými póly proti sobě.</p></div></div>
+    <div class="card scard"><div class="frame"><img src="velka/img/krok5_modul.jpg" alt="Krok 5" loading="lazy"></div><div class="body"><div class="num">5</div><h3>Modul</h3><p>Modul vložte shora do sedel, víkem s vývody dozadu a anténním vývodem nahoru. U každého sedla natáhněte přes trubku O‑kroužek 78 × 3,5 a zahákněte ho za oba kolíky. Táhla z měchů spojte koncovkami s táhly v trubičkách. Hadičku 6 mm z vývodu čerpadla nasaďte na sání ve dně, kabel motorů připojte k motorům.</p></div></div>
+    <div class="card scard"><div class="frame"><img src="velka/img/krok6_vystroj.jpg" alt="Krok 6" loading="lazy"></div><div class="body"><div class="num">6</div><h3>Poklop, věž a výstroj</h3><p>Slepte <b>poklop 1 až 3</b>, nalepte <b>věž</b> do rýhy a vložte obě <b>podlahy můstku</b>. Do periskopů zasuňte mosazné trubičky. Dělo, lafetu, úvazníky, naviják, řezač sítí a sloupek lana posaďte na kousek filamentu 1,75 do otvorů v palubě. Lano proti sítím natáhněte od sloupku na zádi přes otvory ve věži k řezači sítí.</p></div></div>
+  </div>
+  <div class="frame wide"><img src="velka/img/rozlozeno.jpg" alt="Rozložené díly" loading="lazy"><span class="cap">díly trupu a poklopu rozložené</span></div>
+</section>
+
+<!-- ===== VYVÁŽENÍ ===== -->
+<section class="sec alt" id="vyvazeni"><div class="wrap row">
+  <div class="sec-head"><div class="n">07 · Vyvážení</div><h2>Olovo a první ponor ve vaně</h2>
+    <p class="lede">Výpočet počítá s modulem o hmotnosti 1,19 kg a vakem 250 ml. Obojí je odhad, proto se ponorka dovažuje ve vaně.</p></div>
+  <div class="proof">
+    <div class="tile"><b>≈ 1 kg</b><span>olova</span><p>Pro modul 1,0 kg asi 1,2 kg, pro modul 1,4 kg asi 0,76 kg.</p></div>
+    <div class="tile"><b>800 mm</b><span>od zádi</span><p>Kam olovo patří, aby ponorka ležela vodorovně. Nízko u kýlu, mezi sedla.</p></div>
+    <div class="tile"><b>7 mm</b><span>těžiště pod vztlakem</span><p>Ponorka se sama vrací do svislé polohy.</p></div>
+    <div class="tile"><b>91 mm</b><span>hladina nad kýlem</span><p>S prázdným vakem pluje skoro přesně na čáře ponoru, měřítkově je to 95 mm.</p></div>
+  </div>
+  <div class="card"><h3>Postup</h3><ol>
+    <li>Vak prázdný, poklop nasazený. Přidávejte olovo pod modul, dokud ponorka nepluje s palubou těsně nad vodou.</li>
+    <li>Posouvejte olovo dopředu nebo dozadu, až leží vodorovně.</li>
+    <li>Napusťte vak. Ponorka musí pomalu klesat. Když neklesá, přidejte trochu olova.</li>
+    <li>Na hloubce vyzkoušejte kormidla. Při jízdě se hloubkovými kormidly drží v hloubce.</li>
+  </ol></div>
+</div></section>
+
+<!-- ===== SOUBORY ===== -->
+<section class="wrap sec" id="soubory">
+  <div class="sec-head"><div class="n">08 · Soubory</div><h2>Ke stažení</h2></div>
+  <div class="dl">
+    <a class="main" href="velka/downloads/U47_1-50_P1S.3mf" download><b>Projekt pro Bambu Studio</b><span>U47_1-50_P1S.3mf · P1S, 6 podložek, nastavení dílů · 5 MB</span></a>
+    <a href="velka/downloads/U47_1-50_STL.zip" download><b>Všechny díly jako STL</b><span>53 dílů v tiskové poloze, pro jiné slicery</span></a>
+    <a href="velka/models/u47_50.glb" download><b>3D model sestavy</b><span>GLB, pro prohlížení</span></a>
+  </div>
+</section>
+
+<!-- ===== OVĚŘENO ===== -->
+<section class="sec alt" id="overeno"><div class="wrap row">
+  <div class="sec-head"><div class="n">09 · Ověřeno</div><h2>Co je zkontrolované v počítači</h2></div>
+  <div class="cards">
+    <div class="card okbox"><h3>Sestava bez kolizí</h3><p>Kontrola prošla ve 20 bodech. Modul má k trupu vůli aspoň 0,5 mm. Volně procházejí motory, hřídele, vrtule a táhla. Kormidla se natočí v plném rozsahu ±30° a ±25°. Poklop jde zvednout a O‑kroužky se přes trubku vejdou.</p></div>
+    <div class="card okbox"><h3>Tisk</h3><p>Všechny díly jsou uzavřená tělesa. Každá vrstva je zkontrolovaná na převisy. Bambu Studio naslicuje všech 6 podložek bez varování.</p></div>
+    <div class="card warnbox"><h3>Co ověřit nejde</h3><p>Hmotnost modulu, objem vaku a průměr hřídele motoru jsou odhady. Ve vodě zatím ponorka neplula.</p></div>
+  </div>
+  <p class="small muted">Předloha: bokorys a popis úprav U‑47 v letech 1938–1941 od Dougieho Martindalea (Accurate Model Parts, <a href="https://www.uboatarchive.net/Modeling/U47_mods.pdf">U47_mods.pdf</a>). Rozměry typu VIIB: <a href="https://en.wikipedia.org/wiki/Type_VII_submarine">Wikipedia</a>. Řídicí modul a trup Holland: projekt Minialand.</p>
+</div></section>
+
+<footer>Wilhelm · U‑47 1:50 · <a href="index.html">zpět na malou ponorku 1:200</a></footer>
+<script type="module" src="lib/model-viewer.min.js"></script>
+</body>
+</html>
