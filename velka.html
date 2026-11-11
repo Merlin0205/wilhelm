@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>U‑47 1:50 · velká RC ponorka s modulem Holland</title>
-<meta name="description" content="Velká RC ponorka U‑47 (typ VIIB, říjen 1939) v měřítku 1:50, 1330 mm, kolem řídicího modulu Holland SUB 90. Projekt pro Bambu Lab P1S, nákupní seznam, návod ke stavbě.">
+<title>U‑47 1:50 · manuál stavby velké RC ponorky</title>
+<meta name="description" content="Manuál stavby velké RC ponorky U‑47 (typ VIIB, říjen 1939) 1:50 kolem modulu Holland SUB 90: měření, zkušební tisky, tisk na Bambu Lab P1S, lepení, zkoušky a první ponor.">
 <link rel="icon" href="img/brand/helma.svg" type="image/svg+xml">
 <link rel="stylesheet" href="fonts/fonts.css">
-<link rel="stylesheet" href="css/style.css?v=20261111a">
+<link rel="stylesheet" href="css/style.css?v=20261111c">
 <style>
 .hero2{padding-top:96px}
 .hero2 h1{font-size:clamp(2.6rem,6vw,4.6rem);font-weight:800}
@@ -59,6 +59,52 @@
 .plates{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
 .plates .card img{width:100%;border-radius:10px;background:#0a1a28}
 footer{border-top:1px solid var(--line);padding:30px var(--gutter);color:var(--dim);font-size:.85rem;text-align:center}
+
+.phasehd{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center}
+.phasehd .big{font-family:var(--fd);font-weight:800;font-size:4rem;line-height:.9;color:var(--brass)}
+.steps{display:grid;gap:16px;counter-reset:st}
+.st2{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;display:grid;gap:10px}
+.st2 h3{display:flex;gap:12px;align-items:baseline}
+.st2 h3::before{counter-increment:st;content:counter(st);font-family:var(--fd);color:#14100a;background:var(--brass);border-radius:50%;width:30px;height:30px;display:inline-grid;place-items:center;font-size:1.05rem;flex:none}
+.st2 .grid2{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:860px){.st2 .grid2{grid-template-columns:1fr}}
+.st2 img{width:100%;border-radius:10px;background:#0a1a28}
+.st2 p,.st2 li{color:var(--muted)}
+.check{border-left:4px solid var(--ok);background:rgba(95,208,155,.06);padding:8px 12px;border-radius:8px}
+.fix{border-left:4px solid var(--warn);background:rgba(240,184,64,.07);padding:8px 12px;border-radius:8px}
+.check b,.fix b{display:block;font-family:var(--fm);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
+.check b{color:var(--ok)} .fix b{color:var(--warn)}
+.form td.blank{min-width:110px;border-bottom:1px dashed var(--line2)}
+.btns{display:flex;flex-wrap:wrap;gap:10px}
+.btns a{display:inline-flex;gap:8px;align-items:center;padding:10px 16px;border-radius:10px;border:1px solid var(--line2);background:var(--panel);color:var(--ink);text-decoration:none;font-weight:600}
+.btns a.main{border-color:var(--brass);background:rgba(227,185,78,.14);color:var(--brass)}
+.dets{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.dets figure{margin:0;display:grid;gap:4px}.dets img{width:100%;border-radius:10px;background:#0a1a28}.dets figcaption{font-size:.85rem;color:var(--muted)}
+.toc{columns:2;gap:24px} @media (max-width:700px){.toc{columns:1}}
+.toc a{color:var(--steel)}
+@page{size:A4;margin:12mm 12mm 14mm}
+@media print{
+  :root{--bg:#fff;--bg2:#fff;--panel:#fff;--panel2:#fff;--line:#bbb;--line2:#999;--ink:#111;--muted:#333;--dim:#555;--brass:#8a5a00;--ok:#1d7a45;--warn:#8a5a00;--bad:#a52a1a;--steel:#1a4f86;color-scheme:light}
+  body{background:#fff;color:#111;font-size:11pt}
+  .nav,.tabs,.noprint,#v3dsec,footer{display:none!important}
+  .plates{grid-template-columns:repeat(3,1fr)} .cards{grid-template-columns:repeat(2,1fr)} .dets{grid-template-columns:repeat(2,1fr)}
+  .st2 .grid2{grid-template-columns:1.2fr 1fr}
+  .wrap{padding-inline:0;max-width:none}
+  .specs{grid-template-columns:repeat(5,1fr)!important;display:grid!important} .specs div{break-inside:avoid}
+  .tbl{font-size:8.5pt} .tbl th,.tbl td{padding:4px 5px}
+  .form{table-layout:fixed} .form th:nth-child(1){width:4%} .form th:nth-child(2){width:33%} .form th:nth-child(3){width:14%} .form th:nth-child(4){width:12%} .form th:nth-child(5){width:37%}
+  .tblwrap{overflow:visible;padding:0;border:0}
+  .hero2 .frame.wide{aspect-ratio:21/7}
+  .sec,.row{display:block!important} .sec>*,.row>*{margin-bottom:12px} .steps{display:block} .steps>.st2{margin-bottom:12px} .plates,.cards,.dets,.move,.specs,.proof{margin-bottom:12px}
+  .sec{padding-block:14px} .alt{background:#fff}
+  .phase0,.phasebreak{break-before:page}
+  .st2,.card,.tblwrap,figure{break-inside:avoid}
+  h2{font-size:22pt} .hero2{padding-top:0}
+  a{color:#1a4f86;text-decoration:none}
+  .frame{background:#eef2f6}
+  .st2 img,.plates img{background:#eef2f6}
+  .specs b{color:#8a5a00}
+}
 </style>
 </head>
 <body>
@@ -66,12 +112,13 @@ footer{border-top:1px solid var(--line);padding:30px var(--gutter);color:var(--d
 <nav class="nav" aria-label="Navigace">
   <a class="brand" href="index.html"><img src="img/brand/logo-svetle.svg" alt="Wilhelm" class="brandimg"></a>
   <ul>
-    <li><a class="l" href="#3d">3D</a></li>
+    <li><a class="l" href="#v3dsec">3D</a></li>
     <li><a class="l" href="#koupit">Co koupit</a></li>
-    <li><a class="l" href="#tisk">Tisk</a></li>
-    <li><a class="l" href="#stavba">Stavba</a></li>
-    <li><a class="l" href="#pohyb">Co se hýbe</a></li>
-    <li><a class="l" href="#soubory">Soubory</a></li>
+    <li><a class="l" href="#f0">0 Měření</a></li>
+    <li><a class="l" href="#f1">1 Zkoušky</a></li>
+    <li><a class="l" href="#f2">2 Tisk</a></li>
+    <li><a class="l" href="#f3">3 Stavba</a></li>
+    <li><a class="l" href="#f4">4 Voda</a></li>
   </ul>
 </nav>
 <div class="tabs" role="tablist" aria-label="Verze ponorky"><a href="index.html" role="tab">Malá · 1:200</a><a class="on" href="velka.html" role="tab" aria-selected="true">Velká · 1:50</a></div>
@@ -79,23 +126,36 @@ footer{border-top:1px solid var(--line);padding:30px var(--gutter);color:var(--d
 <!-- ===== ÚVOD ===== -->
 <section class="wrap sec hero2" id="top">
   <div class="sec-head">
-    <div class="eyebrow">U‑47 · typ VIIB · stav ze 17. října 1939</div>
+    <div class="eyebrow">U‑47 · typ VIIB · stav ze 17. října 1939 · manuál stavby</div>
     <h1>Velká RC ponorka 1:50</h1>
-    <p class="lede">Model dlouhý 1,33 m, který postavíte kolem řídicího modulu <b>Holland SUB 90</b>. Modul s čerpadlem a servy se zasune do trupu pod poklop s věží. Ponorka se potápí a vynořuje čerpadlem, pluje na dva šrouby a řídí se dvojitými kormidly.</p>
+    <p class="lede">Model dlouhý 1,33 m postavený kolem řídicího modulu <b>Holland SUB 90</b>. Manuál vede krok za krokem: nejdřív změříte modul, pak vytisknete a vyzkoušíte malé zkušební díly, teprve potom tisknete celou ponorku, lepíte a zkoušíte ve vodě. U každého kroku je kontrola a co dělat, když to nejde.</p>
+  </div>
+  <div class="btns noprint">
+    <a class="main" href="velka/downloads/U47_1-50_manual.pdf" download>Manuál jako PDF k vytištění</a>
+    <a href="velka/downloads/U47_zkousky_P1S.3mf" download>Zkušební tisky (Bambu)</a>
+    <a href="velka/downloads/U47_1-50_P1S.3mf" download>Celá ponorka (Bambu)</a>
+    <a href="velka/downloads/U47_1-50_STL.zip" download>Všechny STL</a>
   </div>
   <div class="frame wide"><img src="velka/img/hero.jpg" alt="U‑47 1:50, celkový pohled"></div>
   <div class="specs">
     <div><b>1330 mm</b><span>délka, šířka 124 mm</span></div>
     <div><b>53</b><span>tištěných dílů</span></div>
-    <div><b>58 h</b><span>tisk na P1S, 6 podložek</span></div>
-    <div><b>1,8 kg</b><span>PLA</span></div>
-    <div><b>Ø 90</b><span>modul Holland SUB 90</span></div>
+    <div><b>4,7 h</b><span>zkušební tisky</span></div>
+    <div><b>58 h</b><span>celý tisk na P1S</span></div>
+    <div><b>1,9 kg</b><span>PLA včetně zkoušek</span></div>
   </div>
+  <div class="card"><h3>Obsah</h3><ol class="toc">
+    <li><a href="#jak">Jak ponorka funguje</a></li><li><a href="#pohyb">Co se hýbe, co se snímá, co se lepí</a></li>
+    <li><a href="#koupit">Nákupní seznam</a></li><li><a href="#f0">Fáze 0: změřit modul</a></li>
+    <li><a href="#f1">Fáze 1: zkušební tisky</a></li><li><a href="#f2">Fáze 2: tisk celé ponorky</a></li>
+    <li><a href="#f3">Fáze 3: stavba</a></li><li><a href="#f4">Fáze 4: zkoušky, vyvážení, první ponor</a></li>
+    <li><a href="#potize">Když něco nejde</a></li><li><a href="#overeno">Co je ověřené a co ne</a></li>
+  </ol></div>
 </section>
 
 <!-- ===== 3D ===== -->
-<section class="sec alt" id="3d"><div class="wrap row">
-  <div class="sec-head"><div class="n">01 · 3D</div><h2>Prohlédněte si ji ze všech stran</h2>
+<section class="sec alt" id="v3dsec"><div class="wrap row">
+  <div class="sec-head"><div class="n">3D</div><h2>Prohlédněte si ji ze všech stran</h2>
     <p class="lede">Rozložte ponorku na díly, rozřízněte ji, schovejte, co nepotřebujete, a prohlédněte si každý díl zvlášť.</p></div>
   <div class="v3d" id="v3d">
     <div class="v3d-stage">
@@ -122,29 +182,22 @@ footer{border-top:1px solid var(--line);padding:30px var(--gutter);color:var(--d
     </div>
   </div>
   <p class="small muted">Tip: klikněte na díl a uvidíte, co to je a jestli se hýbe. Tažením otáčíte, kolečkem nebo dvěma prsty přibližujete, pravým tlačítkem nebo dvěma prsty posouváte.</p>
-  <div class="cards">
-    <div class="card scard"><div class="frame"><img src="velka/img/vez.jpg" alt="Věž" loading="lazy"></div><div class="body"><h3>Věž jako v říjnu 1939</h3><p>Vysoká přední část, zadní otevřený můstek se zábradlím a větracími mřížkami, malá lišta proti stříkání, periskopy, UZO, kompas, rámová anténa a funící býk na obou bocích. Čísla „47“ byla tehdy přetřená.</p></div></div>
-    <div class="card scard"><div class="frame"><img src="velka/img/prid.jpg" alt="Příď" loading="lazy"></div><div class="body"><h3>Příď</h3><p>Řezač sítí s lanem přes věž až na záď, kotevní kapsa, dvířka torpédometů, řady zatopovacích a odvodňovacích otvorů, naviják, úvazníky a dřevěná paluba s prkny.</p></div></div>
-    <div class="card scard"><div class="frame"><img src="velka/img/zad.jpg" alt="Záď" loading="lazy"></div><div class="body"><h3>Záď</h3><p>Dva šrouby na konzolách, za nimi dvojitá kormidla na stabilizátoru a hloubková kormidla. Na zadní palubě lafeta kulometu 2 cm.</p></div></div>
-  </div>
-  <div class="frame wide"><img src="velka/img/bok.jpg" alt="Bokorys" loading="lazy"><span class="cap">bokorys podle výkresu D. Martindale (Accurate Model Parts)</span></div>
 </div></section>
 
 <!-- ===== JAK FUNGUJE ===== -->
 <section class="wrap sec" id="jak">
-  <div class="sec-head"><div class="n">02 · Jak funguje</div><h2>Modul uvnitř, trup kolem</h2>
+  <div class="sec-head"><div class="n">Jak funguje</div><h2>Modul uvnitř, trup kolem</h2>
     <p class="lede">Trup je zaplavovaný, voda volně proudí dovnitř i ven. Suchá je jen plexi trubka modulu. V ní je přijímač, regulátor, akumulátor, dvě serva a čerpadlo, které plní a vyprazdňuje vak.</p></div>
-  <div class="frame wide"><img src="velka/img/otevreno.jpg" alt="Zvednutý poklop, modul v sedlech" loading="lazy"><span class="cap">poklop s věží zvednutý, modul v sedlech, za ním motory a hřídele</span></div>
+  <div class="frame wide"><img src="velka/img/otevreno.jpg" alt="Zvednutý poklop, modul v sedlech"><span class="cap">poklop s věží zvednutý, modul v sedlech, za ním motory a hřídele</span></div>
   <div class="cards">
-    <div class="card"><h3>Potápění</h3><p>Čerpadlo napustí vak, ponorka se ztěžkne a klesá. Vyprázdněním vaku vyplave. Ponorka stojí na místě a nemusí se pohybovat.</p></div>
+    <div class="card"><h3>Potápění</h3><p>Čerpadlo napustí vak a ponorka klesá. Když vak vyprázdní, vyplave. Funguje i na místě, bez jízdy.</p></div>
     <div class="card"><h3>Jízda</h3><p>Dva motory LICHIFIT pohánějí přes hřídele Ø4 dva třílisté šrouby. Kabel motorů vede ze zadního víka modulu.</p></div>
     <div class="card"><h3>Řízení</h3><p>Dvě serva v modulu táhnou přes měchy dvě táhla. Spodní táhlo ovládá obě svislá kormidla, horní táhlo hloubková kormidla na zádi.</p></div>
   </div>
 </section>
 
-<!-- ===== CO SE HÝBE ===== -->
 <section class="sec alt" id="pohyb"><div class="wrap row">
-  <div class="sec-head"><div class="n">03 · Co se hýbe a co ne</div><h2>Co lepit a co nechat volné</h2></div>
+  <div class="sec-head"><div class="n">Co se hýbe a co ne</div><h2>Co lepit a co nechat volné</h2></div>
   <div class="move">
     <div class="card"><h3>Pohyblivé</h3><ul>
       <li><span class="chip m">pohyb</span><b>Svislá kormidla:</b> dva listy na mosazném čepu Ø3, páky spojené drátem 1,5. Do čepu nelepit, listy se lepí jen na čep.</li>
@@ -165,11 +218,12 @@ footer{border-top:1px solid var(--line);padding:30px var(--gutter);color:var(--d
       <li><span class="chip f">lepit</span>věž, podlahy můstku, dělo, lafeta, výstroj paluby, řezač sítí.</li>
     </ul></div>
   </div>
+
 </div></section>
 
 <!-- ===== CO KOUPIT ===== -->
 <section class="wrap sec" id="koupit">
-  <div class="sec-head"><div class="n">04 · Co koupit</div><h2>Nákupní seznam</h2>
+  <div class="sec-head"><div class="n">Co koupit</div><h2>Nákupní seznam</h2>
     <p class="lede">Modul Holland SUB 90 už máte, včetně přijímače, čerpadla, serv a O‑kroužků. Ceny jsou ověřené na stránkách obchodů 11. 11. 2026, kde ověřit nešly, je to napsané.</p></div>
   <div class="tblwrap"><table class="tbl">
     <tr><th>Díl</th><th>Kolik</th><th>Kde</th><th>Cena</th><th>Na co</th></tr>
@@ -181,7 +235,7 @@ footer{border-top:1px solid var(--line);padding:30px var(--gutter);color:var(--d
     <tr><td>Drát pružinová ocel 1,5 mm, 1 m</td><td>1</td><td><a href="https://www.astramodel.cz/cz/katalog/krick-modelltechnik/krick-drat-pruzinova-ocel-1-5x1000mm-p54119.html">Astramodel</a></td><td class="num">29 Kč</td><td>táhla, spojovací tyčka kormidel</td></tr>
     <tr><td>Pájecí koncovka M2 pro drát 1,6 (5 ks)</td><td>1 balení</td><td><a href="https://www.astramodel.cz/cz/katalog/revtec/zavitova-koncovka-pajeci-m2-drat-1-6-5-p22341.html">Astramodel</a></td><td class="num">79 Kč</td><td>spojení táhel s táhly modulu</td></tr>
     <tr><td>Neodymový magnet 10 × 3 mm N52 (10 ks)</td><td>1 balení</td><td><a href="https://www.supermagnete.cz/eng/disc-magnets-neodymium/disc-magnet-10mm-3mm_S-10-03-N52N">supermagnete.cz</a></td><td class="num">6,20 €</td><td>poklop (8 ks)</td></tr>
-    <tr><td>PLA šedé 1 kg (Prusament Gravity Grey)</td><td>2</td><td><a href="https://www.prusa3d.com/cs/produkt/prusament-pla-gravity-grey-1kg-nfc/">Prusa</a></td><td class="num">599 Kč/ks</td><td>všechny díly, 1,76 kg</td></tr>
+    <tr><td>PLA šedé 1 kg (Prusament Gravity Grey)</td><td>2</td><td><a href="https://www.prusa3d.com/cs/produkt/prusament-pla-gravity-grey-1kg-nfc/">Prusa</a></td><td class="num">599 Kč/ks</td><td>všechny díly a zkoušky, 1,94 kg</td></tr>
     <tr><td>Olovo, broky nebo plech</td><td>asi 1 kg</td><td>rybářské potřeby, sběrna</td><td class="num">neověřeno</td><td>zátěž pod modulem</td></tr>
     <tr><td>Dvousložkový epoxid (UHU Plus Endfest)</td><td>1</td><td>Kaufland, papírnictví</td><td class="num">neověřeno</td><td>spoje trupu pod vodou</td></tr>
     <tr><td>Spojka motor–hřídel: silikonová hadička nebo pružná spojka</td><td>2</td><td>podle průměru hřídele motoru</td><td class="num">neověřeno</td><td>spojení motoru s hřídelí Ø4</td></tr>
@@ -189,94 +243,244 @@ footer{border-top:1px solid var(--line);padding:30px var(--gutter);color:var(--d
     <tr><td>Rybářská šňůra 0,5 mm</td><td>1,5 m</td><td>rybářské potřeby</td><td class="num">neověřeno</td><td>lano proti sítím</td></tr>
     <tr><td><i>Volitelně:</i> lodní šroub Raboesch Ø35 M4, levý / pravý</td><td>1 + 1</td><td><a href="https://www.astramodel.cz/en/catalog/raboesch/raboesch-boat-propeller-class-160-35mm-m4-3-blade-left-p89143.html">Astramodel</a></td><td class="num">659 Kč/ks</td><td>místo tištěných šroubů, na hřídel je potřeba závit M4</td></tr>
   </table></div>
+  <div class="card"><h3>Nářadí</h3><p>Posuvné měřítko, kuchyňská váha, odměrka, vrtáky 1,7 / 2,5 / 3,1 / 4,1 mm, smirkový papír 240 a 400, isopropylalkohol, malé kleště, pájka (koncovky táhel), páska, fix.</p></div>
   <div class="card warnbox"><h3>Rádio: 2,4 GHz pod vodou nefunguje</h3><p>Vysílačky na 2,4 GHz (např. TX16S s ELRS) ztratí spojení hned pod hladinou. Použijte přijímač 40/41 MHz z modulu Holland a anténu vyveďte trubičkou do věže.</p></div>
 </section>
 
-<!-- ===== TISK ===== -->
-<section class="sec alt" id="tisk"><div class="wrap row">
-  <div class="sec-head"><div class="n">05 · Tisk</div><h2>Jeden soubor pro Bambu Studio, šest podložek</h2>
-    <p class="lede">Otevřete <span class="mono">U47_1-50_P1S.3mf</span>. Tiskárna Bambu Lab P1S s tryskou 0,4 je nastavená, díly leží na šesti podložkách a každý díl má nastavení v souboru. Stačí zvolit filament PLA, zmáčknout <b>Slice all</b> a postupně posílat podložky na tiskárnu.</p></div>
-  <div class="card okbox"><h3>Ověřeno v Bambu Studiu 2.9</h3><p>Všech 6 podložek se naslicuje bez chyby a bez jediného varování. Podpěry nejsou potřeba, kromě dvou vrtulí, kde jsou zapnuté stromové podpěry.</p></div>
-  <div class="tblwrap"><table class="tbl">
-    <tr><th>Díly</th><th>Vrstva</th><th>Stěny / výplň</th><th>Poznámka</th></tr>
-    <tr><td>Trup (13 dílů)</td><td class="num">0,20 mm</td><td>6 stěn, 100 %</td><td>nastojato, záďovou stranou dolů, vnější stěna 150 mm/s, šev na kýlu, límec 5 mm</td></tr>
-    <tr><td>Věž, dělo, výstroj, kormidla, páky, konzoly, podlahy můstku</td><td class="num">0,12 mm</td><td>6 stěn, 100 %</td><td>vnější stěna 60 mm/s kvůli detailům, límec 3 mm</td></tr>
-    <tr><td>Vrtule</td><td class="num">0,12 mm</td><td>100 %</td><td>stromové podpěry, nebo koupit mosazné</td></tr>
-    <tr><td>Přepážky, sedla, stabilizátor</td><td class="num">0,20 mm</td><td>6 stěn, 100 %</td><td>naplocho</td></tr>
-    <tr><td>Stojan</td><td class="num">0,20 mm</td><td>3 stěny, 20 %</td><td>bez límce</td></tr>
+<!-- ===== FÁZE 0 ===== -->
+<section class="sec alt phase0" id="f0"><div class="wrap row">
+  <div class="phasehd"><div class="big">0</div><div class="sec-head"><div class="n">Fáze 0 · asi 1 hodina</div><h2>Změřte modul, než začnete tisknout</h2></div></div>
+  <p class="lede">Model je spočítaný na rozměry z výkresů modulu Holland. Některé věci se z výkresů zjistit nedají, ty změříte sami. Vyplňte tabulku. Když hodnota sedí, pokračujte. Když nesedí, udělejte, co je ve sloupci vpravo.</p>
+  <div class="tblwrap"><table class="tbl form">
+    <tr><th>#</th><th>Co změřit a jak</th><th>Počítáno s</th><th>Naměřeno</th><th>Když nesedí</th></tr>
+    <tr><td>1</td><td><b>Natočení desky v modulu.</b> Postavte modul na stůl tak, aby ouška zadního víka (dva výstupky s otvory) byla svisle nad sebou. Podívejte se, jak leží vnitřní deska se servy a čerpadlem.</td><td class="num">deska vodorovně, tolerance ±25°</td><td class="blank"></td><td>Do ±25° je vše v pořádku, modul se jen pootočí v sedlech. Při větším natočení se ouška nevejdou do trupu. Model je potřeba přepočítat s jiným natočením (parametr v generátoru <span class="mono">u47_big.py</span>).</td></tr>
+    <tr><td>2</td><td><b>Průměr trubky</b> na třech místech.</td><td class="num">90,0 mm</td><td class="blank"></td><td>Sedla mají otvor 90,8 mm. Do 90,6 mm v pořádku. Při větším průměru sedla přebruste, při menším podlepte páskou.</td></tr>
+    <tr><td>3</td><td><b>Délka modulu</b> od čela zadního víka (ouška) po čelo předního víka.</td><td class="num">nejvýš 471 mm</td><td class="blank"></td><td>Kratší modul: mezeru k přednímu dorazu vyplňte podložkou (zbytek PLA). Delší než 471 mm: přední doraz přebruste nebo vynechte a modul jistěte jen O‑kroužky.</td></tr>
+    <tr><td>4</td><td><b>Ouška zadního víka:</b> celková výška přes obě ouška.</td><td class="num">102,7 mm</td><td class="blank"></td><td>Do 104 mm v pořádku (vůle 0,7–4 mm podle natočení). Víc: napište, model se upraví.</td></tr>
+    <tr><td>5</td><td><b>Měchy a táhla za víkem.</b> Změřte, jak daleko za čelo víka sahají měchy a konce táhel serv.</td><td class="num">do 45 mm</td><td class="blank"></td><td>Delší: zkraťte mosazné trubičky v trupu o rozdíl. Kratší: táhla prodlužte pájecí koncovkou M2 a kouskem drátu.</td></tr>
+    <tr><td>6</td><td><b>Zdvih táhel serv.</b> Zapněte vysílač i modul, dejte páku do krajních poloh a měřte, o kolik se konec táhla posune.</td><td class="num">±4 mm</td><td class="blank"></td><td>Svislá kormidla potřebují ±3,8 mm, hloubková ±4,2 mm. Větší zdvih stáhněte ve vysílači (koncové body, EPA). Menší: táhlo zavěste dál od osy páky serva.</td></tr>
+    <tr><td>7</td><td><b>Hmotnost modulu</b> komplet s akumulátorem, na kuchyňské váze.</td><td class="num">1190 g (odhad)</td><td class="blank"></td><td>Spočítejte olovo podle vzorce ve fázi 4. Ponorka se vždy dovažuje ve vaně.</td></tr>
+    <tr><td>8</td><td><b>Objem vaku.</b> Napusťte vak čerpadlem do plna, vypusťte do odměrky.</td><td class="num">250 ml (odhad)</td><td class="blank"></td><td>Pod 150 ml bude ponorka na hladině hluboko. Doporučený rozsah je 200–400 ml.</td></tr>
+    <tr><td>9</td><td><b>Hřídel motoru LICHIFIT:</b> průměr a délka, po sundání vrtule.</td><td class="num">Ø2,3–3,2 mm, ~26 mm</td><td class="blank"></td><td>Podle průměru vyberte spojku na hřídel Ø4 (silikonová hadička nebo pružná spojka). Motor je vpředu volný, posune se o rozdíl délky.</td></tr>
+    <tr><td>10</td><td><b>Akumulátor</b> je uvnitř modulu?</td><td class="num">ano</td><td class="blank"></td><td>Mimo modul nelze, v trupu není suché místo. Akumulátor musí být v trubce.</td></tr>
+    <tr><td>11</td><td><b>Přijímač 40/41 MHz</b> v modulu a anténa ve trubičce Ø4.</td><td class="num">ano</td><td class="blank"></td><td>2,4 GHz pod vodou nefunguje. Bez dlouhovlnného přijímače ponorka nepoplave pod hladinou.</td></tr>
+    <tr><td>12</td><td><b>Těsnost modulu.</b> Modul bez trupu ponořte na 15 minut do vany, pak otevřete a zkontrolujte papírovým ubrouskem.</td><td class="num">sucho</td><td class="blank"></td><td>Vlhko: vyměňte nebo namažte O‑kroužky víček silikonovou vazelínou, zkontrolujte měchy a průchodky. Bez suchého modulu dál nepokračujte.</td></tr>
   </table></div>
-  <div class="plates">
-    <div class="card"><img src="velka/img/plate_1.png" alt="Podložka 1" loading="lazy"><h3>Podložka 1 · 4,5 h · 182 g</h3><p class="small">stojan, přepážky, konzoly, dělo, lafeta, výstroj paluby, páky, sání</p></div>
-    <div class="card"><img src="velka/img/plate_2.png" alt="Podložka 2" loading="lazy"><h3>Podložka 2 · 6,7 h · 181 g</h3><p class="small">věž, sedla, přepážky, podlahy můstku, vrtule, všechna kormidla</p></div>
-    <div class="card"><img src="velka/img/plate_3.png" alt="Podložka 3" loading="lazy"><h3>Podložka 3 · 21,7 h · 604 g</h3><p class="small">poklop 1–3, spodek 2 a 5</p></div>
-    <div class="card"><img src="velka/img/plate_4.png" alt="Podložka 4" loading="lazy"><h3>Podložka 4 · 19,7 h · 616 g</h3><p class="small">spodek 1, 3, 4, vrch záď 2, vrch příď 1 a 2</p></div>
-    <div class="card"><img src="velka/img/plate_5.png" alt="Podložka 5" loading="lazy"><h3>Podložka 5 · 4,3 h · 145 g</h3><p class="small">vrch záď 1, spodek 6 (příď)</p></div>
-    <div class="card"><img src="velka/img/plate_6.png" alt="Podložka 6" loading="lazy"><h3>Podložka 6 · 0,7 h · 36 g</h3><p class="small">přepážka záď, stabilizátor</p></div>
-  </div>
-  <div class="card"><h3>Rady k tisku</h3><ul>
-    <li>Celkem asi 58 hodin a 1,76 kg PLA. Nejdelší podložky běží přes noc.</li>
-    <li>Vysoké díly trupu stojí na límci 5 mm. Podložku před tiskem odmastěte, ať se díl neutrhne.</li>
-    <li>Límec po tisku odlomte a hranu přejeďte smirkem. Spoje dílů nebruste, límce do sebe musí zapadnout.</li>
-    <li>Rytiny na trupu (prkna paluby, švy nádrží) jsou hluboké 0,6 mm, při broušení je nezahlaďte.</li>
-  </ul></div>
 </div></section>
 
-<!-- ===== STAVBA ===== -->
-<section class="wrap sec" id="stavba">
-  <div class="sec-head"><div class="n">06 · Stavba</div><h2>Šest kroků od dílů k ponorce</h2>
-    <p class="lede">Trup lepte epoxidem, protože bude pod vodou. Drobnosti můžete vteřinovým lepidlem. Každý díl má v souboru jméno, podle kterého ho najdete.</p></div>
-  <div class="cards two">
-    <div class="card scard"><div class="frame"><img src="velka/img/krok1_spodek.jpg" alt="Krok 1" loading="lazy"></div><div class="body"><div class="num">1</div><h3>Spodek trupu</h3><p>Slepte <b>spodek 1 až 6</b> v pořadí od zádi. Každý díl má na přední straně vnitřní límec, na který se nasune další díl. Dvě hodiny nechte vytvrdnout na rovné podložce.</p></div></div>
-    <div class="card scard"><div class="frame"><img src="velka/img/krok2_prepazky.jpg" alt="Krok 2" loading="lazy"></div><div class="body"><div class="num">2</div><h3>Přepážky a sedla</h3><p>Každá přepážka má svou drážku mezi dvěma žebírky, zepředu dozadu: <b>záď, hřídel, motor 1, motor 2, doraz, sedlo 1, sedlo 2, přední</b>. Do přepážek vlepte mosazné trubičky táhel (360 mm) a do přepážky hřídele ložiska. Na dno vlepte zevnitř <b>sání čerpadla</b>.</p></div></div>
-    <div class="card scard"><div class="frame"><img src="velka/img/krok3_zad.jpg" alt="Krok 3" loading="lazy"></div><div class="body"><div class="num">3</div><h3>Záď: hřídele, motory, kormidla</h3><p><b>Stabilizátor</b> vlepte žebrem do drážky ve dně. <b>Konzoly hřídelí</b> zasuňte kolíky do otvorů v boku, vlepte do nich ložiska a protáhněte hřídele. Na hřídele nasaďte spojky a motory do přepážek motor 1 a 2. Svislá kormidla jsou dva listy na čepu Ø3 nad a pod stabilizátorem, páky spojte drátem skrz štěrbinu v zádi. Páku hloubkových kormidel nasaďte dovnitř a protáhněte hřídel Ø4. <b>Páku vložte dřív, než nalepíte horní záď.</b></p></div></div>
-    <div class="card scard"><div class="frame"><img src="velka/img/krok4_vrch.jpg" alt="Krok 4" loading="lazy"></div><div class="body"><div class="num">4</div><h3>Horní záď a příď</h3><p>Nalepte <b>vrch záď 1 a 2</b> a <b>vrch příď 1 a 2</b> na spodek. Jejich lem zapadne dovnitř spodku. Do příďových štěrbin vlepte <b>příďová kormidla</b>. Do čtyř ok na hraně otvoru vlepte magnety a do ok na poklopu protikusy opačnými póly proti sobě.</p></div></div>
-    <div class="card scard"><div class="frame"><img src="velka/img/krok5_modul.jpg" alt="Krok 5" loading="lazy"></div><div class="body"><div class="num">5</div><h3>Modul</h3><p>Modul vložte shora do sedel, víkem s vývody dozadu a anténním vývodem nahoru. U každého sedla natáhněte přes trubku O‑kroužek 78 × 3,5 a zahákněte ho za oba kolíky. Táhla z měchů spojte koncovkami s táhly v trubičkách. Hadičku 6 mm z vývodu čerpadla nasaďte na sání ve dně, kabel motorů připojte k motorům.</p></div></div>
-    <div class="card scard"><div class="frame"><img src="velka/img/krok6_vystroj.jpg" alt="Krok 6" loading="lazy"></div><div class="body"><div class="num">6</div><h3>Poklop, věž a výstroj</h3><p>Slepte <b>poklop 1 až 3</b>, nalepte <b>věž</b> do rýhy a vložte obě <b>podlahy můstku</b>. Do periskopů zasuňte mosazné trubičky. Dělo, lafetu, úvazníky, naviják, řezač sítí a sloupek lana posaďte na kousek filamentu 1,75 do otvorů v palubě. Lano proti sítím natáhněte od sloupku na zádi přes otvory ve věži k řezači sítí.</p></div></div>
+<!-- ===== FÁZE 1 ===== -->
+<section class="wrap sec phasebreak" id="f1">
+  <div class="phasehd"><div class="big">1</div><div class="sec-head"><div class="n">Fáze 1 · 4,7 h tisku · 170 g</div><h2>Zkušební tisky: ověřte spoje dřív, než tisknete 58 hodin</h2></div></div>
+  <p class="lede">Otevřete <span class="mono">U47_zkousky_P1S.3mf</span>. Jsou v něm dvě podložky s malými výřezy trupu a s díly mechaniky. Vytisknete tak přesně ty spoje, na kterých záleží, a ověříte je s modulem, mosazí a ložisky, které máte doma.</p>
+  <div class="plates">
+    <div class="card"><img src="velka/img/zkouska_1.png" alt="Zkušební podložka 1"><h3>Zkouška 1 · 3,7 h · 132 g</h3><p class="small">úsek trupu se sedlem, sedlo 1, začátek spodku 3, začátek poklopu, přepážka hřídelí, konzola, kormidla, páky</p></div>
+    <div class="card"><img src="velka/img/zkouska_2.png" alt="Zkušební podložka 2"><h3>Zkouška 2 · 0,9 h · 38 g</h3><p class="small">konec spodku 2 s límcem a oky na magnety, stabilizátor</p></div>
   </div>
-  <div class="frame wide"><img src="velka/img/rozlozeno.jpg" alt="Rozložené díly" loading="lazy"><span class="cap">díly trupu a poklopu rozložené</span></div>
+  <div class="steps">
+    <div class="st2"><h3>Modul v sedle</h3>
+      <p>Díly: <b>zk_trup_sedlo</b> (úsek spodku se dvěma žebírky) a <b>sedlo1</b>.</p><ol>
+      <li>Sedlo zasuňte nasucho mezi žebírka. Má jít dovnitř rukou, bez kladiva, a nemá se viklat.</li>
+      <li>Do sedla položte modul. O‑kroužek 78 × 3,5 natáhněte přes trubku a zahákněte za oba kolíky na sedle.</li>
+      <li>Posuvkou nebo kartičkou zkontrolujte mezeru mezi trubkou a stěnou trupu nad sedlem.</li></ol>
+<div class="dets"><figure><img src="velka/img/det_sedlo.jpg" alt="Sedlo s modulem a O‑kroužkem (červený) zaháknutým za kolíky sedla"><figcaption>Sedlo s modulem a O‑kroužkem (červený) zaháknutým za kolíky sedla</figcaption></figure></div>
+      <div class="check"><b>Projde, když</b>modul leží v sedle bez viklání, O‑kroužek drží a trubka se nikde nedotýká stěny.</div>
+      <div class="fix"><b>Když to nejde</b>Sedlo nejde mezi žebírka: přebruste hrany sedla smirkem 240. Sedlo volné: při lepení vyplní mezeru epoxid. Trubka se nevejde: zkontrolujte bod 2 fáze 0. O‑kroužek nedosáhne na kolíky: použijte dva kroužky za sebou nebo silikonový pásek.</div></div>
+    <div class="st2"><h3>Spoj dvou dílů spodku</h3>
+      <p>Díly: <b>zk_spodek_oka</b> (konec spodku 2 s vnitřním límcem) a <b>zk_spodek_navazny</b> (začátek spodku 3).</p><ol>
+      <li>Nasuňte navazující díl na límec. Má jít ztuha rukou a sedět bez mezery.</li>
+      <li>Přejeďte prstem přes spoj, oba díly mají lícovat.</li></ol>
+<div class="dets"><figure><img src="velka/img/det_spoj.jpg" alt="Vnitřní límec na konci jednoho dílu, na něj se nasune další díl"><figcaption>Vnitřní límec na konci jednoho dílu, na něj se nasune další díl</figcaption></figure></div>
+      <div class="check"><b>Projde, když</b>díly jdou k sobě rukou, spára je do 0,3 mm a schod na povrchu je do 0,2 mm.</div>
+      <div class="fix"><b>Když to nejde</b>Moc těsné: přebruste límec smirkem 240 dokola, nebo v Bambu Studiu u dílů trupu nastavte <b>Kvalita › Kompenzace obrysu XY</b> na −0,05 mm a celý trup tiskněte s tím. Volné: nic se neděje, mezeru vyplní epoxid. Díly nesedí do sebe vůbec: tiskárna je rozkalibrovaná, spusťte kalibraci a zkontrolujte, že tisknete PLA na 0,4 trysce.</div></div>
+    <div class="st2"><h3>Poklop a magnety</h3>
+      <p>Díly: <b>zk_poklop_oka</b> (začátek poklopu s lemem a oky) a <b>zk_spodek_oka</b>.</p><ol>
+      <li>Nasucho nasaďte poklop na spodek. Lem zajede dovnitř spodku, oka sedí nad sebou.</li>
+      <li>Do kapes vlepte vteřinovým lepidlem magnety 10 × 3. <b>Nejdřív si magnety přiložte k sobě a fixem označte strany, které se přitahují.</b> Dolní magnet označenou stranou nahoru, horní označenou stranou dolů.</li>
+      <li>Po zaschnutí poklop nasaďte a zkuste ho zvednout.</li></ol>
+<div class="dets"><figure><img src="velka/img/det_magnety.jpg" alt="Oko na hraně spodku s magnetem 10 × 3 zarovnaným s povrchem"><figcaption>Oko na hraně spodku s magnetem 10 × 3 zarovnaným s povrchem</figcaption></figure></div>
+      <div class="check"><b>Projde, když</b>poklop dosedne bez mezery, magnety cvaknou a poklop jde zvednout kolmo nahoru bez zasekávání.</div>
+      <div class="fix"><b>Když to nejde</b>Magnety se odpuzují: jeden vylomte a otočte. Lem drhne: přebruste lem z vnější strany. Magnet vyčnívá: kapsu prohloubte vrtákem 10 mm ručně. Magnety drží slabě: kapsy jsou hluboké 3,2 mm, magnet musí být zarovnán s povrchem oka.</div></div>
+    <div class="st2"><h3>Mechanika zádě a ložiska</h3>
+      <p>Díly: <b>stabilizator</b>, <b>kormidlo_horni</b>, <b>kormidlo_dolni</b>, <b>paka_kormidla</b>, <b>hloubkove_kormidlo</b>, <b>paka_hloubkovych</b>, <b>konzola_hridele_P</b>, <b>prepazka_hridel</b>.</p><ol>
+      <li>Mosaznou tyčku Ø3 prostrčte ložiskem stabilizátoru. Musí se volně otáčet a nesmí se viklat.</li>
+      <li>Listy kormidla a páku nasuňte na tyčku Ø3. Do páky prostrčte drát 1,5.</li>
+      <li>Hloubkové kormidlo a páku nasuňte na tyčku Ø4, páku utáhněte šroubkem M2.</li>
+      <li>Ložisko 624ZZ zatlačte do konzoly a do přepážky hřídelí. Do přepážky zasuňte mosazné trubičky 4 mm.</li></ol>
+<div class="dets"><figure><img src="velka/img/det_kormidla.jpg" alt="Záď: čepy kormidel, páky, spojovací drát, páka hloubkových kormidel, konzola s ložiskem"><figcaption>Záď: čepy kormidel, páky, spojovací drát, páka hloubkových kormidel, konzola s ložiskem</figcaption></figure></div>
+      <div class="check"><b>Projde, když</b>čep Ø3 se ve stabilizátoru točí lehce, listy a páky sedí pevně, ložiska jdou dovnitř ztuha a trubičky projdou otvory.</div>
+      <div class="fix"><b>Když to nejde</b>Těsné otvory převrtejte ručně vrtákem (Ø3 → 3,1, Ø4 → 4,1, drát 1,5 → 1,7). Volné otvory zalepte vteřinovým lepidlem, kromě čepu ve stabilizátoru, ten se musí točit. Ložisko jde moc volně: přilepte epoxidem. Neleze dovnitř: otvor 13,3 mm přebruste smirkem namotaným na tužce.</div></div>
+  </div>
+  <div class="card okbox"><h3>Když všechny čtyři zkoušky prošly</h3><p>Tiskárna, vůle i modul sedí na model. Pokračujte fází 2. Zkušební díly si schovejte: sedlo1 a díly mechaniky použijete rovnou ve stavbě a v celém tisku je pak můžete vynechat.</p></div>
 </section>
 
-<!-- ===== VYVÁŽENÍ ===== -->
-<section class="sec alt" id="vyvazeni"><div class="wrap row">
-  <div class="sec-head"><div class="n">07 · Vyvážení</div><h2>Olovo a první ponor ve vaně</h2>
-    <p class="lede">Výpočet počítá s modulem o hmotnosti 1,19 kg a vakem 250 ml. Obojí je odhad, proto se ponorka dovažuje ve vaně.</p></div>
-  <div class="proof">
-    <div class="tile"><b>≈ 1 kg</b><span>olova</span><p>Pro modul 1,0 kg asi 1,2 kg, pro modul 1,4 kg asi 0,76 kg.</p></div>
-    <div class="tile"><b>800 mm</b><span>od zádi</span><p>Kam olovo patří, aby ponorka ležela vodorovně. Nízko u kýlu, mezi sedla.</p></div>
-    <div class="tile"><b>7 mm</b><span>těžiště pod vztlakem</span><p>Ponorka se sama vrací do svislé polohy.</p></div>
-    <div class="tile"><b>91 mm</b><span>hladina nad kýlem</span><p>S prázdným vakem pluje skoro přesně na čáře ponoru, měřítkově je to 95 mm.</p></div>
+<!-- ===== FÁZE 2 ===== -->
+<section class="sec alt phasebreak" id="f2"><div class="wrap row">
+  <div class="phasehd"><div class="big">2</div><div class="sec-head"><div class="n">Fáze 2 · 58 h tisku · 1,77 kg</div><h2>Tisk celé ponorky na Bambu Lab P1S</h2></div></div>
+  <div class="steps">
+    <div class="st2"><h3>Otevřete projekt</h3><ol>
+      <li>Spusťte Bambu Studio, vyberte <b>Soubor › Otevřít projekt</b> a zvolte <span class="mono">U47_1-50_P1S.3mf</span>.</li>
+      <li>Když se program zeptá, jestli načíst nastavení z projektu, zvolte <b>Ano</b>.</li>
+      <li>Vlevo nahoře zkontrolujte tiskárnu <b>Bambu Lab P1S 0.4 nozzle</b> a filament <b>PLA</b>. Desku použijte texturovanou PEI nebo Cool Plate s lepidlem.</li>
+      <li>Nahoře uvidíte 6 podložek. Každý díl už má svou výšku vrstvy, počet stěn, výplň, límec a rychlost uloženou v projektu. Nic neměňte.</li></ol>
+      <div class="check"><b>Projde, když</b>po kliknutí na <b>Slice all</b> program ukáže všech 6 podložek bez žluté nebo červené hlášky.</div>
+      <div class="fix"><b>Když to nejde</b>Program chce jinou tiskárnu: zvolte P1S 0.4 a projekt otevřete znovu. Díl je mimo podložku: neklikejte na „Uspořádat“, projekt otevřete znovu, rozmístění je spočítané ručně kvůli zakázanému rohu podložky.</div></div>
+    <div class="st2"><h3>Tiskněte v tomto pořadí</h3>
+      <div class="tblwrap"><table class="tbl">
+        <tr><th>Pořadí</th><th>Podložka</th><th>Čas</th><th>Co na ní je</th></tr>
+        <tr><td>1.</td><td>Podložka 6</td><td class="num">0,7 h</td><td>přepážka záď, stabilizátor (rychlá kontrola, že vše běží)</td></tr>
+        <tr><td>2.</td><td>Podložka 4</td><td class="num">19,6 h</td><td>spodek 1, 3, 4, vrch záď 2, vrch příď 1 a 2</td></tr>
+        <tr><td>3.</td><td>Podložka 3</td><td class="num">22,0 h</td><td>spodek 2 a 5, poklop 1–3</td></tr>
+        <tr><td>4.</td><td>Podložka 5</td><td class="num">4,1 h</td><td>vrch záď 1, spodek 6 (příď)</td></tr>
+        <tr><td>5.</td><td>Podložka 1</td><td class="num">4,5 h</td><td>přepážky, konzoly, dělo, lafeta, výstroj, páky, sání, stojan</td></tr>
+        <tr><td>6.</td><td>Podložka 2</td><td class="num">6,7 h</td><td>věž, sedla, podlahy můstku, vrtule, kormidla</td></tr>
+      </table></div>
+      <p>U každé podložky klikněte na <b>Slice plate</b> a pak <b>Print plate</b>. Dlouhé podložky 3 a 4 pouštějte na noc.</p></div>
+    <div class="st2"><h3>Zkontrolujte každý výtisk</h3><div class="grid2"><div><ul>
+      <li>Límec (tenký okraj kolem dílu) opatrně odlomte a hranu přejeďte smirkem 400.</li>
+      <li>Díly trupu postavte na rovný stůl. Nesmí se kývat a spodní hrana nesmí být zvlněná.</li>
+      <li>Vnitřní límce na předních koncích spodků musí být celé, bez odlomených kousků.</li>
+      <li>Rytiny na povrchu (prkna paluby, švy nádrží) nebruste.</li>
+      <li>Každý díl si fixem uvnitř popište jménem z projektu.</li></ul></div>
+      <img src="velka/img/plate_4.png" alt="Podložka 4 v Bambu Studiu"></div>
+      <div class="fix"><b>Když to nejde</b>Díl se během tisku odlepil nebo převrátil: podložku umyjte saponátem, zkontrolujte límec a zkuste znovu. Spodek dílu je zvlněný (warping): zavřete dvířka tiskárny a nevětrejte. Vlásky mezi díly: vysušte filament (50 °C, 6 h). Díl je slabý nebo praská ve vrstvách: tiskněte bez změny rychlosti, zkontrolujte teplotu trysky.</div></div>
   </div>
-  <div class="card"><h3>Postup</h3><ol>
-    <li>Vak prázdný, poklop nasazený. Přidávejte olovo pod modul, dokud ponorka nepluje s palubou těsně nad vodou.</li>
-    <li>Posouvejte olovo dopředu nebo dozadu, až leží vodorovně.</li>
-    <li>Napusťte vak. Ponorka musí pomalu klesat. Když neklesá, přidejte trochu olova.</li>
-    <li>Na hloubce vyzkoušejte kormidla. Při jízdě se hloubkovými kormidly drží v hloubce.</li>
-  </ol></div>
+  <div class="plates">
+    <div class="card"><img src="velka/img/plate_1.png" alt="Podložka 1"><h3>1 · 4,5 h · 182 g</h3></div>
+    <div class="card"><img src="velka/img/plate_2.png" alt="Podložka 2"><h3>2 · 6,7 h · 181 g</h3></div>
+    <div class="card"><img src="velka/img/plate_3.png" alt="Podložka 3"><h3>3 · 22,0 h · 611 g</h3></div>
+    <div class="card"><img src="velka/img/plate_4.png" alt="Podložka 4"><h3>4 · 19,6 h · 616 g</h3></div>
+    <div class="card"><img src="velka/img/plate_5.png" alt="Podložka 5"><h3>5 · 4,1 h · 144 g</h3></div>
+    <div class="card"><img src="velka/img/plate_6.png" alt="Podložka 6"><h3>6 · 0,7 h · 36 g</h3></div>
+  </div>
 </div></section>
 
-<!-- ===== SOUBORY ===== -->
-<section class="wrap sec" id="soubory">
-  <div class="sec-head"><div class="n">08 · Soubory</div><h2>Ke stažení</h2></div>
-  <div class="dl">
-    <a class="main" href="velka/downloads/U47_1-50_P1S.3mf" download><b>Projekt pro Bambu Studio</b><span>U47_1-50_P1S.3mf · P1S, 6 podložek, nastavení dílů · 5 MB</span></a>
-    <a href="velka/downloads/U47_1-50_STL.zip" download><b>Všechny díly jako STL</b><span>53 dílů v tiskové poloze, pro jiné slicery</span></a>
-    <a href="velka/models/u47_50.glb" download><b>3D model sestavy</b><span>GLB se všemi díly i modulem, rozměry v mm</span></a>
+<!-- ===== FÁZE 3 ===== -->
+<section class="wrap sec phasebreak" id="f3">
+  <div class="phasehd"><div class="big">3</div><div class="sec-head"><div class="n">Fáze 3 · 2–3 večery</div><h2>Stavba krok za krokem</h2></div></div>
+  <div class="card"><h3>Jak lepit</h3><ul>
+    <li><b>Trup a všechno, co bude pod vodou:</b> dvousložkový epoxid. Lepené plochy přebruste smirkem 240 a otřete isopropylalkoholem. Epoxid nanášejte tence, přebytek setřete hned.</li>
+    <li><b>Drobnosti na palubě a magnety:</b> vteřinové lepidlo.</li>
+    <li><b>Nikdy nelepte</b> čepy kormidel ve stabilizátoru, hřídele v ložiscích, táhla v trubičkách, poklop k trupu a modul do sedel.</li>
+    <li>Před každým lepením díly složte nasucho a zkontrolujte, že sedí.</li></ul></div>
+  <div class="steps">
+    <div class="st2"><h3>Spodek trupu</h3><div class="grid2"><div><ol>
+      <li>Položte díly spodek 1 až 6 za sebou od zádi a nasucho je spojte přes límce.</li>
+      <li>Lepte po jednom spoji: epoxid na límec, nasunout, přitlačit na rovné podložce.</li>
+      <li>Natáhněte provázek od zádi k přídi po kýlu a zkontrolujte, že trup není prohnutý. Nechte vytvrdnout podle návodu lepidla.</li></ol>
+      <div class="check"><b>Kontrola</b>trup leží rovně, spoje jsou bez schodů.</div>
+      <div class="fix"><b>Když to nejde</b>Schod na spoji přebruste až po vytvrdnutí. Prohnutý trup rozlepte teplým vzduchem (fén, ne horkovzdušná pistole) a slepte znovu.</div></div>
+      <img src="velka/img/krok1_spodek.jpg" alt="Spodek trupu"></div><div class="dets"><figure><img src="velka/img/det_spoj.jpg" alt="Detail: límec dílu 3 zajede do dílu 4, lepí se epoxidem po celém obvodu"><figcaption>Detail: límec dílu 3 zajede do dílu 4, lepí se epoxidem po celém obvodu</figcaption></figure></div></div>
+    <div class="st2"><h3>Přepážky, sedla, trubičky, sání</h3><div class="grid2"><div><ol>
+      <li>Každá přepážka má svou drážku mezi dvěma žebírky. Od zádi: <b>záď (x 160), hřídel (300), motor 1 (365), motor 2 (403), doraz (462), sedlo 1 (560), sedlo 2 (840), přední (942)</b>. Číslo je vzdálenost od zádi v mm.</li>
+      <li>Nasucho vložte všechny a protáhněte mosazné trubičky táhel (2 × 360 mm). Trubičky musí jít rovně všemi přepážkami.</li>
+      <li>Do přepážky hřídelí zatlačte ložiska 624ZZ.</li>
+      <li>Lepte přepážky epoxidem, trubičky vteřinovým lepidlem. Sání čerpadla vlepte zevnitř na otvor ve dně, trnem nahoru.</li></ol>
+      <div class="check"><b>Kontrola</b>drát 1,5 projde oběma trubičkami bez drhnutí.</div>
+      <div class="fix"><b>Když to nejde</b>Trubička nejde přes všechny přepážky: přepážku ještě nelepenou pootočte nebo otvor převrtejte na 4,1 mm.</div></div>
+      <img src="velka/img/krok2_prepazky.jpg" alt="Přepážky"></div></div>
+    <div class="st2"><h3>Záď: hřídele, motory, kormidla</h3><div class="grid2"><div><ol>
+      <li><b>Stabilizátor</b> vlepte žebrem do drážky ve dně zádě.</li>
+      <li><b>Konzoly hřídelí</b> zasuňte kolíky do otvorů v boku a vlepte do nich ložiska. Hřídele Ø4 (250 mm) protáhněte konzolou, trupem a ložiskem v přepážce.</li>
+      <li>Na hřídele nasaďte spojky a motory zasuňte do přepážek motor 1 a 2. <b>Motory nelepte</b>, jen je zajistěte páskou, aby šly vysunout dopředu.</li>
+      <li>Svislá kormidla: čep Ø3 (45 mm) prostrčte stabilizátorem, nalepte horní a dolní list. Na horní konec nalepte páku. Páky obou kormidel spojte drátem 1,5 skrz štěrbinu v zádi.</li>
+      <li>Hloubková kormidla: páku vložte dovnitř zádě, protáhněte hřídel Ø4 (65 mm), utáhněte šroubek M2 a nalepte oba listy. <b>Udělejte to dřív, než nalepíte horní záď.</b></li>
+      <li>Spodní drát z trubičky připojte koncovkou ke spojovací tyčce svislých kormidel, horní drát k páce hloubkových kormidel.</li></ol>
+      <div class="check"><b>Kontrola</b>hřídele se točí rukou lehce. Svislá kormidla jdou ±30°, hloubková ±25°, nic nedrhne.</div>
+      <div class="fix"><b>Když to nejde</b>Hřídel jde ztuha: povolte konzolu, srovnejte ji podle hřídele a teprve pak lepte. Kormidlo drhne o trup: list posuňte na čepu o 0,5 mm a přilepte znovu.</div></div>
+      <img src="velka/img/krok3_zad.jpg" alt="Záď"></div><div class="dets"><figure><img src="velka/img/det_motory.jpg" alt="Motory v otvorech dvou přepážek (nelepí se), oranžové spojky na hřídele, ložiska 624ZZ v přepážce a konzole"><figcaption>Motory v otvorech dvou přepážek (nelepí se), oranžové spojky na hřídele, ložiska 624ZZ v přepážce a konzole</figcaption></figure><figure><img src="velka/img/det_kormidla.jpg" alt="Táhla v mosazných trubičkách k páce hloubkových kormidel a ke spojovací tyčce svislých kormidel"><figcaption>Táhla v mosazných trubičkách k páce hloubkových kormidel a ke spojovací tyčce svislých kormidel</figcaption></figure></div></div>
+    <div class="st2"><h3>Horní záď a příď</h3><div class="grid2"><div><ol>
+      <li>Nalepte <b>vrch záď 1 a 2</b> a <b>vrch příď 1 a 2</b> na spodek. Lem horního dílu zapadne dovnitř spodku.</li>
+      <li>Do štěrbin v přídi vlepte <b>příďová kormidla</b>.</li>
+      <li>Do čtyř ok na hraně otvoru pro poklop vlepte magnety (polarita podle zkoušky ve fázi 1).</li></ol>
+      <div class="check"><b>Kontrola</b>okraje otvoru pro poklop jsou rovné, poklop nasucho dosedne.</div>
+      <div class="fix"><b>Když to nejde</b>Horní díl nedosedne: lem drhne o přepážku, přebruste lem v tom místě.</div></div>
+      <img src="velka/img/krok4_vrch.jpg" alt="Horní záď a příď"></div><div class="dets"><figure><img src="velka/img/det_magnety.jpg" alt="Kam magnet: kapsa v oku na hraně otvoru, 4 oka vzadu a vpředu, protikus v okách poklopu"><figcaption>Kam magnet: kapsa v oku na hraně otvoru, 4 oka vzadu a vpředu, protikus v okách poklopu</figcaption></figure></div></div>
+    <div class="st2"><h3>Modul</h3><div class="grid2"><div><ol>
+      <li>Modul vložte shora do sedel, víkem s vývody dozadu a anténním vývodem nahoru.</li>
+      <li>U každého sedla natáhněte přes trubku O‑kroužek a zahákněte ho za oba kolíky.</li>
+      <li>Táhla z měchů spojte pájecími koncovkami s dráty v trubičkách. Hadičku 6 mm z vývodu čerpadla nasaďte na trn sání. Kabel motorů připojte k motorům.</li></ol>
+      <div class="check"><b>Kontrola</b>vysílačem pohnete kormidly v obou směrech až do krajních poloh, motory se točí.</div>
+      <div class="fix"><b>Když to nejde</b>Kormidlo jde jen na jednu stranu: posuňte koncovku na drátu tak, aby byla neutrální poloha uprostřed. Táhlo drhne: zkontrolujte, že trubičky nejsou v místě lepení zalité lepidlem.</div></div>
+      <img src="velka/img/krok5_modul.jpg" alt="Modul"></div><div class="dets"><figure><img src="velka/img/det_sedlo.jpg" alt="Modul v sedle, O‑kroužek přes trubku za kolíky"><figcaption>Modul v sedle, O‑kroužek přes trubku za kolíky</figcaption></figure><figure><img src="velka/img/det_tahla.jpg" alt="Za zadním víkem: měchy, pájecí koncovky M2 a dráty v trubičkách, hadička čerpadla k sání ve dně"><figcaption>Za zadním víkem: měchy, pájecí koncovky M2 a dráty v trubičkách, hadička čerpadla k sání ve dně</figcaption></figure></div></div>
+    <div class="st2"><h3>Poklop, věž a výstroj</h3><div class="grid2"><div><ol>
+      <li>Slepte <b>poklop 1 až 3</b> stejně jako spodek. Do ok vlepte magnety.</li>
+      <li>Věž nalepte do rýhy v poklopu. Vložte podlahy můstku, do periskopů zasuňte mosazné trubičky Ø4.</li>
+      <li>Dělo, lafetu, úvazníky, naviják, řezač sítí a sloupek lana posaďte na kousky filamentu 1,75 do otvorů v palubě a přilepte.</li>
+      <li>Lano proti sítím natáhněte od sloupku na zádi přes otvory ve věži k řezači sítí.</li>
+      <li>Anténu protáhněte otvorem v palubě pod věží až do věže.</li></ol>
+      <div class="check"><b>Kontrola</b>poklop jde nasadit i sundat a nic neruší modul.</div>
+      <div class="fix"><b>Když to nejde</b>Poklop nedosedne kvůli anténě: zkraťte trubičku antény nebo ji veďte podél boku.</div></div>
+      <img src="velka/img/krok6_vystroj.jpg" alt="Poklop a výstroj"></div><div class="dets"><figure><img src="velka/img/det_vez.jpg" alt="Věž: přední podlaha s periskopy, UZO, kompasem a rámovou anténou; zadní podlaha"><figcaption>Věž: přední podlaha s periskopy, UZO, kompasem a rámovou anténou; zadní podlaha</figcaption></figure></div></div>
   </div>
+  <div class="card"><h3>Barvy (stav říjen 1939)</h3><p>Horní část trupu a věž Dunkelgrau 51 (RAL 7000), spodek po čáru ponoru těsně pod řadami otvorů Schiffsbodenfarbe III Grau (RAL 7016). Paluba je dřevo napuštěné černě, jen přetřít tmavou lazurou. Býk na věži bíle. Před barvením plasty přebruste smirkem 400 a nastříkejte základ na plasty.</p></div>
+</section>
+
+<!-- ===== FÁZE 4 ===== -->
+<section class="sec alt phasebreak" id="f4"><div class="wrap row">
+  <div class="phasehd"><div class="big">4</div><div class="sec-head"><div class="n">Fáze 4 · 1 večer</div><h2>Zkoušky na suchu, vana, vyvážení a první ponor</h2></div></div>
+  <div class="steps">
+    <div class="st2"><h3>Zkouška na suchu</h3><ol>
+      <li>Kormidla: každé v obou směrech až na doraz. Ve vysílači nastavte koncové body tak, aby nic nedrhlo a serva v krajní poloze nebzučela.</li>
+      <li>Motory: krátce oběma směry. Vzduch nebo voda má jít od vrtulí dozadu, když dáte plyn vpřed. Když ne, prohoďte dva vodiče motoru.</li>
+      <li>Čerpadlo: napusťte a vypusťte vak. Koncové spínače musí čerpadlo zastavit.</li></ol>
+      <div class="fix"><b>Když to nejde</b>Vrtule se točí stejným směrem: jeden motor má prohozené vodiče. Čerpadlo se nezastaví: zkontrolujte spínače D2SW‑P v modulu.</div></div>
+    <div class="st2"><h3>Vyvážení ve vaně</h3><div class="grid2"><div>
+      <p>Kolik olova přibližně budete potřebovat, spočítáte z hmotnosti modulu a objemu vaku z fáze 0:</p>
+      <p class="mono" style="font-size:1.05rem;color:var(--ink)">olovo ≈ 993 − 1,1 × (modul − 1190) − 1,1 × (vak − 250) g</p>
+      <p class="small">Příklad: modul 1000 g, vak 400 ml → olovo asi 1040 g.</p><ol>
+      <li>Vak prázdný, poklop nasazený. Olovo v sáčcích dávejte pod modul mezi sedla, dokud ponorka nepluje s palubou těsně nad vodou.</li>
+      <li>Posouvejte olovo dopředu nebo dozadu, až leží vodorovně. Těžiště olova vychází asi 800 mm od zádi.</li>
+      <li>Ponorku zatlačte na stranu a pusťte: musí se sama narovnat.</li>
+      <li>Napusťte vak: ponorka musí pomalu klesat. Když neklesá, přidejte olovo po 10 g.</li></ol></div>
+      <img src="velka/img/bok.jpg" alt="Bokorys"></div>
+      <div class="fix"><b>Když to nejde</b>Ponorka se převrací na bok: olovo dejte níž, přímo na dno. Leží s přídí dolů: olovo posuňte dozadu. S plným vakem neklesá: vak je menší, přidejte olovo. Pod vodou se nevynoří: ubírejte olovo, dokud se s prázdným vakem nevynoří sama.</div></div>
+    <div class="st2"><h3>První ponor</h3><ol>
+      <li>Poprvé v bazénu nebo ve vaně, na tenké šňůře uvázané ke sloupku lana.</li>
+      <li>Nejdřív jen ponor a vynoření vakem na místě. Pak pomalu jízda u hladiny.</li>
+      <li>Vyzkoušejte, do jaké hloubky drží rádio spojení.</li>
+      <li>Po plavbě poklop sundejte, vylijte vodu a nechte vše vyschnout.</li></ol>
+      <div class="fix"><b>Když to nejde</b>Ztráta spojení pod vodou: anténa musí vést do věže a přijímač musí být 40/41 MHz. Modul je vlhký: ihned vytáhnout, vysušit a znovu udělat bod 12 fáze 0. Nastavte si ve vysílači failsafe na „vyprázdnit vak“, aby se ponorka při ztrátě signálu vynořila.</div></div>
+  </div>
+</div></section>
+
+<!-- ===== POTÍŽE ===== -->
+<section class="wrap sec" id="potize">
+  <div class="sec-head"><div class="n">Když něco nejde</div><h2>Rychlá pomoc</h2></div>
+  <div class="tblwrap"><table class="tbl">
+    <tr><th>Potíž</th><th>Pravděpodobná příčina</th><th>Co udělat</th></tr>
+    <tr><td>Díly trupu nejdou do sebe</td><td>tiskárna tiskne větší obrys</td><td>Kompenzace obrysu XY −0,05 mm, nebo přebrousit límec.</td></tr>
+    <tr><td>Modul se nevejde do sedel</td><td>trubka větší než 90,6 mm</td><td>Přebrousit sedla, viz fáze 0, bod 2.</td></tr>
+    <tr><td>Ouška víka narážejí do trupu</td><td>modul pootočený o víc než 25°</td><td>Pootočit modul, aby ouška byla svisle. Když to kvůli desce nejde, model se musí přepočítat.</td></tr>
+    <tr><td>Kormidla mají malý výchylku</td><td>malý zdvih serva</td><td>Táhlo dál od osy páky serva, koncové body ve vysílači na 120 %.</td></tr>
+    <tr><td>Kormidla drhnou</td><td>lepidlo v trubičce nebo na čepu</td><td>Vyčistit, převrtat 1,7 / 3,1 mm.</td></tr>
+    <tr><td>Hřídel jde ztuha</td><td>konzola není v ose</td><td>Konzolu rozlepit, srovnat podle hřídele, přilepit znovu.</td></tr>
+    <tr><td>Ponorka se nepotopí</td><td>málo olova nebo malý vak</td><td>Přidat olovo po 10 g.</td></tr>
+    <tr><td>Ponorka se nevynoří</td><td>moc olova</td><td>Ubrat olovo, s prázdným vakem musí plavat.</td></tr>
+    <tr><td>Ztráta signálu pod vodou</td><td>2,4 GHz nebo anténa uvnitř trupu</td><td>Přijímač 40/41 MHz, anténa do věže, failsafe na vyprázdnění vaku.</td></tr>
+    <tr><td>Voda v modulu</td><td>O‑kroužek víka nebo měch</td><td>Vysušit, vyměnit nebo promazat O‑kroužek, zkontrolovat měchy.</td></tr>
+  </table></div>
 </section>
 
 <!-- ===== OVĚŘENO ===== -->
 <section class="sec alt" id="overeno"><div class="wrap row">
-  <div class="sec-head"><div class="n">09 · Ověřeno</div><h2>Co je zkontrolované v počítači</h2></div>
+  <div class="sec-head"><div class="n">Co je ověřené a co ne</div><h2>Zkontrolováno v počítači, ve vodě zatím ne</h2></div>
   <div class="cards">
     <div class="card okbox"><h3>Sestava bez kolizí</h3><p>Kontrola prošla ve 20 bodech. Modul má k trupu vůli aspoň 0,5 mm. Volně procházejí motory, hřídele, vrtule a táhla. Kormidla se natočí v plném rozsahu ±30° a ±25°. Poklop jde zvednout a O‑kroužky se přes trubku vejdou.</p></div>
-    <div class="card okbox"><h3>Tisk</h3><p>Všechny díly jsou uzavřená tělesa. Každá vrstva je zkontrolovaná na převisy. Bambu Studio naslicuje všech 6 podložek bez varování.</p></div>
-    <div class="card warnbox"><h3>Co ověřit nejde</h3><p>Hmotnost modulu, objem vaku a průměr hřídele motoru jsou odhady. Ve vodě zatím ponorka neplula.</p></div>
+    <div class="card okbox"><h3>Tisk</h3><p>Všechny díly jsou uzavřená tělesa. Každá vrstva je zkontrolovaná na převisy. Bambu Studio naslicuje všech 6 podložek celé ponorky i obě zkušební podložky bez varování.</p></div>
+    <div class="card warnbox"><h3>Co se musí ověřit u vás</h3><p>Natočení desky v modulu, délka měchů, zdvih serv, hmotnost modulu, objem vaku, hřídel motoru a vůle spojů na vaší tiskárně. Proto je tu fáze 0 a zkušební tisky.</p></div>
+  </div>
+  <div class="dl noprint">
+    <a class="main" href="velka/downloads/U47_1-50_manual.pdf" download><b>Manuál PDF</b><span>k vytištění, s obrázky</span></a>
+    <a href="velka/downloads/U47_zkousky_P1S.3mf" download><b>Zkušební tisky</b><span>projekt pro Bambu Studio, 2 podložky, 4,7 h</span></a>
+    <a href="velka/downloads/U47_1-50_P1S.3mf" download><b>Celá ponorka</b><span>projekt pro Bambu Studio, 6 podložek, 58 h</span></a>
+    <a href="velka/downloads/U47_1-50_STL.zip" download><b>Všechny STL</b><span>53 dílů v tiskové poloze</span></a>
+    <a href="velka/models/u47_50.glb" download><b>3D model</b><span>GLB se všemi díly, v mm</span></a>
   </div>
   <p class="small muted">Předloha: bokorys a popis úprav U‑47 v letech 1938–1941 od Dougieho Martindalea (Accurate Model Parts, <a href="https://www.uboatarchive.net/Modeling/U47_mods.pdf">U47_mods.pdf</a>). Rozměry typu VIIB: <a href="https://en.wikipedia.org/wiki/Type_VII_submarine">Wikipedia</a>. Řídicí modul a trup Holland: projekt Minialand.</p>
 </div></section>
 
 <footer>Wilhelm · U‑47 1:50 · <a href="index.html">zpět na malou ponorku 1:200</a></footer>
 <script type="importmap">{"imports":{"three":"./lib/three.module.js","three/addons/":"./lib/addons/"}}</script>
-<script type="module" src="js/velka3d.js?v=20261111c"></script>
+<script type="module" src="js/velka3d.js?v=20261111d"></script>
 </body>
 </html>
