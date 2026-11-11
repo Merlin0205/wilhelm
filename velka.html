@@ -22,10 +22,11 @@
 .tblwrap{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:6px 10px}
 .v3d{display:grid;grid-template-columns:1fr 330px;gap:14px}
 @media (max-width:960px){.v3d{grid-template-columns:1fr}}
-.v3d-stage{position:relative;border-radius:var(--r);overflow:hidden;background:#0a1a28;border:1px solid var(--line)}
+.v3d-stage{position:relative;border-radius:var(--r);overflow:hidden;background:#fff;border:1px solid var(--line)}
 .v3d-stage canvas{display:block;width:100%;height:min(72vh,660px);touch-action:none;cursor:grab}
 @media (max-width:700px){.v3d-stage canvas{height:58vh}}
-.v3d-status{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-family:var(--fm);font-size:.8rem}
+.frame{background:#fff}
+.v3d-status{position:absolute;inset:0;display:grid;place-items:center;color:#44525e;font-family:var(--fm);font-size:.8rem}
 .v3d-tools{position:absolute;top:10px;left:10px;display:flex;gap:6px}
 .v3d button{font-family:var(--fm);font-size:.72rem;letter-spacing:.04em;color:var(--ink);background:rgba(19,38,55,.92);border:1px solid var(--line2);border-radius:8px;padding:7px 10px;cursor:pointer}
 .v3d button:hover{border-color:var(--brass)} .v3d button.on{background:var(--brass);color:#14100a;border-color:var(--brass)}
@@ -57,7 +58,7 @@
 .chip.m{background:rgba(95,208,155,.14);color:var(--ok)} .chip.f{background:rgba(155,175,192,.12);color:var(--muted)} .chip.r{background:rgba(127,179,224,.14);color:var(--steel)}
 .warnbox{border-left:4px solid var(--bad)} .okbox{border-left:4px solid var(--ok)}
 .plates{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
-.plates .card img{width:100%;border-radius:10px;background:#0a1a28}
+.plates .card img{width:100%;border-radius:10px;background:#fff}
 footer{border-top:1px solid var(--line);padding:30px var(--gutter);color:var(--dim);font-size:.85rem;text-align:center}
 
 .phasehd{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center}
@@ -68,7 +69,7 @@ footer{border-top:1px solid var(--line);padding:30px var(--gutter);color:var(--d
 .st2 h3::before{counter-increment:st;content:counter(st);font-family:var(--fd);color:#14100a;background:var(--brass);border-radius:50%;width:30px;height:30px;display:inline-grid;place-items:center;font-size:1.05rem;flex:none}
 .st2 .grid2{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:16px;align-items:start}
 @media (max-width:860px){.st2 .grid2{grid-template-columns:1fr}}
-.st2 img{width:100%;border-radius:10px;background:#0a1a28}
+.st2 img{width:100%;border-radius:10px;background:#fff}
 .st2 p,.st2 li{color:var(--muted)}
 .check{border-left:4px solid var(--ok);background:rgba(95,208,155,.06);padding:8px 12px;border-radius:8px}
 .fix{border-left:4px solid var(--warn);background:rgba(240,184,64,.07);padding:8px 12px;border-radius:8px}
@@ -79,7 +80,7 @@ footer{border-top:1px solid var(--line);padding:30px var(--gutter);color:var(--d
 .btns a{display:inline-flex;gap:8px;align-items:center;padding:10px 16px;border-radius:10px;border:1px solid var(--line2);background:var(--panel);color:var(--ink);text-decoration:none;font-weight:600}
 .btns a.main{border-color:var(--brass);background:rgba(227,185,78,.14);color:var(--brass)}
 .dets{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
-.dets figure{margin:0;display:grid;gap:4px}.dets img{width:100%;border-radius:10px;background:#0a1a28}.dets figcaption{font-size:.85rem;color:var(--muted)}
+.dets figure{margin:0;display:grid;gap:4px}.dets img{width:100%;border-radius:10px;background:#fff}.dets figcaption{font-size:.85rem;color:var(--muted)}
 .toc{columns:2;gap:24px} @media (max-width:700px){.toc{columns:1}}
 .toc a{color:var(--steel)}
 @page{size:A4;margin:12mm 12mm 14mm}
@@ -101,7 +102,7 @@ footer{border-top:1px solid var(--line);padding:30px var(--gutter);color:var(--d
   .st2,.card,.tblwrap,figure{break-inside:avoid}
   h2{font-size:22pt} .hero2{padding-top:0}
   a{color:#1a4f86;text-decoration:none}
-  .frame{background:#eef2f6}
+  .frame{background:#fff}
   .st2 img,.plates img{background:#eef2f6}
   .specs b{color:#8a5a00}
 }
@@ -565,6 +566,6 @@ footer{border-top:1px solid var(--line);padding:30px var(--gutter);color:var(--d
 
 <footer>Wilhelm · U‑47 1:50 · <a href="index.html">zpět na malou ponorku 1:200</a></footer>
 <script type="importmap">{"imports":{"three":"./lib/three.module.js","three/addons/":"./lib/addons/"}}</script>
-<script type="module" src="js/velka3d.js?v=20261111d"></script>
+<script type="module" src="js/velka3d.js?v=20261111e"></script>
 </body>
 </html>

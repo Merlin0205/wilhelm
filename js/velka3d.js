@@ -83,10 +83,10 @@ function explodeVec(name, c) {
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.localClippingEnabled = true;
 renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.outputColorSpace = THREE.SRGBColorSpace;
-const scene = new THREE.Scene(); scene.background = new THREE.Color(0x0a1a28);
+const scene = new THREE.Scene(); scene.background = new THREE.Color(0xffffff);
 scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
 const sun = new THREE.DirectionalLight(0xffffff, 1.6); sun.position.set(400, 900, 700); scene.add(sun);
-scene.add(new THREE.HemisphereLight(0xbfd8ff, 0x1a2430, 0.6));
+scene.add(new THREE.HemisphereLight(0xffffff, 0x9aa4ac, 0.9));
 const camera = new THREE.PerspectiveCamera(32, 1, 5, 20000);
 const controls = new OrbitControls(camera, canvas); controls.enableDamping = true; controls.autoRotate = true; controls.autoRotateSpeed = 0.8;
 controls.minDistance = 60; controls.maxDistance = 6000;
