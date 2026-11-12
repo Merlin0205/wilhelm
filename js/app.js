@@ -4,7 +4,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { STLLoader } from 'three/addons/loaders/STLLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
-const ST = window.WILHELM_STATS;                 // z v2_stats.json (vloženo do HTML)
+const ST = window.WILHELM_STATS;                 // z v4_stats.json (vloženo do HTML)
 const L = ST.length_mm, WL = ST.waterline_mm, DECK = ST.deck_mm;
 const CENTER = new THREE.Vector3(L / 2, 0, 16);   // střed otáčení v souřadnicích modelu
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -16,7 +16,7 @@ function fixGeom(g) { g.rotateX(-Math.PI / 2); g.translate(-CENTER.x, -CENTER.z,
 
 // ---------- načtení geometrií (sdílené mezi scénami)
 const loader = new STLLoader();
-const FILES = ['hull_stern', 'hull_bow', 'tower', 'gun', 'flak', 'lid', 'planes', 'rudders', 'cartridge', 'ballast_caps', 'cup', 'siphon', 'void', 'test_block'];
+const FILES = ['hull_stern', 'hull_bow', 'tower', 'gun', 'flak', 'lid', 'planes', 'rudders', 'cartridge', 'ballast', 'cup', 'siphon', 'void', 'test_block'];
 const geoms = {};
 await Promise.all(FILES.map(n => new Promise((res, rej) => loader.load(`models/${n}.stl`, g => { geoms[n] = fixGeom(g); res(); }, undefined, rej))))
   .catch(e => { document.querySelectorAll('.overlay').forEach(o => o.textContent = 'Model se nepodařilo načíst. Stránku je nutné otevřít přes http server, ne jako soubor.'); throw e; });
@@ -28,11 +28,11 @@ const PART_INFO = {
   hull_bow:   { name: 'Trup, příďový díl', color: COLORS.hull, explode: [46, 0, 0], file: 'hull_bow_print.stl' },
   tower:      { name: 'Věž', color: COLORS.tower, explode: [0, 0, 38], file: 'tower.stl' },
   cartridge:  { name: 'Palivová kazeta', color: COLORS.brass, explode: [0, 0, 38], file: 'fuel_cartridge.stl' },
-  ballast_caps: { name: 'Víčka zátěže', color: COLORS.brass, explode: [0, 0, -36], file: 'ballast_cap.stl ×2' },
+  ballast:    { name: 'Zátěž: ocelové matice M8 a M4', color: 0x9aa3ab, explode: [0, 0, -44], file: 'netiskne se, koupit' },
   gun:        { name: 'Dělo 8,8 cm', color: COLORS.brass, explode: [0, 0, 28], file: 'gun_88.stl' },
   flak:       { name: 'Flak 2 cm', color: COLORS.brass, explode: [0, 0, 22], file: 'flak_20.stl' },
   lid:        { name: 'Zátka s mřížkou', color: COLORS.lid, explode: [0, 0, -30], file: 'lid_normal.stl' },
-  planes:     { name: 'Hloubková kormidla (otočná)', color: COLORS.brass, explode: [0, 0, -24], file: 'plane_bow.stl, plane_stern.stl' },
+  planes:     { name: 'Hloubková kormidla (otočná)', color: COLORS.brass, explode: [0, 0, -24], file: 'plane_bow_a/b.stl, plane_stern_a/b.stl' },
   rudders:    { name: 'Kormidla (otočná)', color: COLORS.brass, explode: [0, 0, -30], file: 'rudder.stl ×2' },
 };
 const INNER = { cup: COLORS.cup, siphon: COLORS.siphon, void: COLORS.void };
@@ -109,7 +109,7 @@ class Dive {
   constructor() { this.reset(); this.speed = 1; this.playing = true; this.status = ''; }
   reset() { this.gas = 0; this.phase = 'fill'; this.y = -1; this.v = 0; this.dumpT = 0; }
   step(dt, depth) {
-    const NEUTRAL = Math.abs(ST.net_g) / ST.gas_capacity_cm3 + 0.1;   // podíl plynu pro neutrální vztlak (+prášek)
+    const NEUTRAL = ST.weight_in_water_g / ST.gas_capacity_cm3;   // podíl plynu, při kterém se ponorka právě vznáší
     if (this.phase === 'fill') { this.gas = Math.min(1, this.gas + dt / 9); if (this.gas >= 1) { this.phase = 'dump'; this.dumpT = 0; } }
     else { this.dumpT += dt; this.gas = Math.max(0, 1 - this.dumpT / 1.4); if (this.gas <= 0) this.phase = 'fill'; }
     const lift = (this.gas - NEUTRAL) * 70; this.v += lift * dt; this.v *= Math.pow(0.3, dt); this.y += this.v * dt;
@@ -146,10 +146,10 @@ class Dive {
   const labelsEl = document.getElementById('storyLabels'); const capEl = document.getElementById('diveCaption');
   const LABELS = {
     tower: ['věž (Turm 0)', ST.tower_cx, 0, DECK + 16], gun: ['dělo 8,8 cm SK C/35', ST.gun_x, 0, DECK + 7], flak: ['flak 2 cm', ST.flak_x, 0, DECK + 5],
-    bow: ['příďový díl 118 mm', ST.split_x + 60, 0, DECK + 3], stern: ['záďový díl 215 mm', 90, 0, DECK + 3], split: ['spoj: 2 kolíky Ø4', ST.split_x, -16, 14],
-    lid: ['zátka s mřížkou', ST.cup.cx, 0, -4], planes: ['otočná hloubková kormidla, západky 0 / ±10 / ±20°', 60.5 * 5, 20, 16], rud: ['dvě kormidla', 13, 0, 8],
-    cup: ['komora na prášek 12 × 60 mm, 25 mm před těžištěm', ST.cup.cx, 0, 5], siphon: ['plynový sifon Ø 9 mm', ST.siphon.xb, 0, -7], voidl: ['uzavřená dutina plováku ' + ST.void_cm3 + ' cm³', ST.cup.cx - 60, 0, 26], slots: ['zaplavovací otvory nástavby', 260, 9, DECK - 2.6], rudders: ['kormidla na čepech, stabilizátor', 10, 0, 6], name: ['reliéf WILHELM', 77, -9, 20],
-    screws: ['otvory M4 pro dolaďovací šroubky', ST.screw_x[1], 0, 3], exit: ['výstup plynu, pravobok', ST.siphon.xc - 14, 14, ST.siphon.exit_z + 12],
+    bow: ['příďový díl ' + Math.round(ST.length_mm - ST.split_x) + ' mm', ST.split_x + 40, 0, DECK + 3], stern: ['záďový díl ' + Math.round(ST.split_x) + ' mm', 90, 0, DECK + 3], split: ['spoj: 2 kolíky Ø4', ST.split_x, -16, 14],
+    lid: ['víčko komory s trubičkou na matice', ST.cup.cx - 14, 0, -10], planes: ['otočná hloubková kormidla, 5 poloh', 60.5 * 5, 20, 16], rud: ['dvě kormidla', 13, 0, 8],
+    cup: ['komora na plyn ' + ST.cup.w + ' × ' + ST.cup.l + ' mm', ST.cup.cx, 0, 12], siphon: ['kanálek: vypustí plyn naráz', ST.siphon.xc + 16, 0, -3], voidl: ['uzavřený vzduch ' + Math.round(ST.void_cm3) + ' cm³', ST.cup.cx + 62, 0, 30], slots: ['zaplavovací otvory nástavby', 260, 9, DECK - 2.6], rudders: ['kormidla na čepech, stabilizátor', 10, 0, 6], name: ['reliéf WILHELM', 77, -9, 20],
+    screws: ['ocelové matice v kýlu', ST.ballast.m8_slots_x[ST.ballast.m8_slots_x.length - 1], 0, -8], exit: ['výstup plynu, pravobok', ST.siphon.xc - 14, 14, ST.siphon.exit_z + 12],
   };
   const labelEls = {}; for (const k of Object.keys(LABELS)) { const d = document.createElement('div'); d.className = 'lbl'; d.textContent = LABELS[k][0]; labelsEl.appendChild(d); labelEls[k] = d; }
 
@@ -204,13 +204,13 @@ class Dive {
     water.position.y = THREE.MathUtils.lerp(300, WL - CENTER.z, state.dive);
     tank.position.y = -CENTER.z - DEPTH - 2;
     sub.root.position.y = subY * state.dive;
-    sub.root.rotation.z = state.dive > 0.02 ? THREE.MathUtils.degToRad(-14 + 32 * dive.gas) * state.dive : 0;   // kluzák: příď nahoru s plynem
+    sub.root.rotation.z = state.dive > 0.02 ? THREE.MathUtils.degToRad(-4 + 7 * dive.gas) * state.dive : 0;   // s plynem se příď zvedne o pár stupňů
     gas.visible = state.dive > 0.02;
     const gh = Math.max(0.01, cupH * dive.gas); gas.scale.y = gh; gas.position.set(ST.cup.cx - CENTER.x, (ST.cup.top - gh / 2) - CENTER.z, 0);
     siphonMat.emissiveIntensity = dive.phase === 'dump' ? 1.4 : 0.25; sub.inner.siphon.material.opacity = state.dive > 0.02 ? 0.85 : state.inner * 0.55;
     bubbles.points.visible = state.dive > 0.02;
     if (state.dive > 0.5 && dive.playing && !reduced) {
-      if (dive.phase === 'fill' && Math.random() < 0.6) bubbles.spawn(toThree(ST.cup.cx + (Math.random() - .5) * 50, 0, 3).add(sub.root.position), 6, 25);
+      if (dive.phase === 'fill' && Math.random() < 0.6) bubbles.spawn(toThree(ST.cup.cx + (Math.random() - .5) * 22, 0, 3).add(sub.root.position), 6, 25);
       if (dive.phase === 'dump') for (let k = 0; k < 3; k++) bubbles.spawn(toThree(ST.siphon.xc, 16, ST.siphon.exit_z).add(sub.root.position), 4, 70);
     }
     bubbles.update(dt, WL - CENTER.z);

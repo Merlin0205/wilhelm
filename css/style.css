@@ -198,3 +198,4 @@ footer .wrap{display:grid;gap:14px}
 .tabs a.on{background:var(--brass);color:#14100a;font-weight:600}
 @media (min-width:1500px){.tabs{top:10px}}
 @media (max-width:860px){.tabs{top:auto;bottom:12px}}
+.steplist{margin:0;padding-left:1.25em;display:grid;gap:7px;color:var(--muted)} .steplist b{color:var(--ink)}

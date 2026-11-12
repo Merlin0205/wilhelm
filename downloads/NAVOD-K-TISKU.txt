@@ -1,42 +1,70 @@
-WILHELM – ponorka U-47 (typ VIIB) 1:200, která se sama potápí, vynořuje a pluje dopředu
-=========================================================================================
+WILHELM – ponorka U-47 (typ VIIB) 1:200, která se sama potápí a vynořuje
+=========================================================================
 Návod s obrázky a 3D: https://merlin0205.github.io/wilhelm/
+Ověřeno výpočtem a v Bambu Studiu. Ve skutečné vodě zatím nezkoušeno.
 
-1) TISK (Bambu Lab P1S, tryska 0,4 mm, PLA)
+CO JE POTŘEBA
+   - tiskárna Bambu Lab P1S, běžné PLA (PLA Basic), asi 130 g. Ne matné (Matte), hedvábné (Silk)
+     ani plněné PLA: jsou těžší a ponorka by nemusela vyplavat.
+   - 5 ocelových matic M8 a asi 14 ocelových matic M4 (obyčejné šestihranné, pozinkované)
+   - vteřinové lepidlo, šumivá tableta nebo prášek do pečiva, kbelík nebo vana
+
+1) TISK (tryska 0,4 mm)
    - Otevřete Wilhelm_podlozka_P1S.3mf v Bambu Studiu. Nastavení každého dílu je uložené
      v souboru (4 stěny, výplň 100 %, límec 5 mm, bez podpěr). Zvolte jen tiskárnu P1S a PLA.
      Zadní díl trupu leží úhlopříčně (je delší než 256 mm), nic neotáčejte.
      Ověřeno v Bambu Studiu 2.9.1: projekt se naslicuje bez chyb a bez varování.
+   - Plná výplň je nutná: uvnitř trupu je uzavřená vzduchová dutina, kolem musí být plný plast.
    - Kdyby nastavení po otevření chybělo: File -> Import -> Import Configs -> Wilhelm_P1S_proces.json
-     (vychází z profilu 0.20mm Standard @BBL X1C, který Bambu používá i pro P1S).
-   - Asi 4 a půl hodiny, 150 g PLA.
-   - Pod plochou deskou na konci zádě jsou dvě tenká žebra. Jsou jen pro tisk:
-     po tisku je ulomte kleštěmi a hranu přejeďte smirkem. Po tisku projeďte drátkem kanálek: z komory pod kýlem
-     ke kulatému otvoru na pravém boku.
+   - Asi 3,6 hodiny, 130 g PLA.
+   - Pod plochou deskou na konci zádě jsou dvě tenká žebra. Jsou jen pro tisk: ulomte je kleštěmi.
+   - Kontrola kanálku: foukněte do kulatého otvoru na pravém boku, vzduch musí vycházet komorou
+     ve spodku trupu. Když ne, pročistěte kanálek drátkem z obou stran.
 
-2) SLOŽENÍ (vteřinové lepidlo)
-   - Kolíky do zadního dílu, nasadit přední díl.
-   - Palivovou kazetu (díl s košíčkem) přilepte zespodu k věži, výřez do výřezu.
+2) SLOŽENÍ (asi 20 minut)
+   - Kolíky do zadního dílu, nasadit přední díl, na dosedací plochu pár kapek lepidla.
+   - Palivovou kazetu (díl s košíčkem) přilepte zespodu k věži, výstupek do drážky.
      Věž se do paluby NElepí: zasune se, dvě pružné západky cvaknou; vytáhne se tahem nahoru.
-   - Dělo před věž, kulomet za ni. Malá kormidla prostrčit otvory na přídi a zádi,
-     svislá kormidla zespodu do zádě. Víčko s dírkami zatlačit zespodu do komory (zůstává tam).
+   - Dělo před věž, kulomet za ni (lepí se).
+   - Malá kormidla jsou ze dvou dílů: díl s hřídelí (A) prostrčit otvorem v trupu z levé strany,
+     z pravé strany nasadit druhý list (B) a zajistit kapkou lepidla. Svislá kormidla zespodu do zádě.
+   - Zátěž: do pěti velkých šestihranných kapes ve spodku zatlačit naplocho matice M8.
+     Do malé kapsy hned za komorou (směrem k zádi) dvě matice M4 na sebe.
+     Do trubičky na víčku komory dvě matice M4, víčko zatlačit zespodu do komory, trubičkou dopředu.
+     Matice drží na žebírkách; ven se páčí malým šroubovákem v zářezu. Volnou zajistit kapkou lepidla.
 
-3) PLAVBA
-   - Vytáhněte věž, do košíčku vložte kousek šumivé tablety (asi půl gramu = asi 10 ponorů),
-     věž zasuňte zpátky, cvakne.
-     Na delší hraní: lžička prášku do pečiva zespodu do komory pod víčko.
-   - Ponořit, zatřepat (vybublá vzduch), položit na dno. Do minuty vyplave.
-   - Zátěž: dvě schránky ve spodku, víčko mincí o čtvrt otáčky. Dovnitř matky M4 nebo kuličky 6 mm.
-     Plave: přidat matku. Padá moc rychle: ubrat. Vpředu víc = příď dolů.
-   - Malá kormidla natočit = pluje dopředu. Svislá kormidla natočit = krouží.
+3) VYVÁŽENÍ (bez paliva, ve kbelíku)
+   a) Ponořit, pod vodou otočit spodkem nahoru a protřepat, aby z komory a z kapes vyšel vzduch,
+      otočit zpátky a pustit. Stejně před každým hraním.
+   b) Plave: přidávat po jedné matici M4, střídavě do kapsy za komorou a do trubičky na víčku
+      (pak do druhé kapsy za komorou; když nestačí, po jedné úplně dozadu a úplně dopředu),
+      dokud nezačne klesat. Klesá hned: matice M4 ubírat, dokud nezůstane plavat, a poslední vrátit.
+   c) Přidat ještě TŘI matice M4.
+   d) Má klesat vodorovně. Jde přídí dolů: jednu matici M4 přesunout do kapsy úplně vzadu.
+      Jde zádí dolů: do kapsy vpředu.
 
-4) NA POLIČKU / JEN NA HLADINU
-   - Výstavní díly jsou v Wilhelm_vystavni_P1S.3mf (také s nastavením, asi hodina tisku, 56 g).
-   - display_plug.stl (dutá vložka) místo víčka: ponorka pluje jen na hladině a spodek je hladký.
-   - exit_cap.stl zakryje boční otvor kanálku (jen na poličku); vyndává se nehtem v drážce.
+4) PLAVBA
+   - Vytáhněte věž, do košíčku (je z jedné strany otevřený) vložte kousek šumivé tablety velký
+     jako hrášek, nebo ho naplňte práškem do pečiva. Věž zasuňte zpátky, cvakne.
+   - Položte ponorku na dno. Vyplave, u hladiny naráz vypustí bubliny bočním otvorem a klesne.
+     Stoupá a klesá na místě, dopředu sama nepluje.
+
+KDYŽ NĚCO NEJDE
+   - Zůstane ležet na dně: ubrat jednu matici M4; větší kousek tablety.
+   - Vyplave a už neklesne: setřít bublinky z trupu; přidat jednu matici M4.
+   - Plave šikmo: přesunout jednu matici M4 na opačný konec, než který je dole.
+   - Bubliny jdou zpod věže: věž není docvaknutá.
+   - Plyn uniká po bublinkách a ponorka nevyplave: kanálek není průchozí.
+   - Časem těžkne nebo se naklání na bok: do dutiny natekla voda. Vysušit, spodek paluby
+     a spoj trupu přetřít lakem.
+
+5) NA POLIČKU
+   - Výstavní díly jsou v Wilhelm_vystavni_P1S.3mf (asi 1 hodina tisku, 54 g).
+   - display_plug.stl (vložka) místo víčka: spodek trupu je hladký.
+   - exit_cap.stl zakryje boční otvor kanálku; vyndává se nehtem v drážce.
    - stand.stl: stojánek s nápisem U-47 WILHELM.
 
-NEPOVINNÉ: test_block_print.stl je jen zkušební kostka komory s kanálkem, do ponorky se nedává.
-POZOR: vlažná voda (PLA měkne od 55 °C), zátěž jen do spodku, po hraní vypláchnout a usušit.
-
+NEPOVINNÉ: Wilhelm_zkouska_P1S.3mf je zkušební kostka (komora s kanálkem a víčko), do ponorky se nedává.
+   Ve sklenici vody s kouskem tablety pod víčkem má jednou za čas naráz vypustit velkou bublinu.
+POZOR: studená nebo vlažná voda (PLA měkne od 55 °C). Matice jsou malé díly: ne pro děti do 3 let.
 PO HRANÍ: vytáhnout věž s kazetou a víčko komory, vypláchnout, nechat den vyschnout.
